@@ -36,7 +36,7 @@
         {
          "columns":20,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/..\/Downloads\/RPG Nature Tileset.png",
+         "image":"src/tiles/tileset.png",
          "imageheight":288,
          "imagewidth":641,
          "margin":0,
