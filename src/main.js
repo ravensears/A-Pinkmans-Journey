@@ -26,6 +26,7 @@ const config = {
 const game = new Phaser.Game(config);
 
 score = 0;
+musicOn = true;
 
 // ************PRELOAD****************
 function preload() {
@@ -41,6 +42,7 @@ function preload() {
 	this.load.tilemapTiledJSON("tilemap", "/tiles/map.json");
 	this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
 	this.load.image("object", "/sprites/pinkman.png");
+  this.load.image("muteMan", "/sprites/muteMan.png");
 }
 
 // ************CREATE****************
@@ -75,6 +77,7 @@ function create() {
 	this.hero.setOrigin(0.5, 0.5);
 	this.hero2 = this.physics.add.sprite(300, 200, "pinkman");
 	object = this.add.image(450, 350, "object").setInteractive();
+  muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2);
 
 	this.physics.add.collider(this.hero, layer2);
 	this.physics.add.collider(this.hero2, layer2);
@@ -123,6 +126,17 @@ function create() {
 		console.log(score);
 	});
 
+  mute = muteMan.on("pointerdown", () => {
+    if(musicOn === true) {
+      this.music.stop();
+      musicOn = false;
+    } else {
+      this.music.play(musicConfig);
+      musicOn = true;
+    }
+		console.log('muteMan in action!');
+	});
+
 	scoreText = this.add.text(790, 0, `Treasures: ${score}`, {
 		fontSize: "32px",
 		fill: "#ffffff",
@@ -133,6 +147,7 @@ function create() {
 
 function update() {
 	scoreText.setText(`Treasures: ${score}`);
+
 
 	this.hero.setVelocity(0);
 	if (this.cursors.up.isDown || keyW.isDown) {
