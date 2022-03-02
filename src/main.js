@@ -25,14 +25,16 @@ const config = {
 
 const Game = new Phaser.Game(config);
 
+// ************PRELOAD****************
 function preload() {
     this.load.spritesheet('pinkman', '/sprites/pinkman_run.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('sadGuy', '/sprites/pien.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('sadGuy', '/sprites/cat.png', { frameWidth: 32, frameHeight: 32 });
     this.load.image('base_tiles', '/tiles/tileset.png');
 	  this.load.tilemapTiledJSON('tilemap', '/tiles/map.json');
     this.load.audio('bens_beautiful_song', '/audio/music_2.mp3');
 }
 
+// ************CREATE****************
 function create () {
   this.music = this.sound.add("bens_beautiful_song");
 
@@ -64,6 +66,11 @@ function create () {
   this.physics.add.collider(this.hero2, layer2);
 
   this.cursors = this.input.keyboard.createCursorKeys();
+
+  keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+  keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+  keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+  keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
   this.anims.create({
     key: 'right',
@@ -98,18 +105,19 @@ function create () {
   this.physics.add.collider(this.hero, this.hero2);
 }
 
+// ************UPDATE****************
 function update () {
   this.hero.setVelocity(0)
-  if (this.cursors.up.isDown) {
+  if (this.cursors.up.isDown || keyW.isDown) {
     this.hero.setVelocityY(-160);
     this.hero.anims.play('top', true);
-  } else if (this.cursors.down.isDown) {
+  } else if (this.cursors.down.isDown || keyS.isDown) {
     this.hero.setVelocityY(160);
     this.hero.anims.play('down', true);
-  } else if (this.cursors.right.isDown) {
+  } else if (this.cursors.right.isDown || keyD.isDown) {
     this.hero.setVelocityX(160);
     this.hero.anims.play('right', true);
-  } else if (this.cursors.left.isDown) {
+  } else if (this.cursors.left.isDown || keyA.isDown) {
     this.hero.setVelocityX(-160);
     this.hero.anims.play('left', true);
   } else {
