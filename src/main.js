@@ -1,15 +1,15 @@
 const config = {
   type: Phaser.AUTO,
-  width: 1080,
-  height: 720,
-  renderer: Phaser.AUTO,
-  parent: 'phaser-example',
-  // scale: {
-  //   parent: 'phaser-example',
-  //   mode: Phaser.DOM.FIT,
-  //   width: '100%',
-  //   height: '100%'
-  // },
+  //width: 1080,
+  //height: 720,
+  //renderer: Phaser.AUTO,
+  parent: 'phaser-game',
+  scale: {
+    parent: 'phaser-game',
+    mode: Phaser.DOM.FIT,
+    width: window.innerWidth,
+    height: window.innerHeight
+  },
   scene: {
       preload: preload,
       create: create,
@@ -23,7 +23,7 @@ const config = {
   }
 };
 
-const Game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
 
 function preload() {
     this.load.spritesheet('pinkman', '/sprites/pinkman_run.png', { frameWidth: 32, frameHeight: 32 });
@@ -32,12 +32,12 @@ function preload() {
     this.load.audio('bens_beautiful_song', '/audio/music_2.mp3');
 }
 
-function create () {
+function create() {
   this.music = this.sound.add("bens_beautiful_song");
 
   var musicConfig = {
     mute: false,
-    volume: 0.5,
+    volume: 0.3,
     rate: 1,
     detune: 0,
     seek: 0,
@@ -45,16 +45,20 @@ function create () {
     delay: 0
   }
 
-  this.music.play(config);
+  this.music.play(musicConfig);
 
-  const map = this.make.tilemap({ key: 'tilemap' });
+  // mute = game.add.sprite(game.world.centreX, game.word.centreY, 'greenie');
+  // mute.anchor.set(0.5);
+  // game.input.onDown.add(removeMusic, this)
+
+  const map = this.make.tilemap({ key: 'tilemap' }); 
 	const tileset = map.addTilesetImage('tileset', 'base_tiles');
-
+  
   const layer1 = map.createStaticLayer('grass', tileset);
   const layer2 = map.createStaticLayer('walls', tileset);
 
   layer2.setCollisionByProperty({ collides: true });
-
+  
   this.hero = this.physics.add.sprite(400, 300, 'pinkman');
   this.hero.setOrigin(0.5, 0.5);
   this.hero2 = this.physics.add.sprite(300, 200, 'pinkman');
@@ -74,13 +78,13 @@ function create () {
     key: 'left',
     frames: this.anims.generateFrameNumbers('pinkman', { start: 0, end: 11 }),
     frameRate: 10,
-    repeat: -1
+    repeat: -1    
   });
 
   this.physics.add.collider(this.hero, this.hero2);
 }
 
-function update () {
+function update() {
   this.hero.setVelocity(0)
   if (this.cursors.up.isDown) {
     this.hero.setVelocityY(-160);
