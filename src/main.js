@@ -18,18 +18,22 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   }
 };
 
+let score
+// let scoreText 
+
 const Game = new Phaser.Game(config);
 
 function preload() {
-    this.load.spritesheet('pinkman', '/sprites/pinkman_run.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.image('base_tiles', '/tiles/tileset.png');
-	  this.load.tilemapTiledJSON('tilemap', '/tiles/map.json');
-    this.load.audio('bens_beautiful_song', '/audio/music_2.mp3');
+  this.load.spritesheet('pinkman', '/sprites/pinkman_run.png', { frameWidth: 32, frameHeight: 32 });
+  this.load.image('base_tiles', '/tiles/tileset.png');
+	this.load.tilemapTiledJSON('tilemap', '/tiles/map.json');
+  this.load.audio('bens_beautiful_song', '/audio/music_2.mp3');
+  this.load.image('object', '/sprites/pinkman.png')
 }
 
 function create () {
@@ -58,6 +62,16 @@ function create () {
   this.hero = this.physics.add.sprite(400, 300, 'pinkman');
   this.hero.setOrigin(0.5, 0.5);
   this.hero2 = this.physics.add.sprite(300, 200, 'pinkman');
+  object = this.add.image(450, 350, 'object').setInteractive();
+
+  score = 0;
+
+  object.on('pointerdown', function (pointer) {
+    score += 10
+
+    console.log(`${score}`)
+
+  });
 
   this.physics.add.collider(this.hero, layer2);
   this.physics.add.collider(this.hero2, layer2);
@@ -95,4 +109,9 @@ function update () {
     this.hero.setVelocityX(-160);
     this.hero.anims.play('right', true);
   }
+
+  scoreText = this.add.text(790, 0, `Treasures: ${score}`, {
+		fontSize: "32px",
+		fill: "#ffffff",
+	});
 }
