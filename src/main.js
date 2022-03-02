@@ -18,7 +18,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   }
 };
@@ -27,6 +27,7 @@ const Game = new Phaser.Game(config);
 
 function preload() {
     this.load.spritesheet('pinkman', '/sprites/pinkman_run.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('sadGuy', '/sprites/pien.png', { frameWidth: 32, frameHeight: 32 });
     this.load.image('base_tiles', '/tiles/tileset.png');
 	  this.load.tilemapTiledJSON('tilemap', '/tiles/map.json');
     this.load.audio('bens_beautiful_song', '/audio/music_2.mp3');
@@ -55,7 +56,7 @@ function create () {
 
   layer2.setCollisionByProperty({ collides: true });
 
-  this.hero = this.physics.add.sprite(400, 300, 'pinkman');
+  this.hero = this.physics.add.sprite(400, 300, 'sadGuy').setScale(1.5);
   this.hero.setOrigin(0.5, 0.5);
   this.hero2 = this.physics.add.sprite(300, 200, 'pinkman');
 
@@ -66,15 +67,32 @@ function create () {
 
   this.anims.create({
     key: 'right',
-    frames: this.anims.generateFrameNumbers('pinkman', { start: 0, end: 11 }),
+    frames: this.anims.generateFrameNumbers('sadGuy', { start: 6, end: 8 }),
     frameRate: 10,
     repeat: -1
   });
   this.anims.create({
     key: 'left',
-    frames: this.anims.generateFrameNumbers('pinkman', { start: 0, end: 11 }),
+    frames: this.anims.generateFrameNumbers('sadGuy', { start: 3, end: 5 }),
     frameRate: 10,
     repeat: -1
+  });
+  this.anims.create({
+    key: 'top',
+    frames: this.anims.generateFrameNumbers('sadGuy', { start: 9, end: 11 }),
+    frameRate: 10,
+    repeat: -1
+  });
+  this.anims.create({
+    key: 'down',
+    frames: this.anims.generateFrameNumbers('sadGuy', { start: 0, end: 2 }),
+    frameRate: 10,
+    repeat: -1
+  });
+  this.anims.create({
+    key: 'idle',
+    frames: [ { key: 'sadGuy', frame: 1 } ],
+    frameRate: 10
   });
 
   this.physics.add.collider(this.hero, this.hero2);
@@ -84,15 +102,18 @@ function update () {
   this.hero.setVelocity(0)
   if (this.cursors.up.isDown) {
     this.hero.setVelocityY(-160);
-    this.hero.anims.play('right', true);
+    this.hero.anims.play('top', true);
   } else if (this.cursors.down.isDown) {
     this.hero.setVelocityY(160);
-    this.hero.anims.play('right', true);
+    this.hero.anims.play('down', true);
   } else if (this.cursors.right.isDown) {
     this.hero.setVelocityX(160);
     this.hero.anims.play('right', true);
   } else if (this.cursors.left.isDown) {
     this.hero.setVelocityX(-160);
-    this.hero.anims.play('right', true);
+    this.hero.anims.play('left', true);
+  } else {
+    this.hero.setVelocity(0)
+    this.hero.anims.play('idle', true);
   }
 }
