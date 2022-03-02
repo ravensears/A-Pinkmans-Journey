@@ -1,10 +1,15 @@
-var config = {
+const config = {
   type: Phaser.AUTO,
   width: 1080,
   height: 720,
   renderer: Phaser.AUTO,
-  backgroundColor: '#FD8379',
-  
+  parent: null,
+  // scale: {
+  //   parent: 'phaser-example',
+  //   mode: Phaser.DOM.FIT,
+  //   width: '100%',
+  //   height: '100%'
+  // },
   scene: {
       preload: preload,
       create: create,
@@ -13,7 +18,7 @@ var config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 0 }
+      debug: false
     }
   }
 };
@@ -21,90 +26,73 @@ var config = {
 const Game = new Phaser.Game(config);
 
 function preload() {
-    // game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    // game.scale.pageAlignHorizontally = true;
-    // game.scale.pageAlignVertically = true;
-    // this.scene.backgroundColor = '#78828b';
-    
-    this.load.image('pinkman', '/sprites/pinkman.png');
-    this.load.image('pubWoman', '/sprites/pub.jpeg')
-    
+    this.load.spritesheet('pinkman', '/sprites/pinkman_run.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.image('base_tiles', '/tiles/tileset.png');
+	  this.load.tilemapTiledJSON('tilemap', '/tiles/map.json');
+    this.load.audio('bens_beautiful_song', '/audio/music_2.mp3');
 }
 
 function create () {
+  this.music = this.sound.add("bens_beautiful_song");
 
-  this.pub = this.add.image(400, 300, 'pubWoman');
-  this.hero = this.add.image(400, 300, 'pinkman');
-  // this.physics.add.existing(this.hero)
-  // this.hero.body.setCollideWorldBounds()
+  var musicConfig = {
+    mute: false,
+    volume: 0.5,
+    rate: 1,
+    detune: 0,
+    seek: 0,
+    loop: true,
+    delay: 0
+  }
+
+  this.music.play(config);
+
+  const map = this.make.tilemap({ key: 'tilemap' });
+	const tileset = map.addTilesetImage('tileset', 'base_tiles');
+
+  const layer1 = map.createStaticLayer('grass', tileset);
+  const layer2 = map.createStaticLayer('walls', tileset);
+
+  layer2.setCollisionByProperty({ collides: true });
+
+  this.hero = this.physics.add.sprite(400, 300, 'pinkman');
+  this.hero.setOrigin(0.5, 0.5);
+  this.hero2 = this.physics.add.sprite(300, 200, 'pinkman');
+
+  this.physics.add.collider(this.hero, layer2);
+  this.physics.add.collider(this.hero2, layer2);
 
   this.cursors = this.input.keyboard.createCursorKeys();
 
-  // this.aGrid = new AlignGrid({scene:this,rows:11,cols:11});
-  // this.aGrid.showNumbers();
+  this.anims.create({
+    key: 'right',
+    frames: this.anims.generateFrameNumbers('pinkman', { start: 0, end: 11 }),
+    frameRate: 10,
+    repeat: -1
+  });
+  this.anims.create({
+    key: 'left',
+    frames: this.anims.generateFrameNumbers('pinkman', { start: 0, end: 11 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  this.physics.add.collider(this.hero, this.hero2);
 }
 
 function update () {
-
+  this.hero.setVelocity(0)
   if (this.cursors.up.isDown) {
-    console.log(this.hero.x);
-    console.log(this.hero.y);
-    this.hero.y -= 2;
+    this.hero.setVelocityY(-160);
+    this.hero.anims.play('right', true);
   } else if (this.cursors.down.isDown) {
-    this.hero.y += 2;
+    this.hero.setVelocityY(160);
+    this.hero.anims.play('right', true);
   } else if (this.cursors.right.isDown) {
-    this.hero.x += 2;
+    this.hero.setVelocityX(160);
+    this.hero.anims.play('right', true);
   } else if (this.cursors.left.isDown) {
-    this.hero.x -= 2;
+    this.hero.setVelocityX(-160);
+    this.hero.anims.play('right', true);
   }
 }
-
-// export default Game;
-
-    
-
-// var config = {
-//   type: Phaser.AUTO,
-//   width: 800,
-//   height: 600,
-//   scene: {
-//       preload: preload,
-//       create: create,
-//       update: update
-//   }
-// };
-
-
-
-
-// var game = new Phaser.Game(config);
-
-// function preload ()
-// {
-//   this.load.image('sky', '/assets/sky.png');
-//   this.load.image('ground', 'assets/platform.png');
-//   this.load.image('star', 'assets/star.png');
-//   this.load.image('bomb', 'assets/bomb.png');
-//   this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-// }
-
-// function create ()
-// {
-//   this.add.image(400, 300, 'sky');
-//   this.hero = this.add.image(400, 300, 'star');
-//   this.cursors = this.input.keyboard.createCursorKeys();
-// }
-
-// function update ()
-// {
-//   if (this.cursors.up.isDown) {
-//     console.log("move up");
-//     this.hero.y -= 2;
-//   } else if (this.cursors.down.isDown) {
-//     this.hero.y += 2;
-//   } else if (this.cursors.right.isDown) {
-//     this.hero.x += 2;
-//   } else if (this.cursors.left.isDown) {
-//     this.hero.x -= 2;
-//   }
-// }
