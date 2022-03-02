@@ -3,7 +3,7 @@ const config = {
   width: 1080,
   height: 720,
   renderer: Phaser.AUTO,
-  parent: null,
+  parent: 'phaser-example',
   // scale: {
   //   parent: 'phaser-example',
   //   mode: Phaser.DOM.FIT,
@@ -23,6 +23,9 @@ const config = {
   }
 };
 
+let score
+// let scoreText 
+
 const Game = new Phaser.Game(config);
 
 // ************PRELOAD****************
@@ -32,6 +35,7 @@ function preload() {
     this.load.image('base_tiles', '/tiles/tileset.png');
 	  this.load.tilemapTiledJSON('tilemap', '/tiles/map.json');
     this.load.audio('bens_beautiful_song', '/audio/music_2.mp3');
+    this.load.image('object', '/sprites/pinkman.png')
 }
 
 // ************CREATE****************
@@ -61,6 +65,16 @@ function create () {
   this.hero = this.physics.add.sprite(400, 300, 'sadGuy').setScale(1.5);
   this.hero.setOrigin(0.5, 0.5);
   this.hero2 = this.physics.add.sprite(300, 200, 'pinkman');
+  object = this.add.image(450, 350, 'object').setInteractive();
+
+  score = 0;
+
+  object.on('pointerdown', function (pointer) {
+    score += 10
+
+    console.log(`${score}`)
+
+  });
 
   this.physics.add.collider(this.hero, layer2);
   this.physics.add.collider(this.hero2, layer2);
@@ -124,4 +138,9 @@ function update () {
     this.hero.setVelocity(0)
     this.hero.anims.play('idle', true);
   }
+
+  scoreText = this.add.text(790, 0, `Treasures: ${score}`, {
+		fontSize: "32px",
+		fill: "#ffffff",
+	});
 }
