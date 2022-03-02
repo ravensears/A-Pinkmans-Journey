@@ -3,7 +3,7 @@ const config = {
   width: 1080,
   height: 720,
   renderer: Phaser.AUTO,
-  parent: null,
+  parent: 'phaser-example',
   // scale: {
   //   parent: 'phaser-example',
   //   mode: Phaser.DOM.FIT,
