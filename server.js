@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.static('src'));
 
 app.get('/', (_req, res) => {
-  res.sendFile('/Users/victoriablack/Projects/Makers/final-project/RPG-Game/index.html')
+  res.sendFile('/index.html')
 });
 
 app.listen(PORT);
