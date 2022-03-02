@@ -1,9 +1,15 @@
-var config = {
+const config = {
   type: Phaser.AUTO,
   width: 1080,
   height: 720,
   renderer: Phaser.AUTO,
-  backgroundColor: '#FD8379',
+  parent: null,
+  // scale: {
+  //   parent: 'phaser-example',
+  //   mode: Phaser.DOM.FIT,
+  //   width: '100%',
+  //   height: '100%'
+  // },
   scene: {
       preload: preload,
       create: create,
@@ -12,7 +18,7 @@ var config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 0 }
+      debug: false
     }
   }
 };
@@ -50,6 +56,7 @@ function create () {
   layer2.setCollisionByProperty({ collides: true });
 
   this.hero = this.physics.add.sprite(400, 300, 'pinkman');
+  this.hero.setOrigin(0.5, 0.5);
   this.hero2 = this.physics.add.sprite(300, 200, 'pinkman');
 
   this.physics.add.collider(this.hero, layer2);
