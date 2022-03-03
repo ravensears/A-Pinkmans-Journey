@@ -89,6 +89,22 @@ function create() {
 	keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 	keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
+
+	//Gamescene
+
+	// const {LEFT,RIGHT,UP,DOWN,W,A,S,D} = Phaser.Input.Keyboard.KeyCodes
+	// this.keys = this.input.keyboard.addKeys({
+	// 	left: LEFT,
+	// 	right: RIGHT,
+	// 	up: UP,
+	// 	down: DOWN,
+	// 	w: W,
+	// 	a: A,
+	// 	s: S,
+	// 	d: D
+	// })
+
+
 	this.anims.create({
 		key: "right",
 		frames: this.anims.generateFrameNumbers("sadGuy", { start: 6, end: 8 }),
@@ -147,28 +163,23 @@ function create() {
 
 function update() {
 	scoreText.setText(`Treasures: ${score}`);
-
-
+	
 	this.hero.setVelocity(0);
+	this.hero.anims.play("idle", true);
+
 	if (this.cursors.up.isDown || keyW.isDown) {
 		this.hero.setVelocityY(-160);
 		this.hero.anims.play("top", true);
 	} else if (this.cursors.down.isDown || keyS.isDown) {
 		this.hero.setVelocityY(160);
 		this.hero.anims.play("down", true);
-	} else if (this.cursors.right.isDown || keyD.isDown) {
+	}
+	
+	if (this.cursors.right.isDown || keyD.isDown) {
 		this.hero.setVelocityX(160);
 		this.hero.anims.play("right", true);
 	} else if (this.cursors.left.isDown || keyA.isDown) {
 		this.hero.setVelocityX(-160);
 		this.hero.anims.play("left", true);
-	} else {
-		this.hero.setVelocity(0);
-		this.hero.anims.play("idle", true);
 	}
-
-	// scoreText = this.add.text(790, 0, `Treasures: ${score}`, {
-	// 	fontSize: "32px",
-	// 	fill: "#ffffff",
-	// });
 }
