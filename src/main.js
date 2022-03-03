@@ -75,6 +75,7 @@ function create() {
 
 	this.hero = this.physics.add.sprite(400, 300, "sadGuy").setScale(1.5);
 	this.hero.setOrigin(0.5, 0.5);
+	this.cameras.main.startFollow(this.hero, true)
 	this.hero2 = this.physics.add.sprite(300, 200, "pinkman");
 	object = this.add.image(450, 350, "object").setInteractive();
   muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2);
