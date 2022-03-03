@@ -18,7 +18,7 @@ const config = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true,
+			debug: false,
 		},
 	},
 };
@@ -39,7 +39,7 @@ function preload() {
 		frameHeight: 32,
 	});
 	this.load.image("base_tiles", "/tiles/tileset.png");
-	this.load.tilemapTiledJSON("tilemap", "/tiles/map.json");
+	this.load.tilemapTiledJSON("tilemap", "/tiles/bigshitmap.json");
 	this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
 	this.load.image("object", "/sprites/pinkman.png");
   this.load.image("muteMan", "/sprites/muteMan.png");
@@ -68,8 +68,8 @@ function create() {
 	const map = this.make.tilemap({ key: "tilemap" });
 	const tileset = map.addTilesetImage("tileset", "base_tiles");
 
-	const layer1 = map.createStaticLayer("grass", tileset);
-	const layer2 = map.createStaticLayer("walls", tileset);
+	const layer1 = map.createStaticLayer("ground", tileset);
+	const layer2 = map.createStaticLayer("stuff", tileset);
 
 	layer2.setCollisionByProperty({ collides: true });
 
