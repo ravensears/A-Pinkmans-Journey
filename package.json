@@ -4,7 +4,7 @@
   "description": "https://github.com/ravensears/RPG-Game.git",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "npx nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "express": "^4.17.3",
     "jest": "^27.5.1",
     "mongodb": "^4.4.0",
+    "mongoose": "^6.2.4",
     "phaser": "^3.55.2"
   },
   "devDependencies": {
