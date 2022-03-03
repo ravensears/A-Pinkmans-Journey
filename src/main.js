@@ -71,14 +71,36 @@ function create() {
 	layer2.setCollisionByProperty({ collides: true });
 
 	this.hero = this.physics.add.sprite(500, 500, "sadGuy").setScale(1.3);
-	this.heroHand = this.physics.add.sprite(500, 530, "sadGuy").setScale(1.8);
+	this.heroHand = this.physics.add.sprite(500, 530, "sadGuy").setScale(1.6);
 	this.heroHand.visible = false;
 
-	this.treasureTreeShape = this.add.rectangle(368, 192, 30, 63, "00FFFFFF");
-	this.treasure = this.physics.add.existing(this.treasureTreeShape, 1);
-	this.treasure.visible = false;
+	const generateTreasure = (x, y, width, height) => {
+		treasureShape = this.add.rectangle(x, y, width, height, "00FFFFFF");
+		treasure = this.physics.add.existing(treasureShape, 1);
+		treasure.visible = false;
+		return treasure;
+	};
 
-	score = 0;
+	this.treasure1 = generateTreasure(368, 192, 30, 63);
+	this.treasure2 = generateTreasure(624, 290, 30, 63);
+
+	const sfx = this.sound.add("beep");
+	const keyObj = this.input.keyboard.addKey("E");
+	this.score = 0;
+
+	const findTreasure = (treasure) => {
+		if (treasure.active === true) {
+			if (treasure.body.embedded === true && keyObj.isDown) {
+				console.log(`You found the treasure at ${treasure.x}, ${treasure.y}!`);
+				this.score += 1;
+				sfx.play();
+				treasure.setActive(false);
+			}
+		}
+	};
+
+	this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
+	this.physics.add.overlap(this.treasure2, this.heroHand, findTreasure);
 
 	this.physics.add.collider(this.hero, layer2);
 
@@ -121,7 +143,7 @@ function create() {
 
 	// this.physics.add.collider(this.hero, this.hero2);
 
-	scoreText = this.add.text(790, 0, `Treasures: ${score}`, {
+	scoreText = this.add.text(790, 0, `Treasures: ${this.score}`, {
 		fontSize: "32px",
 		fill: "#ffffff",
 	});
@@ -135,28 +157,11 @@ function create() {
 	// 		sfx.play();
 	// 	}
 	// });
-
-	const sfx = this.sound.add("beep");
-	const findTreasure = () => {
-		if (this.treasure.active === true) {
-			if (this.treasure.body.embedded === true && this.keyObj.isDown) {
-				console.log("You found the treasure!");
-				score += 1;
-				sfx.play();
-				this.treasure.setActive(false);
-			}
-		}
-	};
-	this.physics.add.overlap(this.treasure, this.heroHand, findTreasure);
-
-	setTimeout(() => {
-		console.log(this.treasure.body.embedded);
-	}, 5000);
 }
 
 // ************UPDATE****************
 function update() {
-	scoreText.setText(`Treasures: ${score}`);
+	scoreText.setText(`Treasures: ${this.score}`);
 	this.hero.setVelocity(0);
 	this.heroHand.setVelocity(0);
 	if (this.cursors.up.isDown || keyW.isDown) {
@@ -178,6 +183,4 @@ function update() {
 
 	this.heroHand.x = this.hero.x;
 	this.heroHand.y = this.hero.y;
-
-	this.keyObj = this.input.keyboard.addKey("E");
 }
