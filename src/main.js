@@ -18,7 +18,7 @@ const config = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true,
+			debug: false,
 		},
 	},
 };
@@ -70,27 +70,17 @@ function create() {
 
 	layer2.setCollisionByProperty({ collides: true });
 
-	this.hero = this.physics.add.sprite(400, 300, "sadGuy").setScale(1.5);
-	this.hero.setOrigin(0.5, 0.5);
-	this.hero2 = this.physics.add.sprite(300, 200, "pinkman");
-	object = this.add.image(450, 350, "object").setInteractive();
+	this.hero = this.physics.add.sprite(500, 500, "sadGuy").setScale(1.3);
+	this.heroHand = this.physics.add.sprite(500, 530, "sadGuy").setScale(1.8);
+	this.heroHand.visible = false;
 
-	this.r4 = this.add.rectangle(368, 192, 30, 63, "00FFFFFF");
-	this.treasure = this.physics.add.existing(this.r4, 1);
+	this.treasureTreeShape = this.add.rectangle(368, 192, 30, 63, "00FFFFFF");
+	this.treasure = this.physics.add.existing(this.treasureTreeShape, 1);
 	this.treasure.visible = false;
-
-	this.physics.add.collider(this.treasure, this.hero);
 
 	score = 0;
 
-	object.on("pointerdown", function (pointer) {
-		score += 10;
-
-		console.log(`${score}`);
-	});
-
 	this.physics.add.collider(this.hero, layer2);
-	this.physics.add.collider(this.hero2, layer2);
 
 	this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -145,19 +135,30 @@ function create() {
 	// 		sfx.play();
 	// 	}
 	// });
-	setTimeout(() => {
-		console.log(this.treasure.body.touching.none);
-	}, 5000);
+
+	const sfx = this.sound.add("beep");
+	const findTreasure = () => {
+		if (this.treasure.active === true) {
+			if (this.treasure.body.embedded === true && this.keyObj.isDown) {
+				console.log("You found the treasure!");
+				score += 1;
+				sfx.play();
+				this.treasure.setActive(false);
+			}
+		}
+	};
+	this.physics.add.overlap(this.treasure, this.heroHand, findTreasure);
 
 	setTimeout(() => {
-		console.log(this.treasure.body.touching.none);
-	}, 2000);
+		console.log(this.treasure.body.embedded);
+	}, 5000);
 }
 
 // ************UPDATE****************
 function update() {
 	scoreText.setText(`Treasures: ${score}`);
 	this.hero.setVelocity(0);
+	this.heroHand.setVelocity(0);
 	if (this.cursors.up.isDown || keyW.isDown) {
 		this.hero.setVelocityY(-160);
 		this.hero.anims.play("top", true);
@@ -175,27 +176,8 @@ function update() {
 		this.hero.anims.play("idle", true);
 	}
 
+	this.heroHand.x = this.hero.x;
+	this.heroHand.y = this.hero.y;
+
 	this.keyObj = this.input.keyboard.addKey("E");
-	const sfx = this.sound.add("beep");
-
-	if (this.treasure.active) {
-		if (this.treasure.body.touching.none === false && this.keyObj.isDown) {
-			console.log("You found the treasure!");
-			score += 1;
-			sfx.play();
-			this.treasure.setActive(false);
-		}
-	}
 }
-
-// currently always finds treasure once treasure touched
-
-// let hero3 = this.physics.add.sprite(
-// 	Math.random() * 1000,
-// 	Math.random() * 1000,
-// 	"pinkman"
-// );
-// hero3.setVelocityX(Math.random() * 1000);
-
-// this.physics.add.collider(hero3, this.hero);
-// this.physics.add.collider(hero3, layer2);
