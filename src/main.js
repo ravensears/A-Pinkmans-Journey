@@ -18,7 +18,7 @@ const config = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true,
+			debug: false,
 		},
 	},
 };
@@ -38,8 +38,8 @@ function preload() {
 		frameWidth: 32,
 		frameHeight: 32,
 	});
-	this.load.image("base_tiles", "/tiles/tileset.png");
-	this.load.tilemapTiledJSON("tilemap", "/tiles/map.json");
+	this.load.image("base_tiles", "/tiles/space_tileset.png");
+	this.load.tilemapTiledJSON("tilemap", "/tiles/space_map.json");
 	this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
 	this.load.image("object", "/sprites/pinkman.png");
   this.load.image("muteMan", "/sprites/muteMan.png");
@@ -66,21 +66,26 @@ function create() {
 	// game.input.onDown.add(removeMusic, this)
 
 	const map = this.make.tilemap({ key: "tilemap" });
-	const tileset = map.addTilesetImage("tileset", "base_tiles");
+	const tileset = map.addTilesetImage("space_tileset", "base_tiles");
 
-	const layer1 = map.createStaticLayer("grass", tileset);
-	const layer2 = map.createStaticLayer("walls", tileset);
+	const floor = map.createStaticLayer("floor", tileset);
+	const walls = map.createStaticLayer("walls", tileset);
+	const stuff = map.createStaticLayer("stuff", tileset);
 
-	layer2.setCollisionByProperty({ collides: true });
+	walls.setCollisionByProperty({ collides: true });
+	stuff.setCollisionByProperty({ collides: true });
 
-	this.hero = this.physics.add.sprite(400, 300, "sadGuy").setScale(1.5);
+	this.hero = this.physics.add.sprite(1600, 1600, "sadGuy").setScale(1);
 	this.hero.setOrigin(0.5, 0.5);
-	this.hero2 = this.physics.add.sprite(300, 200, "pinkman");
+	this.cameras.main.startFollow(this.hero, true)
+	this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 	object = this.add.image(450, 350, "object").setInteractive();
   muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2);
 
-	this.physics.add.collider(this.hero, layer2);
-	this.physics.add.collider(this.hero2, layer2);
+	this.physics.add.collider(this.hero, stuff);
+	this.physics.add.collider(this.hero2, stuff);
+	this.physics.add.collider(this.hero, walls);
+	this.physics.add.collider(this.hero2, walls);
 
 	this.cursors = this.input.keyboard.createCursorKeys();
 
