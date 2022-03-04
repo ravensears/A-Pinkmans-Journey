@@ -137,20 +137,6 @@ function create() {
 		.text(5, 40, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
 		.setScrollFactor(0);
 
-	//Gamescene
-
-	// const {LEFT,RIGHT,UP,DOWN,W,A,S,D} = Phaser.Input.Keyboard.KeyCodes
-	// this.keys = this.input.keyboard.addKeys({
-	// 	left: LEFT,
-	// 	right: RIGHT,
-	// 	up: UP,
-	// 	down: DOWN,
-	// 	w: W,
-	// 	a: A,
-	// 	s: S,
-	// 	d: D
-	// })
-
 	this.anims.create({
 		key: "right",
 		frames: this.anims.generateFrameNumbers("sadGuy", { start: 6, end: 8 }),
