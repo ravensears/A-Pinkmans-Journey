@@ -65,4 +65,3 @@ app.use(express.json());
 app.use(express.static('src'));
 
 app.listen(PORT, console.log(`Server running on  ${PORT}`));
-
