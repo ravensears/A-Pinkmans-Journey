@@ -23,6 +23,8 @@ const config = {
 	},
 };
 
+var text;
+
 const game = new Phaser.Game(config);
 
 score = 0;
@@ -42,7 +44,7 @@ function preload() {
 	this.load.tilemapTiledJSON("tilemap", "/tiles/space_map.json");
 	this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
 	this.load.image("object", "/sprites/pinkman.png");
-  this.load.image("muteMan", "/sprites/muteMan.png");
+    this.load.image("muteMan", "/sprites/muteMan.png");
 }
 
 // ************CREATE****************
@@ -80,7 +82,7 @@ function create() {
 	this.cameras.main.startFollow(this.hero, true)
 	this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 	object = this.add.image(450, 350, "object").setInteractive();
-  muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2);
+    muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2).setScrollFactor(0);;
 
 	this.physics.add.collider(this.hero, stuff);
 	this.physics.add.collider(this.hero2, stuff);
@@ -94,6 +96,7 @@ function create() {
 	keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 	keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
+	text = this.add.text(10, 10, 'Cursors to move', { font: '16px Courier', fill: '#00ff00' }).setScrollFactor(0);
 
 	//Gamescene
 
@@ -167,6 +170,16 @@ function create() {
 // ************UPDATE****************
 
 function update() {
+
+	text.setText([
+        'screen x: ' + this.input.x,
+        'screen y: ' + this.input.y,
+        'world x: ' + this.input.mousePointer.worldX,
+        'world y: ' + this.input.mousePointer.worldY,
+		'hero x: ' + this.hero.x,
+		'hero y: ' + this.hero.y,
+    ]);
+
 	scoreText.setText(`Treasures: ${score}`);
 	
 	this.hero.setVelocity(0);
@@ -187,4 +200,5 @@ function update() {
 		this.hero.setVelocityX(-160);
 		this.hero.anims.play("left", true);
 	}
+	
 }
