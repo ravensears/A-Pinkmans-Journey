@@ -39,7 +39,7 @@ function preload() {
 	this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
 	this.load.audio("beep", "/audio/beep.mp3");
 	this.load.image("object", "/sprites/pinkman.png");
-  this.load.image("muteMan", "/sprites/muteMan.png");
+	this.load.image("muteMan", "/sprites/muteMan.png");
 }
 
 // ************CREATE****************
@@ -79,41 +79,49 @@ function create() {
 		return { treasureObj: treasure, treasureMsg: message };
 	};
 
-	this.treasure1 = generateTreasure(45, 690, 30, 100, 'oneoneoneone');
-	this.treasure2 = generateTreasure(1345, 2490, 70, 70, 'treasure 2');
-	
-	console.log(this.treasure1);
-	console.log(`${this.treasure1.treasureObj.active}`)
+	this.treasure1 = generateTreasure(45, 690, 30, 100, "oneoneoneone");
+
+	this.treasure2 = generateTreasure(1345, 2490, 70, 70, "treasure 2");
+
+	console.log(this.treasure1.treasureMsg);
+	// console.log(`${this.treasure1.treasureObj.active}`);
 
 	const sfx = this.sound.add("beep");
 	const keyObj = this.input.keyboard.addKey("E");
 	this.score = 0;
 
-	const findTreasure = (treasure) => {
+	const findTreasure = (treasure, message) => {
 		if (treasure.active === true) {
 			if (treasure.body.embedded === true && keyObj.isDown) {
-				console.log(
-					`You found the treasure at ${treasure.x}, ${treasure.y}!`
-				);
+				console.log(`You found the treasure at ${treasure.x}, ${treasure.y}!`);
 				this.score += 1;
 				sfx.play();
-				this.add.text(
-					treasure.x,
-					treasure.y,
-					treasure.treasureMsg
-				);
+				console.log(message);
+				this.add.text(treasure.x, treasure.y, message);
 				treasure.setActive(false);
 			}
 		}
 	};
 
-	this.physics.add.overlap(this.treasure1.treasureObj, this.heroHand, findTreasure);
-	this.physics.add.overlap(this.treasure2.treasureObj, this.heroHand, findTreasure);
+	this.physics.add.overlap(
+		this.treasure1.treasureObj,
+		this.heroHand,
+		findTreasure(this.treasure1.treasureObj, String(this.treasure1.treasureMsg))
+	);
+	this.physics.add.overlap(
+		this.treasure2.treasureObj,
+		this.heroHand,
+		findTreasure
+	);
 
-	this.cameras.main.startFollow(this.hero, true)
+	this.cameras.main.startFollow(this.hero, true);
 
 	this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
-  muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2).setScrollFactor(0);
+	muteMan = this.add
+		.image(30, 20, "muteMan")
+		.setInteractive()
+		.setScale(2)
+		.setScrollFactor(0);
 
 	this.physics.add.collider(this.hero, stuff);
 	this.physics.add.collider(this.hero2, stuff);
@@ -127,7 +135,9 @@ function create() {
 	keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 	keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
-	text = this.add.text(5, 40, 'Cursors to move', { font: '16px Courier', fill: '#00ff00' }).setScrollFactor(0);
+	text = this.add
+		.text(5, 40, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
+		.setScrollFactor(0);
 
 	//Gamescene
 
@@ -142,7 +152,6 @@ function create() {
 	// 	s: S,
 	// 	d: D
 	// })
-
 
 	this.anims.create({
 		key: "right",
@@ -176,38 +185,39 @@ function create() {
 
 	this.physics.add.collider(this.hero, this.hero2);
 
-  mute = muteMan.on("pointerdown", () => {
-    if(musicOn === true) {
-      this.music.stop();
-      musicOn = false;
-    } else {
-      this.music.play(musicConfig);
-      musicOn = true;
-    }
-		console.log('muteMan in action!');
+	mute = muteMan.on("pointerdown", () => {
+		if (musicOn === true) {
+			this.music.stop();
+			musicOn = false;
+		} else {
+			this.music.play(musicConfig);
+			musicOn = true;
+		}
+		console.log("muteMan in action!");
 	});
 
-	scoreText = this.add.text(1000, 0, `Treasures: ${this.score}`, {
-		fontSize: "32px",
-		fill: "#ffffff",
-	}).setScrollFactor(0);
+	scoreText = this.add
+		.text(1000, 0, `Treasures: ${this.score}`, {
+			fontSize: "32px",
+			fill: "#ffffff",
+		})
+		.setScrollFactor(0);
 }
 
 // ************UPDATE****************
 
 function update() {
-
 	text.setText([
-        'screen x: ' + this.input.x,
-        'screen y: ' + this.input.y,
-        'world x: ' + this.input.mousePointer.worldX.toFixed(0),
-        'world y: ' + this.input.mousePointer.worldY.toFixed(0),
-		'hero x: ' + this.hero.x.toFixed(0),
-		'hero y: ' + this.hero.y.toFixed(0),
-    ]);
+		"screen x: " + this.input.x,
+		"screen y: " + this.input.y,
+		"world x: " + this.input.mousePointer.worldX.toFixed(0),
+		"world y: " + this.input.mousePointer.worldY.toFixed(0),
+		"hero x: " + this.hero.x.toFixed(0),
+		"hero y: " + this.hero.y.toFixed(0),
+	]);
 
 	scoreText.setText(`Treasures: ${this.score}`);
-	
+
 	this.hero.setVelocity(0);
 	this.hero.anims.play("idle", true);
 
@@ -218,7 +228,7 @@ function update() {
 		this.hero.setVelocityY(160);
 		this.hero.anims.play("down", true);
 	}
-	
+
 	if (this.cursors.right.isDown || keyD.isDown) {
 		this.hero.setVelocityX(160);
 		this.hero.anims.play("right", true);
