@@ -58,7 +58,6 @@ function create() {
 
 	this.music.play(musicConfig);
 
-
 	const map = this.make.tilemap({ key: "tilemap" });
 	const tileset = map.addTilesetImage("space_tileset", "base_tiles");
 
@@ -75,17 +74,31 @@ function create() {
 
 	let treasureIndex = -1
 
-	treasureGroup = [{ x: 1011, 
+	treasureGroup = [{ 
+		x: 1011, 
 		y: 1435, 
 		width: 30, 
 		height: 63, 
-		message: 'Found Treasure! Check under the control desk'
+		message: 'Found Treasure! Check in the wishing well'
+	 }, { 
+		x: 1539, 
+		y: 2766, 
+		width: 30, 
+		height: 63, 
+		message: 'Found Treasure! Check by the pipe in the tube seatcover-looking room'
+	 }, { 
+		x: 50, 
+		y: 2350, 
+		width: 30, 
+		height: 63, 
+		message: 'Check under the control desk'
 	 }, { 
 		x: 1369, 
 		y: 1811, 
 		width: 30, 
 		height: 63, 
-		message: 'Game over!!' }];
+		message: 'Game over!!' 
+	}];
 
 	const generateTreasure = (treasure) => {
 		treasureShape = this.add.rectangle(treasure.x, treasure.y, treasure.width, treasure.height, "00FFFFFF");
