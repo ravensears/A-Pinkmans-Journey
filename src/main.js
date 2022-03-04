@@ -100,6 +100,10 @@ function create() {
 		message: 'Game over!!' 
 	}];
 
+	function gameOver() {
+		console.log(`nice work buddy!`)
+	}
+
 	const generateTreasure = (treasure) => {
 		treasureShape = this.add.rectangle(treasure.x, treasure.y, treasure.width, treasure.height, "00FFFFFF");
 		treasureObj = this.physics.add.existing(treasureShape, 1);
@@ -129,9 +133,13 @@ function create() {
 					msg.destroy();
 				}, 5000);
 				treasure.setActive(false);
-				generateNextTreasure();
-			}
-		}
+				if(treasureIndex === treasureGroup.length) {
+					gameOver();
+				} else {
+					generateNextTreasure();
+				};
+			};
+		};
 	};
 
 	this.treasure1 = generateTreasure(
