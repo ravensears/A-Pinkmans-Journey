@@ -22,7 +22,7 @@ const config = {
 var text;
 
 const game = new Phaser.Game(config);
-musicOn = true;
+musicOn = false;
 
 // ************PRELOAD****************
 function preload() {
@@ -76,43 +76,36 @@ function create() {
 		treasureShape = this.add.rectangle(x, y, width, height, "00FFFFFF");
 		treasure = this.physics.add.existing(treasureShape, 1);
 		treasure.visible = false;
-		return { treasureObj: treasure, treasureMsg: message };
+		treasure.setData({ message: message });
+		return treasure;
 	};
 
-	this.treasure1 = generateTreasure(45, 690, 30, 100, "oneoneoneone");
-
-	this.treasure2 = generateTreasure(1345, 2490, 70, 70, "treasure 2");
-
-	console.log(this.treasure1.treasureMsg);
-	// console.log(`${this.treasure1.treasureObj.active}`);
+	this.treasure1 = generateTreasure(1650, 1650, 30, 63, "You found Treasure 1");
+	// this.treasure1.setData({ message: "hi" });
+	console.log(this.treasure1.data.list);
+	this.treasure2 = generateTreasure(1800, 1800, 30, 63, "You found Treasure 2");
 
 	const sfx = this.sound.add("beep");
 	const keyObj = this.input.keyboard.addKey("E");
 	this.score = 0;
 
-	const findTreasure = (treasure, message) => {
-		if (treasure.active === true) {
-			if (treasure.body.embedded === true && keyObj.isDown) {
+	const findTreasure = (treasure) => {
+		if (treasure.active) {
+			if (treasure.body.embedded && keyObj.isDown) {
 				console.log(`You found the treasure at ${treasure.x}, ${treasure.y}!`);
 				this.score += 1;
 				sfx.play();
-				console.log(message);
-				this.add.text(treasure.x, treasure.y, message);
+				msg = this.add.text(treasure.x, treasure.y, treasure.data.list.message);
+				setTimeout(() => {
+					msg.destroy();
+				}, 5000);
 				treasure.setActive(false);
 			}
 		}
 	};
 
-	this.physics.add.overlap(
-		this.treasure1.treasureObj,
-		this.heroHand,
-		findTreasure(this.treasure1.treasureObj, String(this.treasure1.treasureMsg))
-	);
-	this.physics.add.overlap(
-		this.treasure2.treasureObj,
-		this.heroHand,
-		findTreasure
-	);
+	this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
+	this.physics.add.overlap(this.treasure2, this.heroHand, findTreasure);
 
 	this.cameras.main.startFollow(this.hero, true);
 
