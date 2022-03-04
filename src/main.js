@@ -14,7 +14,7 @@ const config = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true,
+			debug: false,
 		},
 	},
 };
@@ -80,10 +80,15 @@ function create() {
 		return treasure;
 	};
 
-	this.treasure1 = generateTreasure(1650, 1650, 30, 63, "You found Treasure 1");
-	// this.treasure1.setData({ message: "hi" });
-	console.log(this.treasure1.data.list);
-	this.treasure2 = generateTreasure(1800, 1800, 30, 63, "You found Treasure 2");
+	this.treasure1 = generateTreasure(
+		1011,
+		1435,
+		30,
+		63,
+		"Found Treasure! Check under the control desk"
+	);
+
+	this.treasure2 = generateTreasure(1369, 1811, 30, 63, "Game over!");
 
 	const sfx = this.sound.add("beep");
 	const keyObj = this.input.keyboard.addKey("E");
