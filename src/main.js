@@ -1,9 +1,5 @@
 const config = {
 	type: Phaser.AUTO,
-	//width: 1080,
-	//height: 720,
-	//renderer: Phaser.AUTO,
-	parent: "phaser-game",
 	scale: {
 		parent: "phaser-game",
 		mode: Phaser.DOM.FIT,
@@ -18,7 +14,7 @@ const config = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: false,
+			debug: true,
 		},
 	},
 };
@@ -26,8 +22,6 @@ const config = {
 var text;
 
 const game = new Phaser.Game(config);
-
-score = 0;
 musicOn = true;
 
 // ************PRELOAD****************
@@ -43,15 +37,16 @@ function preload() {
 	this.load.image("base_tiles", "/tiles/space_tileset.png");
 	this.load.tilemapTiledJSON("tilemap", "/tiles/space_map.json");
 	this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
+	this.load.audio("beep", "/audio/beep.mp3");
 	this.load.image("object", "/sprites/pinkman.png");
-    this.load.image("muteMan", "/sprites/muteMan.png");
+  this.load.image("muteMan", "/sprites/muteMan.png");
 }
 
 // ************CREATE****************
 function create() {
 	this.music = this.sound.add("bens_beautiful_song");
 
-	var musicConfig = {
+	const musicConfig = {
 		mute: false,
 		volume: 0.3,
 		rate: 1,
@@ -63,10 +58,6 @@ function create() {
 
 	this.music.play(musicConfig);
 
-	// mute = game.add.sprite(game.world.centreX, game.word.centreY, 'greenie');
-	// mute.anchor.set(0.5);
-	// game.input.onDown.add(removeMusic, this)
-
 	const map = this.make.tilemap({ key: "tilemap" });
 	const tileset = map.addTilesetImage("space_tileset", "base_tiles");
 
@@ -77,12 +68,48 @@ function create() {
 	walls.setCollisionByProperty({ collides: true });
 	stuff.setCollisionByProperty({ collides: true });
 
-	this.hero = this.physics.add.sprite(1600, 1600, "sadGuy").setScale(1);
-	this.hero.setOrigin(0.5, 0.5);
+	this.hero = this.physics.add.sprite(1600, 1600, "sadGuy").setScale(1.3);
+	this.heroHand = this.physics.add.sprite(1620, 1620, "sadGuy").setScale(1.6);
+	this.heroHand.visible = false;
+
+	const generateTreasure = (x, y, width, height, message) => {
+		generateMessage(x, y, message);
+		treasureShape = this.add.rectangle(x, y, width, height, "00FFFFFF");
+		treasure = this.physics.add.existing(treasureShape, 1);
+		treasure.visible = false;
+		return treasure;
+	};
+
+	const generateMessage = (x, y, message) => {
+		message = this.add.text(x, y, message);
+		message.visible = false;
+	}
+
+	this.treasure1 = generateTreasure(45, 690, 30, 100, 'treasure 1');
+	this.treasure2 = generateTreasure(1345, 2490, 70, 70, 'treasure 2');
+
+	const sfx = this.sound.add("beep");
+	const keyObj = this.input.keyboard.addKey("E");
+	this.score = 0;
+
+	const findTreasure = (treasure, message) => {
+		if (treasure.active === true) {
+			if (treasure.body.embedded === true && keyObj.isDown) {
+				console.log(`You found the treasure at ${treasure.x}, ${treasure.y}!`);
+				this.score += 1;
+				sfx.play();
+				treasure.setActive(false);
+				message.visible = true;
+			}
+		}
+	};
+
+	this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
+	this.physics.add.overlap(this.treasure2, this.heroHand, findTreasure);
 	this.cameras.main.startFollow(this.hero, true)
+
 	this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
-	object = this.add.image(450, 350, "object").setInteractive();
-    muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2).setScrollFactor(0);;
+  muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2).setScrollFactor(0);
 
 	this.physics.add.collider(this.hero, stuff);
 	this.physics.add.collider(this.hero2, stuff);
@@ -145,11 +172,6 @@ function create() {
 
 	this.physics.add.collider(this.hero, this.hero2);
 
-	object.on("pointerdown", () => {
-		score++;
-		console.log(score);
-	});
-
   mute = muteMan.on("pointerdown", () => {
     if(musicOn === true) {
       this.music.stop();
@@ -161,10 +183,10 @@ function create() {
 		console.log('muteMan in action!');
 	});
 
-	scoreText = this.add.text(790, 0, `Treasures: ${score}`, {
+	scoreText = this.add.text(1000, 0, `Treasures: ${this.score}`, {
 		fontSize: "32px",
 		fill: "#ffffff",
-	});
+	}).setScrollFactor(0);
 }
 
 // ************UPDATE****************
@@ -180,7 +202,7 @@ function update() {
 		'hero y: ' + this.hero.y.toFixed(0),
     ]);
 
-	scoreText.setText(`Treasures: ${score}`);
+	scoreText.setText(`Treasures: ${this.score}`);
 	
 	this.hero.setVelocity(0);
 	this.hero.anims.play("idle", true);
@@ -200,5 +222,7 @@ function update() {
 		this.hero.setVelocityX(-160);
 		this.hero.anims.play("left", true);
 	}
-	
+
+	this.heroHand.x = this.hero.x;
+	this.heroHand.y = this.hero.y;
 }
