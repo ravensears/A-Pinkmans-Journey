@@ -14,7 +14,7 @@ const config = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: false,
+			debug: true,
 		},
 	},
 };
@@ -70,23 +70,33 @@ function create() {
 	this.heroHand = this.physics.add.sprite(1620, 1620, "sadGuy").setScale(1.6);
 	this.heroHand.visible = false;
 
-	const generateTreasure = (x, y, width, height, message) => {
-		treasureShape = this.add.rectangle(x, y, width, height, "00FFFFFF");
-		treasure = this.physics.add.existing(treasureShape, 1);
-		treasure.visible = false;
-		treasure.setData({ message: message });
-		return treasure;
+	let treasureIndex = -1
+
+	treasureGroup = [{ x: 1011, 
+		y: 1435, 
+		width: 30, 
+		height: 63, 
+		message: 'Found Treasure! Check under the control desk'
+	 }, { 
+		x: 1369, 
+		y: 1811, 
+		width: 30, 
+		height: 63, 
+		message: 'Game over!!' }];
+
+	const generateTreasure = (treasure) => {
+		treasureShape = this.add.rectangle(treasure.x, treasure.y, treasure.width, treasure.height, "00FFFFFF");
+		treasureObj = this.physics.add.existing(treasureShape, 1);
+		treasureObj.visible = false;
+		treasureObj.setData({ message: treasure.message });
+		this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
+		treasureIndex++
+		return treasureObj;
 	};
-
-	this.treasure1 = generateTreasure(
-		1011,
-		1435,
-		30,
-		63,
-		"Found Treasure! Check under the control desk"
-	);
-
-	this.treasure2 = generateTreasure(1369, 1811, 30, 63, "Game over!");
+	
+	function generateNextTreasure() {
+		generateTreasure(treasureGroup[treasureIndex]);
+	};
 
 	const sfx = this.sound.add("beep");
 	const keyObj = this.input.keyboard.addKey("E");
@@ -103,12 +113,21 @@ function create() {
 					msg.destroy();
 				}, 5000);
 				treasure.setActive(false);
+				generateNextTreasure();
 			}
 		}
 	};
 
+	this.treasure1 = generateTreasure(
+		{ x: 1679,
+		y: 1418,
+		width: 30,
+		height: 63,
+		message: "Found Treasure! Check in the couch"
+		}
+	);
+
 	this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
-	this.physics.add.overlap(this.treasure2, this.heroHand, findTreasure);
 
 	this.cameras.main.startFollow(this.hero, true);
 
