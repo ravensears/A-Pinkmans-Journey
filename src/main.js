@@ -96,7 +96,7 @@ function create() {
 	keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 	keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
-	text = this.add.text(10, 10, 'Cursors to move', { font: '16px Courier', fill: '#00ff00' }).setScrollFactor(0);
+	text = this.add.text(5, 40, 'Cursors to move', { font: '16px Courier', fill: '#00ff00' }).setScrollFactor(0);
 
 	//Gamescene
 
@@ -174,10 +174,10 @@ function update() {
 	text.setText([
         'screen x: ' + this.input.x,
         'screen y: ' + this.input.y,
-        'world x: ' + this.input.mousePointer.worldX,
-        'world y: ' + this.input.mousePointer.worldY,
-		'hero x: ' + this.hero.x,
-		'hero y: ' + this.hero.y,
+        'world x: ' + this.input.mousePointer.worldX.toFixed(0),
+        'world y: ' + this.input.mousePointer.worldY.toFixed(0),
+		'hero x: ' + this.hero.x.toFixed(0),
+		'hero y: ' + this.hero.y.toFixed(0),
     ]);
 
 	scoreText.setText(`Treasures: ${score}`);
