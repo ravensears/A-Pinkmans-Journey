@@ -22,7 +22,7 @@ const config = {
 var text;
 
 const game = new Phaser.Game(config);
-musicOn = false;
+musicOn = true;
 
 // ************PRELOAD****************
 function preload() {
@@ -55,6 +55,9 @@ function create() {
 		loop: true,
 		delay: 0,
 	};
+
+	this.music.play(musicConfig);
+
 
 	const map = this.make.tilemap({ key: "tilemap" });
 	const tileset = map.addTilesetImage("space_tileset", "base_tiles");
@@ -187,7 +190,7 @@ function create() {
 	this.physics.add.collider(this.hero, this.hero2);
 
 	mute = muteMan.on("pointerdown", () => {
-		if (musicOn === true) {
+		if (musicOn) {
 			this.music.stop();
 			musicOn = false;
 		} else {
