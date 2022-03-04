@@ -63,10 +63,6 @@ function create() {
 
 	this.music.play(musicConfig);
 
-	// mute = game.add.sprite(game.world.centreX, game.word.centreY, 'greenie');
-	// mute.anchor.set(0.5);
-	// game.input.onDown.add(removeMusic, this)
-
 	const map = this.make.tilemap({ key: "tilemap" });
 	const tileset = map.addTilesetImage("space_tileset", "base_tiles");
 
@@ -82,7 +78,7 @@ function create() {
 	this.cameras.main.startFollow(this.hero, true)
 	this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 	object = this.add.image(450, 350, "object").setInteractive();
-    muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2).setScrollFactor(0);;
+  muteMan = this.add.image(30, 20, "muteMan").setInteractive().setScale(2).setScrollFactor(0);;
 
 	this.physics.add.collider(this.hero, stuff);
 	this.physics.add.collider(this.hero2, stuff);
@@ -97,21 +93,6 @@ function create() {
 	keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
 	text = this.add.text(5, 40, 'Cursors to move', { font: '16px Courier', fill: '#00ff00' }).setScrollFactor(0);
-
-	//Gamescene
-
-	// const {LEFT,RIGHT,UP,DOWN,W,A,S,D} = Phaser.Input.Keyboard.KeyCodes
-	// this.keys = this.input.keyboard.addKeys({
-	// 	left: LEFT,
-	// 	right: RIGHT,
-	// 	up: UP,
-	// 	down: DOWN,
-	// 	w: W,
-	// 	a: A,
-	// 	s: S,
-	// 	d: D
-	// })
-
 
 	this.anims.create({
 		key: "right",
@@ -161,10 +142,10 @@ function create() {
 		console.log('muteMan in action!');
 	});
 
-	scoreText = this.add.text(790, 0, `Treasures: ${score}`, {
+	scoreText = this.add.text(1000, 24, `Treasures: ${score}`, {
 		fontSize: "32px",
 		fill: "#ffffff",
-	});
+	}).setScrollFactor(0);
 }
 
 // ************UPDATE****************
@@ -172,13 +153,13 @@ function create() {
 function update() {
 
 	text.setText([
-        'screen x: ' + this.input.x,
-        'screen y: ' + this.input.y,
-        'world x: ' + this.input.mousePointer.worldX.toFixed(0),
-        'world y: ' + this.input.mousePointer.worldY.toFixed(0),
+    'screen x: ' + this.input.x,
+    'screen y: ' + this.input.y,
+    'world x: ' + this.input.mousePointer.worldX.toFixed(0),
+    'world y: ' + this.input.mousePointer.worldY.toFixed(0),
 		'hero x: ' + this.hero.x.toFixed(0),
 		'hero y: ' + this.hero.y.toFixed(0),
-    ]);
+  ]);
 
 	scoreText.setText(`Treasures: ${score}`);
 	
@@ -200,5 +181,4 @@ function update() {
 		this.hero.setVelocityX(-160);
 		this.hero.anims.play("left", true);
 	}
-	
 }
