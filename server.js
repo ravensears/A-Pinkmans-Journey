@@ -1,24 +1,25 @@
 require('dotenv').config()
 
 const PORT = 3000;
-const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
-const cors = require('cors');
+import express from 'express';
+import expressLayouts from 'express-ejs-layouts';
+import cors from 'cors';
 const app = express();
-const mongoose = require('mongoose');
-const mongo = require('mongodb');
-const flash = require('connect-flash');
-const session = require('express-session');
-const passport = require('passport');
+import mongoose from 'mongoose';
+import mongo from 'mongodb';
+import flash from 'connect-flash';
+import session from 'express-session';
 
 //Passport COnfig
-require('./config/passport')(passport);
+import passport from "passport";
+import passportConfig from "./config/passport.js";
+passportConfig(passport);
 
 // DB Config
-const db = require('./config/keys').MongoURI;
+import { MongoURI as db } from './config/keys.js';
 
 // Connect to Mongo
-mongoose.connect(db, { useNewUrlParser: true })
+connect(db, { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(err));
   
@@ -37,8 +38,8 @@ app.use(session({
 }));
 
 //Passport Middleware
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(initialize());
+app.use(_session());
 
 // Connect Flash
 app.use(flash());
