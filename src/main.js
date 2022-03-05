@@ -126,12 +126,10 @@ function create() {
 		if (treasure.active) {
 			if (treasure.body.embedded && keyObj.isDown) {
 				console.log(`You found the treasure at ${treasure.x}, ${treasure.y}!`);
-				this.score += 1;
+				this.score++;
 				sfx.play();
 				msg = this.add.text(treasure.x, treasure.y, treasure.data.list.message);
-				setTimeout(() => {
-					msg.destroy();
-				}, 5000);
+				destroyMessage(msg);
 				treasure.setActive(false);
 				if(treasureIndex === treasureGroup.length) {
 					gameOver();
@@ -141,6 +139,12 @@ function create() {
 			};
 		};
 	};
+
+	const destroyMessage = (msg) => {
+		setTimeout(() => {
+			msg.destroy();
+		}, 5000);
+	}
 
 	this.treasure1 = generateTreasure(
 		{ x: 1679,
