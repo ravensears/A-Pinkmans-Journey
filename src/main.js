@@ -282,6 +282,22 @@ function create() {
 // ************UPDATE****************
 
 function update() {
+	const treasureDetector = () => {
+		if (
+			Math.abs(this.hero.x - this.treasure1.x) <= 500 &&
+			Math.abs(this.hero.y - this.treasure1.y) <= 500
+		) {
+			return "HOT";
+		} else if (
+			Math.abs(this.hero.x - this.treasure1.x) <= 1100 &&
+			Math.abs(this.hero.y - this.treasure1.y) <= 1100
+		) {
+			return "Warm";
+		} else {
+			return "cold";
+		}
+	};
+
 	text.setText([
 		"screen x: " + this.input.x,
 		"screen y: " + this.input.y,
@@ -289,6 +305,7 @@ function update() {
 		"world y: " + this.input.mousePointer.worldY.toFixed(0),
 		"hero x: " + this.hero.x.toFixed(0),
 		"hero y: " + this.hero.y.toFixed(0),
+		"TREASURE DETECTOR: " + treasureDetector(),
 	]);
 
 	scoreText.setText(`Treasures: ${this.score}`);
