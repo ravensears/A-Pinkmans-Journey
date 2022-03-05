@@ -129,11 +129,7 @@ function create() {
 	}
 
 	function nextTreasure() {
-		if(treasureIndex === treasureGroup.length) {
-			gameOver();
-		} else {
-			generateNextTreasure();
-		};
+		treasureIndex === treasureGroup.length ? gameOver() : generateNextTreasure();
 	}
 
 	const findTreasure = (treasure) => {
