@@ -122,6 +122,20 @@ function create() {
 	const keyObj = this.input.keyboard.addKey("E");
 	this.score = 0;
 
+	const destroyMessage = (msg) => {
+		setTimeout(() => {
+			msg.destroy();
+		}, 5000);
+	}
+
+	function nextTreasure() {
+		if(treasureIndex === treasureGroup.length) {
+			gameOver();
+		} else {
+			generateNextTreasure();
+		};
+	}
+
 	const findTreasure = (treasure) => {
 		if (treasure.active) {
 			if (treasure.body.embedded && keyObj.isDown) {
@@ -131,20 +145,10 @@ function create() {
 				msg = this.add.text(treasure.x, treasure.y, treasure.data.list.message);
 				destroyMessage(msg);
 				treasure.setActive(false);
-				if(treasureIndex === treasureGroup.length) {
-					gameOver();
-				} else {
-					generateNextTreasure();
-				};
+				nextTreasure();
 			};
 		};
 	};
-
-	const destroyMessage = (msg) => {
-		setTimeout(() => {
-			msg.destroy();
-		}, 5000);
-	}
 
 	this.treasure1 = generateTreasure(
 		{ x: 1679,
