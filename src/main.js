@@ -82,7 +82,7 @@ function create() {
 		message: 'Found Treasure! Check in the wishing well'
 	 }, { 
 		x: 1539, 
-		y: 2766, 
+		y: 2766,
 		width: 30, 
 		height: 63, 
 		message: 'Found Treasure! Check by the pipe in the tube seatcover-looking room'
@@ -113,6 +113,34 @@ function create() {
 		treasureIndex++
 		return treasureObj;
 	};
+
+	const generateTrap = (trap) => {
+		trapShape = this.add.rectangle(trap.x, trap.y, trap.width, trap.height, "00FFFFFF");
+		trapObj = this.physics.add.existing(trapShape, 1);
+		trapObj.visible = false;
+		this.physics.add.overlap(trapObj, this.heroHand, findTrap);
+		return trapObj;
+	};
+
+	const findTrap = (trap) => {
+		if (trap.active) {
+			if (trap.body.embedded && keyObj.isDown) {
+				console.log(`You fell in a wormhole at: ${trap.x}, ${trap.y}!`);
+				sfx.play();
+				this.hero.x = 1600
+				this.hero.y = 1600
+				// treasure.setActive(false);
+			};
+		};
+	};
+
+	this.trap = generateTrap(
+		{ x: 1950,
+		y: 2901,
+		width: 30,
+		height: 63,
+		}
+	);
 	
 	function generateNextTreasure() {
 		generateTreasure(treasureGroup[treasureIndex]);
@@ -128,7 +156,7 @@ function create() {
 		}, 5000);
 	}
 
-	function nextTreasure() {
+	function lastMoveCheck() {
 		treasureIndex === treasureGroup.length ? gameOver() : generateNextTreasure();
 	}
 
@@ -141,7 +169,7 @@ function create() {
 				msg = this.add.text(treasure.x, treasure.y, treasure.data.list.message);
 				destroyMessage(msg);
 				treasure.setActive(false);
-				nextTreasure();
+				lastMoveCheck();
 			};
 		};
 	};
