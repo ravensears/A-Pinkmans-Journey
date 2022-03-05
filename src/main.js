@@ -14,7 +14,7 @@ const config = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true,
+			debug: false,
 		},
 	},
 };
@@ -38,6 +38,7 @@ function preload() {
 	this.load.tilemapTiledJSON("tilemap", "/tiles/space_map.json");
 	this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
 	this.load.audio("beep", "/audio/beep.mp3");
+	this.load.audio("wormhole", "/audio/wormholesfx.mp3");
 	this.load.image("object", "/sprites/pinkman.png");
 	this.load.image("muteMan", "/sprites/muteMan.png");
 }
@@ -72,50 +73,68 @@ function create() {
 	this.heroHand = this.physics.add.sprite(1620, 1620, "sadGuy").setScale(1.6);
 	this.heroHand.visible = false;
 
-	let treasureIndex = -1
+	let treasureIndex = -1;
 
-	treasureGroup = [{ 
-		x: 1011, 
-		y: 1435, 
-		width: 30, 
-		height: 63, 
-		message: 'Found Treasure! Check in the wishing well'
-	 }, { 
-		x: 1539, 
-		y: 2766,
-		width: 30, 
-		height: 63, 
-		message: 'Found Treasure! Check by the pipe in the tube seatcover-looking room'
-	 }, { 
-		x: 50, 
-		y: 2350, 
-		width: 30, 
-		height: 63, 
-		message: 'Check under the control desk'
-	 }, { 
-		x: 1369, 
-		y: 1811, 
-		width: 30, 
-		height: 63, 
-		message: 'Game over!!' 
-	}];
+	treasureGroup = [
+		{
+			x: 1011,
+			y: 1435,
+			width: 30,
+			height: 63,
+			message: "Found Treasure! Check in the wishing well",
+		},
+		{
+			x: 1539,
+			y: 2766,
+			width: 30,
+			height: 63,
+			message:
+				"Found Treasure! Check by the pipe in the tube seatcover-looking room",
+		},
+		{
+			x: 50,
+			y: 2350,
+			width: 30,
+			height: 63,
+			message: "Check under the control desk",
+		},
+		{
+			x: 1369,
+			y: 1811,
+			width: 30,
+			height: 63,
+			message: "Game over!!",
+		},
+	];
 
 	function gameOver() {
-		console.log(`nice work buddy!`)
+		console.log(`nice work buddy!`);
 	}
 
 	const generateTreasure = (treasure) => {
-		treasureShape = this.add.rectangle(treasure.x, treasure.y, treasure.width, treasure.height, "00FFFFFF");
+		treasureShape = this.add.rectangle(
+			treasure.x,
+			treasure.y,
+			treasure.width,
+			treasure.height,
+			"00FFFFFF"
+		);
 		treasureObj = this.physics.add.existing(treasureShape, 1);
 		treasureObj.visible = false;
 		treasureObj.setData({ message: treasure.message });
 		this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
-		treasureIndex++
+		treasureIndex++;
 		return treasureObj;
 	};
 
 	const generateTrap = (trap) => {
-		trapShape = this.add.rectangle(trap.x, trap.y, trap.width, trap.height, "00FFFFFF");
+		trapShape = this.add.rectangle(
+			trap.x,
+			trap.y,
+			trap.width,
+			trap.height,
+			"00FFFFFF"
+		);
 		trapObj = this.physics.add.existing(trapShape, 1);
 		trapObj.visible = false;
 		this.physics.add.overlap(trapObj, this.heroHand, findTrap);
@@ -126,27 +145,25 @@ function create() {
 		if (trap.active) {
 			if (trap.body.embedded && keyObj.isDown) {
 				console.log(`You fell in a wormhole at: ${trap.x}, ${trap.y}!`);
-				sfx.play();
-				this.hero.x = 1600
-				this.hero.y = 1600
+				wormholesfx.play();
+				this.cameras.main.fadeOut(1000, 0, 0, 0);
+				this.cameras.main.shake(700);
+				this.cameras.main.fadeIn(2000, 0, 0, 0);
+				this.hero.x = Math.random() * 3000;
+				this.hero.y = Math.random() * 3000;
 				// treasure.setActive(false);
-			};
-		};
+			}
+		}
 	};
 
-	this.trap = generateTrap(
-		{ x: 1950,
-		y: 2901,
-		width: 30,
-		height: 63,
-		}
-	);
-	
+	this.trap = generateTrap({ x: 1950, y: 2901, width: 30, height: 63 });
+
 	function generateNextTreasure() {
 		generateTreasure(treasureGroup[treasureIndex]);
-	};
+	}
 
 	const sfx = this.sound.add("beep");
+	const wormholesfx = this.sound.add("wormhole");
 	const keyObj = this.input.keyboard.addKey("E");
 	this.score = 0;
 
@@ -154,10 +171,12 @@ function create() {
 		setTimeout(() => {
 			msg.destroy();
 		}, 5000);
-	}
+	};
 
 	function lastMoveCheck() {
-		treasureIndex === treasureGroup.length ? gameOver() : generateNextTreasure();
+		treasureIndex === treasureGroup.length
+			? gameOver()
+			: generateNextTreasure();
 	}
 
 	const findTreasure = (treasure) => {
@@ -170,18 +189,17 @@ function create() {
 				destroyMessage(msg);
 				treasure.setActive(false);
 				lastMoveCheck();
-			};
-		};
+			}
+		}
 	};
 
-	this.treasure1 = generateTreasure(
-		{ x: 1679,
+	this.treasure1 = generateTreasure({
+		x: 1679,
 		y: 1418,
 		width: 30,
 		height: 63,
-		message: "Found Treasure! Check in the couch"
-		}
-	);
+		message: "Found Treasure! Check in the couch",
+	});
 
 	this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
 
@@ -279,18 +297,18 @@ function update() {
 	this.hero.anims.play("idle", true);
 
 	if (this.cursors.up.isDown || keyW.isDown) {
-		this.hero.setVelocityY(-160);
+		this.hero.setVelocityY(-360);
 		this.hero.anims.play("top", true);
 	} else if (this.cursors.down.isDown || keyS.isDown) {
-		this.hero.setVelocityY(160);
+		this.hero.setVelocityY(360);
 		this.hero.anims.play("down", true);
 	}
 
 	if (this.cursors.right.isDown || keyD.isDown) {
-		this.hero.setVelocityX(160);
+		this.hero.setVelocityX(360);
 		this.hero.anims.play("right", true);
 	} else if (this.cursors.left.isDown || keyA.isDown) {
-		this.hero.setVelocityX(-160);
+		this.hero.setVelocityX(-360);
 		this.hero.anims.play("left", true);
 	}
 
