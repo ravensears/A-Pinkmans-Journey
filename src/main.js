@@ -1,6 +1,5 @@
-import Boot from './Boot.js';
-import Game from './Game.js';
-
+import Boot from "./Boot.js";
+import Game from "./Game.js";
 
 const config = {
 	type: Phaser.AUTO,
@@ -16,16 +15,10 @@ const config = {
 			debug: true,
 		},
 	},
-	scene: [Boot, Game]
+	scene: [Boot, Game],
 };
 
 var text;
 
 const game = new Phaser.Game(config);
 musicOn = false;
-
-// ************PRELOAD****************
-
-
-// ************CREATE****************
-
