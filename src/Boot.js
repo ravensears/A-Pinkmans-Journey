@@ -1,4 +1,4 @@
-const Phaser = require('phaser');
+// import Phaser from 'phaser';
 
 class Boot extends Phaser.Scene {
   constructor() {
@@ -7,7 +7,7 @@ class Boot extends Phaser.Scene {
     })
   }
 
-  preload() {
+  preload = () => {
     this.load.spritesheet("pinkman", "/sprites/pinkman_run.png", {
       frameWidth: 32,
       frameHeight: 32,
@@ -30,4 +30,4 @@ class Boot extends Phaser.Scene {
 }
 
 
-module.exports = Boot;
+export default Boot;

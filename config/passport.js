@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 // Local User Model
-const User = require('../models/User');
+import User from '../models/user.js';
 
 const passportConfig = (passport) => {
     passport.use(

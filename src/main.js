@@ -1,7 +1,7 @@
-const Phaser = require('phaser');
+// import Phaser from 'phaser';
 
-const Boot = require(`./Boot.js`);
-const Game = require(`./Game.js`);
+import Boot from './Boot.js';
+import Game from './Game.js';
 
 const config = {
 	type: Phaser.AUTO,
@@ -10,11 +10,6 @@ const config = {
 		mode: Phaser.DOM.FIT,
 		width: window.innerWidth,
 		height: window.innerHeight,
-	},
-	scene: {
-		preload: preload,
-		create: create,
-		update: update,
 	},
 	physics: {
 		default: "arcade",

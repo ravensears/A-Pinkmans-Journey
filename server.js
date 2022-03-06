@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const PORT = 3000;
 import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
@@ -16,10 +14,11 @@ import passportConfig from "./config/passport.js";
 passportConfig(passport);
 
 // DB Config
-import { MongoURI as db } from './config/keys.js';
+import MongoURI from './config/keys.js';
+const db = MongoURI;
 
 // Connect to Mongo
-connect(db, { useNewUrlParser: true })
+mongoose.connect(db, { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(err));
   
@@ -38,8 +37,8 @@ app.use(session({
 }));
 
 //Passport Middleware
-app.use(initialize());
-app.use(_session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Connect Flash
 app.use(flash());
@@ -52,11 +51,13 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
+import indexRouter from './routes/index.js';
+app.use('/', indexRouter);
+import usersRouter from './routes/users.js'
+app.use('/users', usersRouter);
 
 app.get('/game', (_req, res) => {
-  res.sendFile(__dirname + '/index.html')
+  res.render('game')
 });
 
 
