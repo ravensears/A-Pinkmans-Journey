@@ -21,6 +21,7 @@ class Game extends Phaser.Scene {
 		};
 
 		this.music.play(musicConfig);
+    this.musicOn = true
 
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
@@ -66,7 +67,7 @@ class Game extends Phaser.Scene {
 					);
 					this.score += 1;
 					sfx.play();
-					msg = this.add.text(
+					let msg = this.add.text(
 						treasure.x,
 						treasure.y,
 						treasure.data.list.message

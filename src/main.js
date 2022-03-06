@@ -18,7 +18,4 @@ const config = {
 	scene: [Boot, Game],
 };
 
-var text;
-
 const game = new Phaser.Game(config);
-musicOn = false;
