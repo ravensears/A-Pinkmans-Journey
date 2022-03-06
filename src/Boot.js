@@ -12,7 +12,7 @@ class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
-    this.load.spritesheet("sadGuy", "/sprites/pien.png", {
+    this.load.spritesheet("sadGuy", "/sprites/cat.png", {
       frameWidth: 32,
       frameHeight: 32,
     });

@@ -31,13 +31,10 @@ class Game extends Phaser.Scene {
   
     walls.setCollisionByProperty({ collides: true });
     stuff.setCollisionByProperty({ collides: true });
-  
-    // this.hero = this.physics.add.sprite(1600, 1600, "sadGuy").setScale(1.3);
-    // this.heroHand = this.physics.add.sprite(1620, 1620, "sadGuy").setScale(1.6);
-    // this.heroHand.visible = false;
 
     this.hero = new Player(this, 1600, 1600, "sadGuy");
     this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
+    this.heroHand.visible = false;
 
     const generateTreasure = (x, y, width, height, message) => {
       let treasureShape = this.add.rectangle(x, y, width, height, "00FFFFFF");
@@ -93,8 +90,6 @@ class Game extends Phaser.Scene {
     this.physics.add.collider(this.hero, walls);
     this.physics.add.collider(this.hero2, walls);
   
-    
-  
     this.text = this.add
       .text(5, 40, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
       .setScrollFactor(0);
@@ -124,10 +119,10 @@ class Game extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
-      key: "idle",
-      frames: [{ key: "sadGuy", frame: 1 }],
-      frameRate: 10,
-    });
+      key: 'turn',
+      frames: [ { key: 'sadGuy', frame: 4 } ],
+      frameRate: 20
+  });
   
     this.physics.add.collider(this.hero, this.hero2);
   

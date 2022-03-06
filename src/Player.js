@@ -14,19 +14,17 @@ class Player extends Phaser.GameObjects.Sprite {
 
   updatePlayer() {
     this.body.setVelocity(0);
-    this.anims.play("idle", true);
-  
+
     if (this.cursors.up.isDown || this.keyW.isDown) {
       this.moveUp()
     } else if (this.cursors.down.isDown || this.keyS.isDown) {
       this.moveDown()
-    }
-  
-    if (this.cursors.right.isDown || this.keyD.isDown) {
+    } else if (this.cursors.right.isDown || this.keyD.isDown) {
       this.moveRight()
     } else if (this.cursors.left.isDown || this.keyA.isDown) {
       this.moveLeft()
-    }
+    } 
+    
   }
 
   updateHand(player) {
@@ -36,22 +34,22 @@ class Player extends Phaser.GameObjects.Sprite {
 
   moveUp() {
     this.body.setVelocityY(-160);
-    this.anims.play("top", true);
+    this.play("top", true);
   }
 
   moveDown() {
     this.body.setVelocityY(160);
-    this.anims.play("down", true);
+    this.play("down", true);
   }
 
   moveLeft() {
     this.body.setVelocityX(-160);
-    this.anims.play("left", true);
+    this.play("left", true);
   }
 
   moveRight() {
       this.body.setVelocityX(160);
-      this.anims.play("right", true);
+      this.play("right", true);
   }
 }
 
