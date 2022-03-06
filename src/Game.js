@@ -8,11 +8,11 @@ class Game extends Phaser.Scene {
 	}
 
 	create() {
-		this.music = this.sound.add("bens_beautiful_song");
+		this.music = this.sound.add("treasure_song");
 
 		const musicConfig = {
 			mute: false,
-			volume: 0.3,
+			volume: 0.6,
 			rate: 1,
 			detune: 0,
 			seek: 0,

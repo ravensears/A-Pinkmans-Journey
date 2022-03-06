@@ -24,7 +24,7 @@ class Player extends Phaser.GameObjects.Sprite {
 		} else if (this.cursors.left.isDown || this.keyA.isDown) {
 			this.moveLeft();
 		} else {
-			this.play(false);
+			this.anims.stop();
 		}
 	}
 
