@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 const PORT = 3000;
 import express from 'express';
 import expressLayouts from 'express-ejs-layouts';

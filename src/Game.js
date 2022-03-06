@@ -1,4 +1,4 @@
-// import Phaser from 'phaser';
+import Player from "./Player.js"
 
 class Game extends Phaser.Scene {
   constructor() {
@@ -32,10 +32,13 @@ class Game extends Phaser.Scene {
     walls.setCollisionByProperty({ collides: true });
     stuff.setCollisionByProperty({ collides: true });
   
-    this.hero = this.physics.add.sprite(1600, 1600, "sadGuy").setScale(1.3);
-    this.heroHand = this.physics.add.sprite(1620, 1620, "sadGuy").setScale(1.6);
-    this.heroHand.visible = false;
-  
+    // this.hero = this.physics.add.sprite(1600, 1600, "sadGuy").setScale(1.3);
+    // this.heroHand = this.physics.add.sprite(1620, 1620, "sadGuy").setScale(1.6);
+    // this.heroHand.visible = false;
+
+    this.hero = new Player(this, 1600, 1600, "sadGuy");
+    this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
+
     const generateTreasure = (x, y, width, height, message) => {
       let treasureShape = this.add.rectangle(x, y, width, height, "00FFFFFF");
       let treasure = this.physics.add.existing(treasureShape, 1);
@@ -79,7 +82,7 @@ class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.hero, true);
   
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
-    let muteMan = this.add
+    this.muteMan = this.add
       .image(30, 20, "muteMan")
       .setInteractive()
       .setScale(2)
@@ -90,12 +93,7 @@ class Game extends Phaser.Scene {
     this.physics.add.collider(this.hero, walls);
     this.physics.add.collider(this.hero2, walls);
   
-    this.cursors = this.input.keyboard.createCursorKeys();
-  
-    this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    
   
     this.text = this.add
       .text(5, 40, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
@@ -133,13 +131,13 @@ class Game extends Phaser.Scene {
   
     this.physics.add.collider(this.hero, this.hero2);
   
-    let mute = muteMan.on("pointerdown", () => {
-      if (musicOn === true) {
+    this.mute = this.muteMan.on("pointerdown", () => {
+      if (this.musicOn === true) {
         this.music.stop();
-        musicOn = false;
+        this.musicOn = false;
       } else {
         this.music.play(musicConfig);
-        musicOn = true;
+        this.musicOn = true;
       }
       console.log("muteMan in action!");
     });
@@ -166,27 +164,10 @@ class Game extends Phaser.Scene {
   
     this.scoreText.setText(`Treasures: ${this.score}`);
   
-    this.hero.setVelocity(0);
-    this.hero.anims.play("idle", true);
+    this.hero.updatePlayer();
+    this.heroHand.updateHand(this.hero);
   
-    if (this.cursors.up.isDown || this.keyW.isDown) {
-      this.hero.setVelocityY(-160);
-      this.hero.anims.play("top", true);
-    } else if (this.cursors.down.isDown || this.keyS.isDown) {
-      this.hero.setVelocityY(160);
-      this.hero.anims.play("down", true);
-    }
-  
-    if (this.cursors.right.isDown || this.keyD.isDown) {
-      this.hero.setVelocityX(160);
-      this.hero.anims.play("right", true);
-    } else if (this.cursors.left.isDown || this.keyA.isDown) {
-      this.hero.setVelocityX(-160);
-      this.hero.anims.play("left", true);
-    }
-  
-    this.heroHand.x = this.hero.x;
-    this.heroHand.y = this.hero.y;
+    // this.playerBuilder.update();
   }
 }
 

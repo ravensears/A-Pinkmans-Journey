@@ -1,7 +1,6 @@
-// import Phaser from 'phaser';
-
 import Boot from './Boot.js';
 import Game from './Game.js';
+
 
 const config = {
 	type: Phaser.AUTO,
@@ -14,7 +13,7 @@ const config = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: false,
+			debug: true,
 		},
 	},
 	scene: [Boot, Game]
