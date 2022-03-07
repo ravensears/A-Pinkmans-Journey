@@ -1,5 +1,3 @@
-import Phaser from 'phaser';
-
 class Player {
 	constructor(scene, x, y, sprite, phaserObject = Phaser.GameObjects.Sprite) {
 		this.spriteObject = new phaserObject(scene, x, y, sprite);

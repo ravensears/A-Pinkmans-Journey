@@ -12,22 +12,30 @@ class Phaser {
     this.x = x;
     this.y = y;
     this.sprite = sprite;
-    scene.add.existing = (something) => {};
+    this.keyboard = {addKey: "A"}
   }
-
-  // add(){
-
-  // }
-
-  // existing() {
-  //   return true
-  // }
 }
 
-describe("Game class instance", () => {
+describe("Player class instance", () => {
 
-  it("Phaser mock works", () => {
-    const player = new Player("Game", 600, 600, "sadGuy", Phaser)
-    expect(player).toBeInstanceOf(Player);
+  // it("Phaser mock works", () => {
+    
+  //   const player = new Player("Game", 600, 600, "sadGuy", Phaser)
+  //   expect(player).toBeInstanceOf(Player);
+  // });
+  
+  it("returns Phaser object", () => {
+    expect(Phaser).toBeInstanceOf(Object)
   });
+
+  describe("#createPlayer", () => {
+    const player = new Player("Game", 600, 600, "sadGuy", Phaser)
+    it("returns spriteObject", () => {
+      expect(player.createObject).toEqual("this.spriteObject")
+    });
+
+    it("returns Phaser object", () => {
+      expect(player).toBeInstanceOf(Player)
+    });
+});
 });
