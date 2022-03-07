@@ -21,7 +21,7 @@ class Game extends Phaser.Scene {
 		};
 
 		this.music.play(musicConfig);
-    this.musicOn = true
+    	this.musicOn = true
 
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
@@ -189,11 +189,39 @@ class Game extends Phaser.Scene {
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);
+		
+		this.initialTime = 900;
+
+		this.timerText = this.add
+		.text(500, 10, "Countdown: " + formatTime(this.initialTime)).setScrollFactor(0);
+
+		this.timedEvent = this.time.addEvent({
+			delay: 1000,
+			callback: onEvent,
+			callbackScope: this,
+			loop: true,
+		});
+
+		function formatTime(seconds) {
+			var minutes = Math.floor(seconds / 60);
+			var partInSeconds = seconds % 60;
+			partInSeconds = partInSeconds.toString().padStart(2, "0");
+			return `${minutes}:${partInSeconds}`;
+		};
+		function onEvent() {
+			this.initialTime -= 1;
+			if (this.initialTime >= 0){
+			this.timerText.setText("Countdown: " + formatTime(this.initialTime));
+			} else {
+			this.scene.start("GameOver");
+			};
+		};
 	}
 
 	// ************UPDATE****************
 
 	update() {
+
 		this.text.setText([
 			"screen x: " + this.input.x,
 			"screen y: " + this.input.y,
@@ -207,9 +235,8 @@ class Game extends Phaser.Scene {
 
 		this.hero.updatePlayer();
 		this.heroHand.updateHand(this.hero);
-
-		// this.playerBuilder.update();
 	}
+	
 }
 
 export default Game;
