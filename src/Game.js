@@ -20,8 +20,8 @@ class Game extends Phaser.Scene {
 			delay: 0,
 		};
 
-		// this.music.play(musicConfig);
-    // this.musicOn = true
+		this.music.play(musicConfig);
+    this.musicOn = true
 
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
