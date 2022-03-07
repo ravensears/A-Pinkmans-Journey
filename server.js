@@ -9,7 +9,7 @@ const app = express();
 import mongoose from 'mongoose';
 import mongo from 'mongodb';
 import flash from 'connect-flash';
-import session from 'express-session';
+import session from 'cookie-session';
 
 //Passport COnfig
 import passport from "passport";
