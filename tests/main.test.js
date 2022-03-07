@@ -1,7 +1,7 @@
-const Game = require('../main.js');
+// const Game = require('../main.js');
 
-describe("Game class instance", () => {
-  it("character moves", () => {
+// describe("Game class instance", () => {
+//   it("character moves", () => {
     
-  });
-});
+//   });
+// });
