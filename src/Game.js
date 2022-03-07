@@ -77,8 +77,6 @@ class Game extends Phaser.Scene {
 		}
 
 		const generateTreasure = (treasure) => {
-      console.log('inside generateTreasure')
-      console.log(this.treasureGroup[this.treasureIndex])
 			let treasureShape = this.add.rectangle(
 				treasure.x,
 				treasure.y,
@@ -90,16 +88,12 @@ class Game extends Phaser.Scene {
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
 			this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
-      console.log(`in gt, before ++ this.treasureIndex = ${this.treasureIndex}`)
 		  this.treasureIndex++;
-      console.log(`in gt, after ++ this.treasureIndex = ${this.treasureIndex}`)
 			return treasureObj;
 		};
 
 		const generateNextTreasure = () => {
 			generateTreasure(this.treasureGroup[this.treasureIndex]);
-      console.log('inside generatenexttreasure')
-      console.log(this.treasureIndex)
 		}
 
 		const sfx = this.sound.add("beep");
@@ -113,14 +107,12 @@ class Game extends Phaser.Scene {
 		};
 
 		const nextTreasure = () => {
-      console.log('inside nextTreasure')
 			this.treasureIndex === this.treasureGroup.length
 				? gameOver()
 				: generateNextTreasure();
 		}
 
 		const findTreasure = (treasure) => {
-      console.log('inside findTreasure')
 			if (treasure.active) {
 				if (treasure.body.embedded && keyObj.isDown) {
 					console.log(
