@@ -37,36 +37,37 @@ class Game extends Phaser.Scene {
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
 		this.heroHand.visible = false;
 
-		let treasureIndex = -1;
+		this.treasureIndex = 0;
 
-		let treasureGroup = [
+		this.treasureGroup = [
+      {},
 			{
 				x: 1011,
 				y: 1435,
-				width: 30,
-				height: 63,
+				width: 80,
+				height: 80,
 				message: "Found Treasure! Check in the wishing well",
 			},
 			{
 				x: 1539,
 				y: 2766,
-				width: 30,
-				height: 63,
+				width: 80,
+				height: 80,
 				message:
 					"Found Treasure! Check by the pipe in the tube seatcover-looking room",
 			},
 			{
 				x: 50,
 				y: 2350,
-				width: 30,
-				height: 63,
+				width: 80,
+				height: 80,
 				message: "Check under the control desk",
 			},
 			{
 				x: 1369,
 				y: 1811,
-				width: 30,
-				height: 63,
+				width: 80,
+				height: 80,
 				message: "Game over!!",
 			},
 		];
@@ -76,6 +77,8 @@ class Game extends Phaser.Scene {
 		}
 
 		const generateTreasure = (treasure) => {
+      console.log('inside generateTreasure')
+      console.log(this.treasureGroup[this.treasureIndex])
 			let treasureShape = this.add.rectangle(
 				treasure.x,
 				treasure.y,
@@ -87,12 +90,16 @@ class Game extends Phaser.Scene {
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
 			this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
-			treasureIndex++;
+      console.log(`in gt, before ++ this.treasureIndex = ${this.treasureIndex}`)
+		  this.treasureIndex++;
+      console.log(`in gt, after ++ this.treasureIndex = ${this.treasureIndex}`)
 			return treasureObj;
 		};
 
-		function generateNextTreasure() {
-			generateTreasure(treasureGroup[treasureIndex]);
+		const generateNextTreasure = () => {
+			generateTreasure(this.treasureGroup[this.treasureIndex]);
+      console.log('inside generatenexttreasure')
+      console.log(this.treasureIndex)
 		}
 
 		const sfx = this.sound.add("beep");
@@ -105,13 +112,15 @@ class Game extends Phaser.Scene {
 			}, 5000);
 		};
 
-		function nextTreasure() {
-			treasureIndex === treasureGroup.length
+		const nextTreasure = () => {
+      console.log('inside nextTreasure')
+			this.treasureIndex === this.treasureGroup.length
 				? gameOver()
 				: generateNextTreasure();
 		}
 
 		const findTreasure = (treasure) => {
+      console.log('inside findTreasure')
 			if (treasure.active) {
 				if (treasure.body.embedded && keyObj.isDown) {
 					console.log(
@@ -202,47 +211,54 @@ class Game extends Phaser.Scene {
 			console.log("muteMan in action!");
 		});
 
+
+
 		this.scoreText = this.add
 			.text(1000, 0, `Treasures: ${this.score}`, {
 				fontSize: "32px",
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);
-
-		console.log(treasureIndex);
-		this.treasureDetector = () => {
-			if (!this.treasure1.active) {
-				console.log(treasureIndex);
-				if (
-					Math.abs(this.hero.x - treasureGroup[treasureIndex].x) <= 500 &&
-					Math.abs(this.hero.y - treasureGroup[treasureIndex].y) <= 500
-				) {
-					return "HOT!!";
-				} else if (
-					Math.abs(this.hero.x - treasureGroup[treasureIndex].x) <= 800 &&
-					Math.abs(this.hero.y - treasureGroup[treasureIndex].y) <= 800
-				) {
-					return "Warmer";
-				} else if (
-					Math.abs(this.hero.x - treasureGroup[treasureIndex].x) <= 1200 &&
-					Math.abs(this.hero.y - treasureGroup[treasureIndex].y) <= 1200
-				) {
-					return "Warmish";
-				} else if (
-					Math.abs(this.hero.x - treasureGroup[treasureIndex].x) <= 1500 &&
-					Math.abs(this.hero.y - treasureGroup[treasureIndex].y) <= 1500
-				) {
-					return "Cold";
-				} else {
-					return "Ice Cold";
-				}
-			}
-		};
 	}
 
 	// ************UPDATE****************
 
 	update() {
+    this.treasureDetector = () => {
+      const treasureProximity = (distance) => { 
+       return Math.abs(this.hero.x - this.treasureGroup[this.treasureIndex - 1].x) <= distance &&
+        Math.abs(this.hero.y - this.treasureGroup[this.treasureIndex - 1].y) <= distance 
+      };
+
+			if (!this.treasure1.active) {
+				if (
+          treasureProximity(120)
+				) {
+					return "HOT!!!";
+				} else if (
+          treasureProximity(450)
+				) {
+					return "Getting hotter!";
+				} else if (
+          treasureProximity(750)
+				) {
+					return "Warm";
+				} else if (
+          treasureProximity(1200)
+				) {
+					return "warming up a little";
+				} else if (
+          treasureProximity(1500) 
+        ) {
+					return "Cold";
+				} else {
+          return "What's cooler than being cold? Ice cold!!"
+        }
+			} else {
+        return 'Go to world coordinates 1676, 1411'
+      }
+		};
+
 		this.text.setText([
 			"screen x: " + this.input.x,
 			"screen y: " + this.input.y,
@@ -250,7 +266,7 @@ class Game extends Phaser.Scene {
 			"world y: " + this.input.mousePointer.worldY.toFixed(0),
 			"hero x: " + this.hero.x.toFixed(0),
 			"hero y: " + this.hero.y.toFixed(0),
-			"Treasure Detector: " + this.treasureDetector(),
+      "Treasure Detector: " + this.treasureDetector(),
 		]);
 
 		this.scoreText.setText(`Treasures: ${this.score}`);
