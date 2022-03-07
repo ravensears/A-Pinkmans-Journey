@@ -37,51 +37,90 @@ class Game extends Phaser.Scene {
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
 		this.heroHand.visible = false;
 
-		const generateTreasure = (x, y, width, height, message) => {
-			let treasureShape = this.add.rectangle(x, y, width, height, "00FFFFFF");
-			let treasure = this.physics.add.existing(treasureShape, 1);
-			treasure.visible = false;
-			treasure.setData({ message: message });
-			return treasure;
-		};
+    let treasureIndex = -1
 
-		this.treasure1 = generateTreasure(
-			1011,
-			1435,
-			30,
-			63,
-			"Found Treasure! Check under the control desk"
-		);
+    let treasureGroup = [{ 
+      x: 1011, 
+      y: 1435, 
+      width: 30, 
+      height: 63, 
+      message: 'Found Treasure! Check in the wishing well'
+    }, { 
+      x: 1539, 
+      y: 2766, 
+      width: 30, 
+      height: 63, 
+      message: 'Found Treasure! Check by the pipe in the tube seatcover-looking room'
+    }, { 
+      x: 50, 
+      y: 2350, 
+      width: 30, 
+      height: 63, 
+      message: 'Check under the control desk'
+    }, { 
+      x: 1369, 
+      y: 1811, 
+      width: 30, 
+      height: 63, 
+      message: 'Game over!!' 
+    }];
 
-		this.treasure2 = generateTreasure(1369, 1811, 30, 63, "Game over!");
+    function gameOver() {
+      console.log(`nice work buddy!`)
+    }
+  
+    const generateTreasure = (treasure) => {
+      let treasureShape = this.add.rectangle(treasure.x, treasure.y, treasure.width, treasure.height, "00FFFFFF");
+      let treasureObj = this.physics.add.existing(treasureShape, 1);
+      treasureObj.visible = false;
+      treasureObj.setData({ message: treasure.message });
+      this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
+      treasureIndex++
+      return treasureObj;
+    };
+    
+    function generateNextTreasure() {
+      generateTreasure(treasureGroup[treasureIndex]);
+    };
 
 		const sfx = this.sound.add("beep");
 		const keyObj = this.input.keyboard.addKey("E");
 		this.score = 0;
 
-		const findTreasure = (treasure) => {
-			if (treasure.active) {
-				if (treasure.body.embedded && keyObj.isDown) {
-					console.log(
-						`You found the treasure at ${treasure.x}, ${treasure.y}!`
-					);
-					this.score += 1;
-					sfx.play();
-					let msg = this.add.text(
-						treasure.x,
-						treasure.y,
-						treasure.data.list.message
-					);
-					setTimeout(() => {
-						msg.destroy();
-					}, 5000);
-					treasure.setActive(false);
-				}
-			}
-		};
+    const destroyMessage = (msg) => {
+      setTimeout(() => {
+        msg.destroy();
+      }, 5000);
+    }
+  
+    function nextTreasure() {
+      treasureIndex === treasureGroup.length ? gameOver() : generateNextTreasure();
+    }
+  
+    const findTreasure = (treasure) => {
+      if (treasure.active) {
+        if (treasure.body.embedded && keyObj.isDown) {
+          console.log(`You found the treasure at ${treasure.x}, ${treasure.y}!`);
+          this.score++;
+          sfx.play();
+          let msg = this.add.text(treasure.x, treasure.y, treasure.data.list.message);
+          destroyMessage(msg);
+          treasure.setActive(false);
+          nextTreasure();
+        };
+      };
+    };
+
+    this.treasure1 = generateTreasure(
+      { x: 1679,
+      y: 1418,
+      width: 30,
+      height: 63,
+      message: "Found Treasure! Check in the couch"
+      }
+    );
 
 		this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
-		this.physics.add.overlap(this.treasure2, this.heroHand, findTreasure);
 
 		this.cameras.main.startFollow(this.hero, true);
 
