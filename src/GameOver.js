@@ -6,6 +6,12 @@ class GameOver extends Phaser.Scene {
 		});
 	}
 
+    preload () {
+        
+        this.load.image("pien", "/sprites/pien.png");
+
+    }
+
     create ()
     {
         this.add.text(
@@ -29,6 +35,11 @@ class GameOver extends Phaser.Scene {
                 fill: "#ffffff",
             }
         ).setOrigin(0.5, -3.5);
+
+        this.add.image(
+            640, 360, "pien")
+            .setOrigin(0.5, 0.5)
+            .setScale(2.5);
     };
 
 }

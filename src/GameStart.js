@@ -7,7 +7,7 @@ class GameStart extends Phaser.Scene {
 	}
 
     preload () {
-        // this.load.image("planet", "/sprites/arth.gif");
+        this.load.image("planet", "/sprites/pinkman_run.png");
 
     }
 
@@ -34,6 +34,11 @@ class GameStart extends Phaser.Scene {
                 fill: "#ffffff",
             }
         ).setOrigin(0.5, -3.5);
+
+        this.add.image(
+            640, 360, "planet")
+            .setOrigin(0.5, 0.5)
+            .setScale(5);
 
         };
 
