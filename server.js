@@ -69,5 +69,5 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('src'));
 
-app.listen(PORT, console.log(`Server running on  ${PORT}`));
-
+// app.listen(PORT, console.log(`Server running on  ${PORT}`));
+app.listen(process.env.PORT || 3000);
