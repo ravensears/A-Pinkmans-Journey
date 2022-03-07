@@ -1,21 +1,24 @@
-require('dotenv').config()
+import dotenv from "dotenv";
+dotenv.config();
 
 const PORT = 3000;
-const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
-const cors = require('cors');
+import express from 'express';
+import expressLayouts from 'express-ejs-layouts';
+import cors from 'cors';
 const app = express();
-const mongoose = require('mongoose');
-const mongo = require('mongodb');
-const flash = require('connect-flash');
-const session = require('express-session');
-const passport = require('passport');
+import mongoose from 'mongoose';
+import mongo from 'mongodb';
+import flash from 'connect-flash';
+import session from 'express-session';
 
 //Passport COnfig
-require('./config/passport')(passport);
+import passport from "passport";
+import passportConfig from "./config/passport.js";
+passportConfig(passport);
 
 // DB Config
-const db = require('./config/keys').MongoURI;
+import MongoURI from './config/keys.js';
+const db = MongoURI;
 
 // Connect to Mongo
 mongoose.connect(db, { useNewUrlParser: true })
@@ -51,11 +54,13 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
+import indexRouter from './routes/index.js';
+app.use('/', indexRouter);
+import usersRouter from './routes/users.js'
+app.use('/users', usersRouter);
 
 app.get('/game', (_req, res) => {
-  res.sendFile(__dirname + '/index.html')
+  res.render('game')
 });
 
 

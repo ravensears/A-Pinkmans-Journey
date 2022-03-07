@@ -1,6 +1,7 @@
 {
   "name": "rpg_game",
   "version": "1.0.0",
+  "type": "module",
   "description": "https://github.com/ravensears/RPG-Game.git",
   "main": "index.js",
   "scripts": {
