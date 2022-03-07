@@ -5,9 +5,7 @@
   "description": "https://github.com/ravensears/RPG-Game.git",
   "main": "index.js",
   "scripts": {
-
     "start": "npx nodemon server.js",
-
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -17,6 +15,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "jest": {
+    "setupFiles": [
+      "jest-canvas-mock"
+    ]
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
@@ -27,7 +30,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.2",
     "jest": "^27.5.1",
-
+    "jest-canvas-mock": "^2.3.1",
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.4",
     "passport": "^0.5.2",
@@ -35,8 +38,9 @@
     "phaser": "^3.55.2"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
+    "ejs": "^3.1.5",
     "nodemon": "^2.0.15",
-    "phaser": "^3.55.2",
-    "ejs": "^3.1.5"
+    "phaser": "^3.55.2"
   }
 }

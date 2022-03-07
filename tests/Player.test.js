@@ -3,30 +3,31 @@
  */
 
 import 'jest-canvas-mock';
-import Phaser from 'phaser';
+// import Phaser from 'phaser';
 import Player from '../src/Player.js';
-// jest.mock('phaser');
 
-jest.mock('phaser', () => {
-  return jest.fn().mockImplementation(
-    (scene, x, y, sprite) => {
-      this. scene = scene;
-      this.x = x;
-      this.y = y;
-      this.sprite = sprite;
-    }
-  )
-})
+class Phaser {
+  constructor(scene, x, y, sprite) {
+    this.scene = scene;
+    this.x = x;
+    this.y = y;
+    this.sprite = sprite;
+    scene.add.existing = (something) => {};
+  }
 
+  // add(){
 
+  // }
+
+  // existing() {
+  //   return true
+  // }
+}
 
 describe("Game class instance", () => {
-  beforeEach(() => {
-    Phaser.mockClear();
-  })
 
   it("Phaser mock works", () => {
-    const player = new Player("Game", 600, 600, "sadGuy")
-    expect(Phaser).toHaveBeenCalledTimes(1);
+    const player = new Player("Game", 600, 600, "sadGuy", Phaser)
+    expect(player).toBeInstanceOf(Player);
   });
 });

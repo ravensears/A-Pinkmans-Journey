@@ -21,7 +21,7 @@ class Game extends Phaser.Scene {
 		};
 
 		this.music.play(musicConfig);
-    this.musicOn = true
+    this.musicOn = true;
 
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
@@ -34,8 +34,9 @@ class Game extends Phaser.Scene {
 		stuff.setCollisionByProperty({ collides: true });
 
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
-		this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
-		this.heroHand.visible = false;
+		// this.heroHand = new Player(this, 1600, 1600, "sadGuy");
+		// this.heroHand.spriteObject.setScale(1.4);
+		// this.heroHand.spriteObject.visible = false;
 
 		const generateTreasure = (x, y, width, height, message) => {
 			let treasureShape = this.add.rectangle(x, y, width, height, "00FFFFFF");
@@ -83,7 +84,7 @@ class Game extends Phaser.Scene {
 		this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
 		this.physics.add.overlap(this.treasure2, this.heroHand, findTreasure);
 
-		this.cameras.main.startFollow(this.hero, true);
+		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
 		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 		this.muteMan = this.add
@@ -92,9 +93,9 @@ class Game extends Phaser.Scene {
 			.setScale(2)
 			.setScrollFactor(0);
 
-		this.physics.add.collider(this.hero, stuff);
+		this.physics.add.collider(this.hero.spriteObject, stuff);
 		this.physics.add.collider(this.hero2, stuff);
-		this.physics.add.collider(this.hero, walls);
+		this.physics.add.collider(this.hero.spriteObject, walls);
 		this.physics.add.collider(this.hero2, walls);
 
 		this.text = this.add
@@ -131,7 +132,7 @@ class Game extends Phaser.Scene {
 			frameRate: 20,
 		});
 
-		this.physics.add.collider(this.hero, this.hero2);
+		this.physics.add.collider(this.hero.spriteObject, this.hero2);
 
 		this.mute = this.muteMan.on("pointerdown", () => {
 			if (this.musicOn === true) {
@@ -160,14 +161,13 @@ class Game extends Phaser.Scene {
 			"screen y: " + this.input.y,
 			"world x: " + this.input.mousePointer.worldX.toFixed(0),
 			"world y: " + this.input.mousePointer.worldY.toFixed(0),
-			"hero x: " + this.hero.x.toFixed(0),
-			"hero y: " + this.hero.y.toFixed(0),
+			"hero x: " + this.hero.spriteObject.x.toFixed(0),
+			"hero y: " + this.hero.spriteObject.y.toFixed(0),
 		]);
 
 		this.scoreText.setText(`Treasures: ${this.score}`);
-
 		this.hero.updatePlayer();
-		this.heroHand.updateHand(this.hero);
+		// this.heroHand.updateHand(this.hero);
 
 		// this.playerBuilder.update();
 	}
