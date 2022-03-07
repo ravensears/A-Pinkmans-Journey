@@ -1,36 +1,43 @@
-class GameOver extends Phaser.Scene {
+class GameStart extends Phaser.Scene {
 
 	constructor() {
 		super({
-			key: "GameOver",
+			key: "GameStart",
 		});
 	}
+
+    preload () {
+        // this.load.image("planet", "/sprites/arth.gif");
+
+    }
 
     create ()
     {
         this.add.text(
             640, 
             360, 
-            "Game Over!", 
+            "Game Name", 
             {
                 fontSize: "180px",
                 fill: "#ffffff",
             }
         ).setOrigin(0.5, 1.75);
 
-        this.input.once('pointerup', function () {this.scene.start("GameStart")}, this);
+        this.input.once('pointerup', function () {this.scene.start("Game")}, this);
 
         this.add.text(
             640, 
             360, 
-            "Click to return", 
+            "Click to start", 
             {
                 fontSize: "52px",
                 fill: "#ffffff",
             }
         ).setOrigin(0.5, -3.5);
-    };
+
+        };
 
 }
 
-export default GameOver;
+export default GameStart;
+

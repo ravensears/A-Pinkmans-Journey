@@ -190,7 +190,7 @@ class Game extends Phaser.Scene {
 			})
 			.setScrollFactor(0);
 		
-		this.initialTime = 900;
+		this.initialTime = 5;
 
 		this.timerText = this.add
 		.text(500, 10, "Countdown: " + formatTime(this.initialTime)).setScrollFactor(0);
@@ -210,7 +210,7 @@ class Game extends Phaser.Scene {
 		};
 		function onEvent() {
 			this.initialTime -= 1;
-			if (this.initialTime >= 0){
+			if (this.initialTime >= 1){
 			this.timerText.setText("Countdown: " + formatTime(this.initialTime));
 			} else {
 			this.scene.start("GameOver");
