@@ -99,10 +99,6 @@ class Game extends Phaser.Scene {
 			},
 		];
 
-		function gameOver() {
-			console.log(`nice work buddy!`);
-		}
-
 		const generateTreasure = (treasure) => {
 			let treasureShape = this.add.rectangle(
 				treasure.x,
@@ -147,12 +143,12 @@ class Game extends Phaser.Scene {
 					);
 					this.score++;
 					sfx.play();
-					let msg = this.add.text(
-						treasure.x,
-						treasure.y,
-						treasure.data.list.message
-					);
-					destroyMessage(msg);
+					// let msg = this.add.text(
+					// 	treasure.x,
+					// 	treasure.y,
+					// 	treasure.data.list.message
+					// );
+					// destroyMessage(msg);
 					treasure.setActive(false);
 					this.messageIndex++;
 					nextTreasure();
