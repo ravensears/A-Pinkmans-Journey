@@ -30,7 +30,6 @@ class Game extends Phaser.Scene {
 		const walls = map.createStaticLayer("walls", tileset);
 		const stuff = map.createStaticLayer("stuff", tileset);
     
-
 		walls.setCollisionByProperty({ collides: true });
 		stuff.setCollisionByProperty({ collides: true });
 
@@ -41,7 +40,6 @@ class Game extends Phaser.Scene {
 		this.heroHand.spriteObject.visible = false;
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
     this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
-
 
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
@@ -114,7 +112,7 @@ class Game extends Phaser.Scene {
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
       
-			this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
+			this.physics.add.overlap(treasureObj, this.heroHand.spriteObject, findTreasure);
 		  this.temperatureIndex++;
 
 			return treasureObj;
