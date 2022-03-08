@@ -24,14 +24,14 @@ class Game extends Phaser.Scene {
 		this.music.play(musicConfig);
     this.musicOn = true;
 
-    const map = this.make.tilemap({ key: "tilemap" });
-    const tileset = map.addTilesetImage("space_tileset", "base_tiles");
-    const floor = map.createStaticLayer("floor", tileset);
-    const walls = map.createStaticLayer("walls", tileset);
-    const stuff = map.createStaticLayer("stuff", tileset);
-
-    walls.setCollisionByProperty({ collides: true });
-    stuff.setCollisionByProperty({ collides: true });
+		const map = this.make.tilemap({ key: "tilemap" });
+		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
+		const floor = map.createStaticLayer("floor", tileset);
+		const walls = map.createStaticLayer("walls", tileset);
+		const stuff = map.createStaticLayer("stuff", tileset);
+    
+		walls.setCollisionByProperty({ collides: true });
+		stuff.setCollisionByProperty({ collides: true });
 
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
 
@@ -40,7 +40,6 @@ class Game extends Phaser.Scene {
 		this.heroHand.spriteObject.visible = false;
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
     this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
-
 
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
@@ -113,7 +112,7 @@ class Game extends Phaser.Scene {
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
       
-			this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
+			this.physics.add.overlap(treasureObj, this.heroHand.spriteObject, findTreasure);
 		  this.temperatureIndex++;
 
 			return treasureObj;
@@ -295,8 +294,8 @@ class Game extends Phaser.Scene {
     this.treasureDetector = () => {
       const treasureProximity = (distance) => { 
 
-       return Math.abs(this.hero.spriteObject.x - this.treasureGroup[this.treasureIndex - 1].x) <= distance &&
-        Math.abs(this.hero.spriteObject.y - this.treasureGroup[this.treasureIndex - 1].y) <= distance 
+       return Math.abs(this.hero.spriteObject.x - this.treasureGroup[this.temperatureIndex - 1].x) <= distance &&
+        Math.abs(this.hero.spriteObject.y - this.treasureGroup[this.temperatureIndex - 1].y) <= distance 
 
       };
 
