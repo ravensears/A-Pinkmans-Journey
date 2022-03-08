@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const PORT = process.env.PORT;
-//const PORT = 3000;
+
+const PORT = 3000;
 import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
 import cors from 'cors';
