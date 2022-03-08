@@ -1,14 +1,13 @@
-class GameOver extends Phaser.Scene {
+class GameStart extends Phaser.Scene {
 
 	constructor() {
 		super({
-			key: "GameOver",
+			key: "GameStart",
 		});
 	}
 
     preload () {
-        
-        this.load.image("pien", "/sprites/pien.png");
+        this.load.image("planet", "/sprites/pinkman_run.png");
 
     }
 
@@ -17,19 +16,19 @@ class GameOver extends Phaser.Scene {
         this.add.text(
             640, 
             360, 
-            "Game Over!", 
+            "Game Name", 
             {
                 fontSize: "180px",
                 fill: "#ffffff",
             }
         ).setOrigin(0.5, 1.75);
 
-        this.input.once('pointerup', function () {this.scene.start("GameStart")}, this);
+        this.input.once('pointerup', function () {this.scene.start("Game")}, this);
 
         this.add.text(
             640, 
             360, 
-            "Click to return", 
+            "Click to start", 
             {
                 fontSize: "52px",
                 fill: "#ffffff",
@@ -37,11 +36,13 @@ class GameOver extends Phaser.Scene {
         ).setOrigin(0.5, -3.5);
 
         this.add.image(
-            640, 360, "pien")
+            640, 360, "planet")
             .setOrigin(0.5, 0.5)
-            .setScale(2.5);
-    };
+            .setScale(5);
+
+        };
 
 }
 
-export default GameOver;
+export default GameStart;
+
