@@ -123,12 +123,6 @@ class Game extends Phaser.Scene {
 		const keyObj = this.input.keyboard.addKey("E");
 		this.score = 0;
 
-		const destroyMessage = (msg) => {
-			setTimeout(() => {
-				msg.destroy();
-			}, 7000);
-		};
-
 		const nextTreasure = () => {
 			this.temperatureIndex === this.treasureGroup.length
 				? this.scene.start("GameOver")
@@ -143,12 +137,6 @@ class Game extends Phaser.Scene {
 					);
 					this.score++;
 					sfx.play();
-					// let msg = this.add.text(
-					// 	treasure.x,
-					// 	treasure.y,
-					// 	treasure.data.list.message
-					// );
-					// destroyMessage(msg);
 					treasure.setActive(false);
 					this.messageIndex++;
 					nextTreasure();
