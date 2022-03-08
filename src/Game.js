@@ -40,10 +40,12 @@ class Game extends Phaser.Scene {
 		this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
 		this.heroHand.visible = false;
 
-		this.add.rectangle(647, 628, 1000, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
-
 
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
+
+
+	this.add.rectangle(647, 628, 1000, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+
 
     const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
 
@@ -122,12 +124,12 @@ class Game extends Phaser.Scene {
 		const destroyMessage = (msg) => {
 			setTimeout(() => {
 				msg.destroy();
-			}, 5000);
+			}, 7000);
 		};
 
 		const nextTreasure = () => {
 			this.treasureIndex === this.treasureGroup.length
-				? gameOver()
+				? this.scene.start("GameOver")
 				: generateNextTreasure();
 		}
 
