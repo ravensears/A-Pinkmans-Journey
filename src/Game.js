@@ -8,6 +8,7 @@ class Game extends Phaser.Scene {
 	}
 
 	create() {
+		//music
 		this.music = this.sound.add("treasure_song");
 
 		const musicConfig = {
@@ -23,6 +24,7 @@ class Game extends Phaser.Scene {
 		this.music.play(musicConfig);
     	this.musicOn = true
 
+		//map/tiles
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
 
@@ -36,6 +38,8 @@ class Game extends Phaser.Scene {
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
 		this.heroHand.visible = false;
+		
+		//tresure
 
     let treasureIndex = -1
 
@@ -65,10 +69,13 @@ class Game extends Phaser.Scene {
       message: 'Game over!!' 
     }];
 
+
+	// game over
     function gameOver() {
       console.log(`nice work buddy!`)
     }
-  
+
+  	//treasure
     const generateTreasure = (treasure) => {
       let treasureShape = this.add.rectangle(treasure.x, treasure.y, treasure.width, treasure.height, "00FFFFFF");
       let treasureObj = this.physics.add.existing(treasureShape, 1);
@@ -121,9 +128,41 @@ class Game extends Phaser.Scene {
     );
 
 		this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
-
+	  //camera
 		this.cameras.main.startFollow(this.hero, true);
 
+		//sprites
+		//enemy
+	  	this.anims.create({
+			  key: 'skeleton',
+			  frames: this.anims.generateFrameNames('skeleton', {
+				  prefix: 'skeleton-walk-left/',
+				  suffix: '',
+				  start: 1,
+				  end: 3, 
+				  zeroPad: 2
+			  }),
+			  frameRate: 6,
+			  repeat: -1 
+		  })
+
+		  this.anims.create({
+			key: 'tpOnRight',
+			frames: this.anims.generateFrameNames('tpOnline', {
+				prefix: 'walk-right-',
+				suffix: '.png',
+				start: 1,
+				end: 3, 
+				zeroPad: 2
+			}),
+			frameRate: 8,
+			repeat: -1 
+		})
+
+		this.add.sprite(1800, 1900, 'skeleton').anims.play('skeleton')
+		this.add.sprite(1700, 1900, 'tpOnline').anims.play('tpOnRight').setTint(0x9999ff)
+
+		//tut end
 		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 		this.muteMan = this.add
 			.image(30, 20, "muteMan")

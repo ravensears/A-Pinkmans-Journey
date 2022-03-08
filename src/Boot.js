@@ -23,6 +23,9 @@ class Boot extends Phaser.Scene {
 		this.load.audio("beep", "/audio/beep.mp3");
 		this.load.image("object", "/sprites/pinkman.png");
 		this.load.image("muteMan", "/sprites/muteMan.png");
+		//tutorial
+		this.load.atlas('tpOnline', '../sprites/spritesheetV2.png', '../sprites/spritesheetV2.json');
+		this.load.atlas('skeleton', '/sprites/skeleton.png', '/sprites/skeleton.json');
 	};
 
 	create() {
