@@ -180,7 +180,7 @@ class Game extends Phaser.Scene {
 		this.physics.add.collider(group, walls)
 
 		this.text = this.add
-			.text(5, 40, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
+			.text(250, 570, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
 			.setScrollFactor(0);
 
 		this.anims.create({
@@ -264,6 +264,8 @@ class Game extends Phaser.Scene {
 			};
 		};
 
+		
+
 	}
 
 	// ************UPDATE****************
@@ -313,6 +315,9 @@ class Game extends Phaser.Scene {
 			"hero y: " + this.hero.y.toFixed(0),
       		"Treasure Detector: " + this.treasureDetector(),
 		]);
+
+		// "message: " + this.treasure1.message
+		// this.treasureGroup[this.treasureIndex].message
 
 		this.scoreText.setText(`Treasures: ${this.score}`);
 
