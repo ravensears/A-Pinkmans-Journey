@@ -44,7 +44,8 @@ class Game extends Phaser.Scene {
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
 
-		this.add.rectangle(647, 628, 1000, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+	const ui = this.add.rectangle(647, 628, 1000, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+	ui.alpha = 0.75;
 
     const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
 
@@ -125,7 +126,7 @@ class Game extends Phaser.Scene {
 
 		const nextTreasure = () => {
 			this.temperatureIndex === this.treasureGroup.length
-				? this.scene.start("GameOver")
+				? this.scene.start("GameComplete")
 				: generateNextTreasure();
 		}
 
@@ -254,9 +255,6 @@ class Game extends Phaser.Scene {
 			this.scene.start("GameOver");
 			};
 		};
-
-		
-
 	}
 
 	// ************UPDATE****************
@@ -313,13 +311,11 @@ class Game extends Phaser.Scene {
 			"Current Clue: " + this.treasureMessage(),
 			"world x: " + this.input.mousePointer.worldX.toFixed(0),
 			"world y: " + this.input.mousePointer.worldY.toFixed(0),
-			"hero x: " + this.hero.x.toFixed(0),
-			"hero y: " + this.hero.y.toFixed(0),
-      "Treasure Detector: " + this.treasureDetector(),
+			// "hero x: " + this.hero.x.toFixed(0),
+			// "hero y: " + this.hero.y.toFixed(0),
+     		"Treasure Detector: " + this.treasureDetector(),
 		]);
 
-		// "message: " + this.treasure1.message
-		// this.treasureGroup[this.temperatureIndex].message
 
 		this.scoreText.setText(`Treasures: ${this.score}`);
 

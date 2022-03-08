@@ -2,6 +2,7 @@ import Boot from "./Boot.js";
 import Game from "./Game.js";
 import GameOver from "./GameOver.js";
 import GameStart from "./GameStart.js";
+import GameComplete from "./GameComplete.js";
 
 const config = {
 	type: Phaser.AUTO,
@@ -18,7 +19,7 @@ const config = {
 			debug: true,
 		},
 	},
-	scene: [Boot, GameStart, Game, GameOver],
+	scene: [Boot, GameStart, Game, GameOver, GameComplete],
 };
 
 const game = new Phaser.Game(config);
