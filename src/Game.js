@@ -33,6 +33,7 @@ class Game extends Phaser.Scene {
 		walls.setCollisionByProperty({ collides: true });
 		stuff.setCollisionByProperty({ collides: true });
 
+
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
 
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy");
@@ -44,12 +45,21 @@ class Game extends Phaser.Scene {
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
 
-	const ui = this.add.rectangle(648, 732, 1200, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
-	ui.alpha = 0.75;
+		const ui = this.add.rectangle(648, 732, 1200, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+		ui.alpha = 0.75;
 
     const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
-
+	
     Phaser.Actions.RandomRectangle(group.getChildren(), rect);
+
+		const iceRink1 = this.add.rectangle(1920, 1315, 604, 920);
+		const iceRink2 = this.add.rectangle(1920, 2242, 1248, 348);
+
+		this.physics.add.existing(iceRink1);
+		this.physics.add.existing(iceRink2);
+
+		iceRink1.body.setFriction(0);
+		iceRink2.body.setFriction(0);
 
 		this.temperatureIndex = 0;
 		this.messageIndex = -1;
