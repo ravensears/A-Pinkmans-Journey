@@ -8,6 +8,7 @@ class Game extends Phaser.Scene {
 	}
 
 	create() {
+
 		this.music = this.sound.add("treasure_song");
 
 		const musicConfig = {
@@ -35,9 +36,12 @@ class Game extends Phaser.Scene {
 
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
-    this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
-    this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
+		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
+		this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
 		this.heroHand.visible = false;
+
+		this.add.rectangle(647, 628, 1000, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+
 
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
@@ -64,13 +68,13 @@ class Game extends Phaser.Scene {
 				message:
 					"Found Treasure! Check under a chicken",
 			},
-      {
-        x: 1800, 
-        y: 500,
-        width: 80,
+			{
+				x: 1800, 
+				y: 500,
+				width: 80,
 				height: 80,
 				message: "Check in the tube seat looking room by the pipe",
-      },
+      		},
 			{
 				x: 50,
 				y: 2350,
@@ -160,18 +164,18 @@ class Game extends Phaser.Scene {
 		this.cameras.main.startFollow(this.hero, true);
 
 		this.muteMan = this.add
-			.image(30, 20, "muteMan")
+			.image(180, 566, "muteMan")
 			.setInteractive()
-			.setScale(2)
+			.setScale(2.2)
 			.setScrollFactor(0);
 
 		this.physics.add.collider(this.hero, stuff);
 		this.physics.add.collider(this.hero2, stuff);
 		this.physics.add.collider(this.hero, walls);
 		this.physics.add.collider(this.hero2, walls);
-    this.physics.add.collider(this.hero, this.treasureChicken);
-    this.physics.add.collider(this.hero, group);
-    this.physics.add.collider(group, walls)
+		this.physics.add.collider(this.hero, this.treasureChicken);
+		this.physics.add.collider(this.hero, group);
+		this.physics.add.collider(group, walls)
 
 		this.text = this.add
 			.text(5, 40, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
@@ -221,16 +225,20 @@ class Game extends Phaser.Scene {
 		});
 
 		this.scoreText = this.add
-			.text(1000, 0, `Treasures: ${this.score}`, {
-				fontSize: "32px",
+			.text(950, 558, `Treasures: ${this.score}`, {
+				fontSize: "26px",
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);
 		
-		this.initialTime = 5;
+		this.initialTime = 500;
 
 		this.timerText = this.add
-		.text(500, 10, "Countdown: " + formatTime(this.initialTime)).setScrollFactor(0);
+			.text(500, 558, "Countdown: " + formatTime(this.initialTime), {
+				fontSize: "26px",
+				fill: "#ffffff",
+			})
+			.setScrollFactor(0);
 
 		this.timedEvent = this.time.addEvent({
 			delay: 1000,
@@ -253,6 +261,7 @@ class Game extends Phaser.Scene {
 			this.scene.start("GameOver");
 			};
 		};
+
 	}
 
 	// ************UPDATE****************
@@ -300,7 +309,7 @@ class Game extends Phaser.Scene {
 			"world y: " + this.input.mousePointer.worldY.toFixed(0),
 			"hero x: " + this.hero.x.toFixed(0),
 			"hero y: " + this.hero.y.toFixed(0),
-      "Treasure Detector: " + this.treasureDetector(),
+      		"Treasure Detector: " + this.treasureDetector(),
 		]);
 
 		this.scoreText.setText(`Treasures: ${this.score}`);
