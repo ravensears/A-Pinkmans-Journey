@@ -1,13 +1,24 @@
-import { Physics } from "phaser";
-
 var noop = function() {};
+var move = function() { return "movement" }
+
 class SpriteClassMock {
   constructor(scene, x, y, sprite) {
     this.scene = scene;
     this.x = x;
     this.y = y;
     this.sprite = sprite;
+    this.body = {
+      setVelocity: noop,
+      setVelocityY: noop,
+      setVelocityX: noop,
+    }
+    this.play = noop;
+    this.anims = {
+      stop: noop
+    }
   }
+
+  setVelocityY() { return noop };
 }
 
 const sceneMock = {
@@ -21,8 +32,21 @@ const sceneMock = {
   },
   input: {
     keyboard: {
-      addKey: noop,
-      createCursorKeys: noop
+      addKey: () => { return { isDown: false }},
+      createCursorKeys: () => { return {
+        up: {
+          isDown: false
+        },
+        right: {
+          isDown: false
+        },
+        down: {
+          isDown: false
+        },
+        left: {
+          isDown: false
+        },
+      }}
     }
   }
 }
