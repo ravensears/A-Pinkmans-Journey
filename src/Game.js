@@ -25,10 +25,10 @@ class Game extends Phaser.Scene {
 
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
-
 		const floor = map.createStaticLayer("floor", tileset);
 		const walls = map.createStaticLayer("walls", tileset);
 		const stuff = map.createStaticLayer("stuff", tileset);
+    
 
 		walls.setCollisionByProperty({ collides: true });
 		stuff.setCollisionByProperty({ collides: true });
@@ -145,6 +145,7 @@ class Game extends Phaser.Scene {
 		this.cameras.main.startFollow(this.hero, true);
 
 		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
+
 		this.muteMan = this.add
 			.image(30, 20, "muteMan")
 			.setInteractive()
@@ -202,8 +203,6 @@ class Game extends Phaser.Scene {
 			}
 			console.log("muteMan in action!");
 		});
-
-
 
 		this.scoreText = this.add
 			.text(1000, 0, `Treasures: ${this.score}`, {

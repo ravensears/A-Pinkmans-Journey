@@ -16,6 +16,7 @@ class Boot extends Phaser.Scene {
 			frameWidth: 32,
 			frameHeight: 32,
 		});
+
 		this.load.image("base_tiles", "/tiles/space_tileset.png");
 		this.load.tilemapTiledJSON("tilemap", "/tiles/space_map.json");
 		this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
