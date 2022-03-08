@@ -64,11 +64,25 @@ class Game extends Phaser.Scene {
 				y: 1418,
 				width: 30,
 				height: 63,
-				message: "Found Treasure! Check in the couch",
+				message: "Found Treasure! Check in the couch over there",
 			},
 			{
 				x: 1011,
 				y: 1435,
+				width: 30,
+				height: 63,
+				message: "Found Treasure! Check in the heart of the labyrinth",
+			},
+      {
+				x: 238,
+				y: 738,
+				width: 30,
+				height: 63,
+				message: "Found Treasure! Check in the black room",
+			},
+			{
+				x: 498,
+				y: 3059,
 				width: 80,
 				height: 80,
 				message: "Found Treasure! Check in the wishing well",
@@ -78,21 +92,21 @@ class Game extends Phaser.Scene {
 				y: 2766,
 				width: 80,
 				height: 80,
-				message: "Found Treasure! Check under a chicken",
+				message: "Found Treasure! Check under the treasure chicken",
 			},
 			{
 				x: 1800,
 				y: 500,
 				width: 80,
 				height: 80,
-				message: "Check in the tube seat looking room by the pipe",
-			},
+				message: "Found treasure! Check in the ugly carpet room by the pipe",
+      },
 			{
 				x: 50,
 				y: 2350,
 				width: 80,
 				height: 80,
-				message: "Check under the control desk",
+				message: "found treasure! Check under the control desk",
 			},
 			{
 				x: 1369,
@@ -154,13 +168,7 @@ class Game extends Phaser.Scene {
 			}
 		};
 
-		this.treasure1 = generateTreasure({
-			x: 1679,
-			y: 1418,
-			width: 30,
-			height: 63,
-			message: "Found Treasure! Check in the couch",
-		});
+		this.treasure1 = generateTreasure(this.treasureGroup[0]);
 
 
 		this.physics.add.overlap(this.treasure1, this.heroHand.spriteObject, findTreasure);
@@ -257,19 +265,19 @@ class Game extends Phaser.Scene {
 		});
 
 		this.treasureMessage = () => {
-			if (this.messageIndex < 0) {
-				return "Look in the desk";
+			if(this.messageIndex < 0) {
+				return "Look in the desk!!"
 			} else {
 				return this.treasureGroup[this.messageIndex].message;
 			}
 		};
 
 		this.clueText = this.add
-			.text(135, 660, "Current Clue: " + this.treasureMessage(), {
-				fontSize: "28px",
-				fill: "#ffffff",
-			})
-			.setScrollFactor(0);
+		.text(135, 660, this.treasureMessage(), {
+			fontSize: "28px",
+			fill: "#ffffff",
+		})
+		.setScrollFactor(0);
 
 		function formatTime(seconds) {
 			var minutes = Math.floor(seconds / 60);
@@ -338,26 +346,26 @@ class Game extends Phaser.Scene {
 					return "What's cooler than being cold? Ice cold!!";
 				}
 			} else {
-				return "Go to world coordinates 1676, 1411";
-			}
+        return 'Go to coordinates 1676, 1411'
+      }
 		};
 
 		this.text.setText([
 			// "screen x: " + this.input.x,
 			// "screen y: " + this.input.y,
-			// "hero x: " + this.hero.x.toFixed(0),
-			// "hero y: " + this.hero.y.toFixed(0),
-			"world x: " + this.input.mousePointer.worldX.toFixed(0),
-			"world y: " + this.input.mousePointer.worldY.toFixed(0),
+			"hero x: " + this.hero.spriteObject.x.toFixed(0),
+			"hero y: " + this.hero.spriteObject.y.toFixed(0),
+			// "world x: " + this.input.mousePointer.worldX.toFixed(0),
+			// "world y: " + this.input.mousePointer.worldY.toFixed(0),
 
-			`Treasures: ${this.score}`,
-			"Treasure Detector: " + this.treasureDetector(),
+			"Treasures: " + this.score,
+    	"Treasure Detector: " + this.treasureDetector(),
 		]);
 
 		this.hero.updatePlayer();
 		this.heroHand.updateHand(this.hero);
 
-		this.clueText.setText("Current Clue: " + this.treasureMessage());
+		this.clueText.setText(this.treasureMessage());	
 	}
 }
 
