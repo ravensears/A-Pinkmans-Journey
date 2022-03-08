@@ -27,7 +27,7 @@ class Boot extends Phaser.Scene {
 	};
 
 	create() {
-		this.scene.start("Game");
+		this.scene.start("GameStart");
 	}
 }
 
