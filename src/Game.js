@@ -317,6 +317,16 @@ class Game extends Phaser.Scene {
 	// ************UPDATE****************
 
 	update() {
+		this.traps.generateTrap(
+			{ x: 2000, y: 1500, width: 70, height: 1000 },
+			this.traps.goZoomDown
+		);
+
+		this.traps.generateTrap(
+			{ x: 2140, y: 1500, width: 70, height: 1000 },
+			this.traps.goZoomUp
+		);
+		
 		this.treasureDetector = () => {
 			const treasureProximity = (distance) => {
 				return (
