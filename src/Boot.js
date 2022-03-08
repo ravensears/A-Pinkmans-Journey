@@ -24,9 +24,10 @@ class Boot extends Phaser.Scene {
 		this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
 		this.load.audio("treasure_song", "/audio/treasure_hunting.mp3");
 		this.load.audio("beep", "/audio/beep.mp3");
+		this.load.audio("wormhole", "/audio/wormholefx.mp3");
 
-		this.gameWidth = this.sys.game.canvas.width
-    	this.gameHeight = this.sys.game.canvas.height
+		this.gameWidth = this.sys.game.canvas.width;
+		this.gameHeight = this.sys.game.canvas.height;
 	};
 
 	create() {
