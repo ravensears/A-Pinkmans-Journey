@@ -42,8 +42,8 @@ class Game extends Phaser.Scene {
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 
     this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
-		this.cake = this.physics.add.staticSprite(1763, 2382, "eatMe");
-		this.drink = this.physics.add.staticSprite(355, 2715, "drinkMe");
+		this.cake = this.physics.add.staticSprite(1763, 2382, "eatMe").setScale(1.7);
+		this.drink = this.physics.add.staticSprite(355, 2715, "drinkMe").setScale(1.4);
 
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
@@ -159,6 +159,15 @@ class Game extends Phaser.Scene {
 		});
 
 		this.physics.add.overlap(this.treasure1, this.heroHand.spriteObject, findTreasure);
+		this.physics.add.collider(this.hero.spriteObject, stuff);
+		this.physics.add.collider(this.hero2, stuff);
+		this.physics.add.collider(this.hero.spriteObject, walls);
+		this.physics.add.collider(this.hero2, walls);
+		this.physics.add.collider(this.hero.spriteObject, this.cake);
+		this.physics.add.collider(this.hero.spriteObject, this.drink);
+    this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
+    this.physics.add.collider(this.hero.spriteObject, group);
+    this.physics.add.collider(group, walls);
 
 		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
@@ -167,15 +176,6 @@ class Game extends Phaser.Scene {
 			.setInteractive()
 			.setScale(2.2)
 			.setScrollFactor(0);
-
-		this.physics.add.collider(this.hero.spriteObject, stuff);
-		this.physics.add.collider(this.hero2, stuff);
-		this.physics.add.collider(this.hero.spriteObject, walls);
-		this.physics.add.collider(this.hero2, walls);
-
-    this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
-    this.physics.add.collider(this.hero.spriteObject, group);
-    this.physics.add.collider(group, walls)
 
 		this.text = this.add
 			.text(58, 733, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
