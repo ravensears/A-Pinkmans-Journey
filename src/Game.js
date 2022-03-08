@@ -36,24 +36,33 @@ class Game extends Phaser.Scene {
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy");
 
-		this.heroHand.spriteObject.setScale(1.4)
+		this.heroHand.spriteObject.setScale(1.4);
 		this.heroHand.spriteObject.visible = false;
 
-    this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
+		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 
-    this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
-		this.cake = this.physics.add.staticSprite(1763, 2382, "eatMe").setScale(1.7);
-		this.drink = this.physics.add.staticSprite(355, 2715, "drinkMe").setScale(1.4);
+		this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
+		this.cake = this.physics.add
+			.staticSprite(1763, 2382, "eatMe")
+			.setScale(1.7);
+		this.drink = this.physics.add
+			.staticSprite(355, 2715, "drinkMe")
+			.setScale(1.4);
 
-    const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
+		const group = this.physics.add.group({
+			key: "chicken",
+			frameQuantity: 300,
+		});
 
-		const ui = this.add.rectangle(648, 732, 1200, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+		const ui = this.add
+			.rectangle(648, 732, 1200, 150, 0x002b36)
+			.setStrokeStyle(4, 0xefc53f)
+			.setScrollFactor(0);
 		ui.alpha = 0.75;
 
-    const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
-	
-    Phaser.Actions.RandomRectangle(group.getChildren(), rect);
+		const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
 
+		Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
 		this.temperatureIndex = 0;
 		this.messageIndex = -1;
@@ -73,7 +82,7 @@ class Game extends Phaser.Scene {
 				height: 63,
 				message: "Found Treasure! Check in the heart of the labyrinth",
 			},
-      {
+			{
 				x: 238,
 				y: 738,
 				width: 30,
@@ -100,7 +109,7 @@ class Game extends Phaser.Scene {
 				width: 80,
 				height: 80,
 				message: "Found treasure! Check in the ugly carpet room by the pipe",
-      },
+			},
 			{
 				x: 50,
 				y: 2350,
@@ -170,18 +179,20 @@ class Game extends Phaser.Scene {
 
 		this.treasure1 = generateTreasure(this.treasureGroup[0]);
 
-
-		this.physics.add.overlap(this.treasure1, this.heroHand.spriteObject, findTreasure);
+		this.physics.add.overlap(
+			this.treasure1,
+			this.heroHand.spriteObject,
+			findTreasure
+		);
 		this.physics.add.collider(this.hero.spriteObject, stuff);
 		this.physics.add.collider(this.hero2, stuff);
 		this.physics.add.collider(this.hero.spriteObject, walls);
 		this.physics.add.collider(this.hero2, walls);
 		this.physics.add.collider(this.hero.spriteObject, this.cake);
 		this.physics.add.collider(this.hero.spriteObject, this.drink);
-    this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
-    this.physics.add.collider(this.hero.spriteObject, group);
-    this.physics.add.collider(group, walls);
-
+		this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
+		this.physics.add.collider(this.hero.spriteObject, group);
+		this.physics.add.collider(group, walls);
 
 		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
@@ -265,19 +276,19 @@ class Game extends Phaser.Scene {
 		});
 
 		this.treasureMessage = () => {
-			if(this.messageIndex < 0) {
-				return "Look in the desk!!"
+			if (this.messageIndex < 0) {
+				return "Look in the desk!!";
 			} else {
 				return this.treasureGroup[this.messageIndex].message;
 			}
 		};
 
 		this.clueText = this.add
-		.text(135, 660, this.treasureMessage(), {
-			fontSize: "28px",
-			fill: "#ffffff",
-		})
-		.setScrollFactor(0);
+			.text(135, 660, this.treasureMessage(), {
+				fontSize: "28px",
+				fill: "#ffffff",
+			})
+			.setScrollFactor(0);
 
 		function formatTime(seconds) {
 			var minutes = Math.floor(seconds / 60);
@@ -323,10 +334,20 @@ class Game extends Phaser.Scene {
 		);
 
 		this.traps.generateTrap(
-			{ x: 2140, y: 1500, width: 70, height: 1000 },
+			{ x: 1993, y: 2025, width: 70, height: 70 },
+			this.traps.goZoomRight
+		);
+
+		this.traps.generateTrap(
+			{ x: 2140, y: 1700, width: 70, height: 1000 },
 			this.traps.goZoomUp
 		);
-		
+
+		this.traps.generateTrap(
+			{ x: 2140, y: 1500, width: 70, height: 1000 },
+			this.traps.goZoomLeft
+		);
+
 		this.treasureDetector = () => {
 			const treasureProximity = (distance) => {
 				return (
@@ -356,8 +377,8 @@ class Game extends Phaser.Scene {
 					return "What's cooler than being cold? Ice cold!!";
 				}
 			} else {
-        return 'Go to coordinates 1676, 1411'
-      }
+				return "Go to coordinates 1676, 1411";
+			}
 		};
 
 		this.text.setText([
@@ -369,13 +390,13 @@ class Game extends Phaser.Scene {
 			// "world y: " + this.input.mousePointer.worldY.toFixed(0),
 
 			"Treasures: " + this.score,
-    	"Treasure Detector: " + this.treasureDetector(),
+			"Treasure Detector: " + this.treasureDetector(),
 		]);
 
 		this.hero.updatePlayer();
 		this.heroHand.updateHand(this.hero);
 
-		this.clueText.setText(this.treasureMessage());	
+		this.clueText.setText(this.treasureMessage());
 	}
 }
 

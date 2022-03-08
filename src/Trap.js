@@ -57,6 +57,20 @@ class Trap {
 		}
 	};
 
+	goZoomLeft = (trap) => {
+		if (trap.body.embedded) {
+			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
+			this.scene.hero.spriteObject.body.setVelocityX(-1000, 1000);
+		}
+	};
+
+	goZoomRight = (trap) => {
+		if (trap.body.embedded) {
+			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
+			this.scene.hero.spriteObject.body.setVelocityX(1000, 1000);
+		}
+	};
+
 	generateTrap = (trap, callback) => {
 		let trapShape = this.scene.add.rectangle(
 			trap.x,
