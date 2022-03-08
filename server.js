@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const PORT = 3000;
+
+//const PORT = 3000;
 import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
 import cors from 'cors';
@@ -9,9 +10,9 @@ const app = express();
 import mongoose from 'mongoose';
 import mongo from 'mongodb';
 import flash from 'connect-flash';
-import session from 'express-session';
+import session from 'cookie-session';
 
-//Passport COnfig
+//Passport Config
 import passport from "passport";
 import passportConfig from "./config/passport.js";
 passportConfig(passport);
@@ -68,6 +69,7 @@ app.get('/game', (_req, res) => {
 app.use(cors());
 app.use(express.json());
 app.use(express.static('src'));
-
-app.listen(PORT, console.log(`Server running on  ${PORT}`));
-
+//app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(process.env.PORT || 3000, () => {  
+  console.log(`app is running on port ${process.env.PORT}`);
+}) 

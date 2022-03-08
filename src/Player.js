@@ -1,9 +1,9 @@
-class Player extends Phaser.GameObjects.Sprite {
-	constructor(scene, x, y, sprite) {
-		super(scene, x, y, sprite);
+class Player {
+	constructor(scene, x, y, sprite, phaserObject = Phaser.GameObjects.Sprite) {
+		this.spriteObject = new phaserObject(scene, x, y, sprite);
 
-		scene.add.existing(this);
-		scene.physics.world.enableBody(this);
+		scene.add.existing(this.spriteObject);
+		scene.physics.world.enableBody(this.spriteObject);
 
 		this.cursors = scene.input.keyboard.createCursorKeys();
 		this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -12,8 +12,12 @@ class Player extends Phaser.GameObjects.Sprite {
 		this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 	}
 
+	createPlayer() {
+		return this.spriteObject;
+	}
+
 	updatePlayer() {
-		this.body.setVelocity(0);
+		this.spriteObject.body.setVelocity(0);
 
 		if (this.cursors.up.isDown || this.keyW.isDown) {
 			this.moveUp();
@@ -24,33 +28,33 @@ class Player extends Phaser.GameObjects.Sprite {
 		} else if (this.cursors.left.isDown || this.keyA.isDown) {
 			this.moveLeft();
 		} else {
-			this.anims.stop();
+			this.spriteObject.anims.stop();
 		}
 	}
 
 	updateHand(player) {
-		this.x = player.x;
-		this.y = player.y;
+		this.spriteObject.x = player.spriteObject.x;
+		this.spriteObject.y = player.spriteObject.y;
 	}
 
 	moveUp() {
-		this.body.setVelocityY(-180);
-		this.play("top", true);
+		this.spriteObject.body.setVelocityY(-180);
+		this.spriteObject.play("top", true);
 	}
 
 	moveDown() {
-		this.body.setVelocityY(180);
-		this.play("down", true);
+		this.spriteObject.body.setVelocityY(180);
+		this.spriteObject.play("down", true);
 	}
 
 	moveLeft() {
-		this.body.setVelocityX(-180);
-		this.play("left", true);
+		this.spriteObject.body.setVelocityX(-180);
+		this.spriteObject.play("left", true);
 	}
 
 	moveRight() {
-		this.body.setVelocityX(180);
-		this.play("right", true);
+		this.spriteObject.body.setVelocityX(180);
+		this.spriteObject.play("right", true);
 	}
 }
 

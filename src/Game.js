@@ -22,7 +22,7 @@ class Game extends Phaser.Scene {
 		};
 
 		this.music.play(musicConfig);
-		this.musicOn = true;
+    this.musicOn = true;
 
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
@@ -35,10 +35,12 @@ class Game extends Phaser.Scene {
 		stuff.setCollisionByProperty({ collides: true });
 
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
-		this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
-		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
-		this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
-		this.heroHand.visible = false;
+
+		this.heroHand = new Player(this, 1600, 1600, "sadGuy");
+		this.heroHand.spriteObject.setScale(1.4)
+		this.heroHand.spriteObject.visible = false;
+    this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
+    this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
 
 
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
@@ -111,8 +113,10 @@ class Game extends Phaser.Scene {
 			let treasureObj = this.physics.add.existing(treasureShape, 1);
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
+      
 			this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
 		  this.temperatureIndex++;
+
 			return treasureObj;
 		};
 
@@ -153,9 +157,9 @@ class Game extends Phaser.Scene {
 			message: "Found Treasure! Check in the couch",
 		});
 
-		this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
+		this.physics.add.overlap(this.treasure1, this.heroHand.spriteObject, findTreasure);
 
-		this.cameras.main.startFollow(this.hero, true);
+		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
 		this.muteMan = this.add
 			.image(85, 673, "muteMan")
@@ -163,13 +167,14 @@ class Game extends Phaser.Scene {
 			.setScale(2.2)
 			.setScrollFactor(0);
 
-		this.physics.add.collider(this.hero, stuff);
+		this.physics.add.collider(this.hero.spriteObject, stuff);
 		this.physics.add.collider(this.hero2, stuff);
-		this.physics.add.collider(this.hero, walls);
+		this.physics.add.collider(this.hero.spriteObject, walls);
 		this.physics.add.collider(this.hero2, walls);
-		this.physics.add.collider(this.hero, this.treasureChicken);
-		this.physics.add.collider(this.hero, group);
-		this.physics.add.collider(group, walls)
+
+    this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
+    this.physics.add.collider(this.hero.spriteObject, group);
+    this.physics.add.collider(group, walls)
 
 		this.text = this.add
 			.text(58, 733, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
@@ -205,7 +210,7 @@ class Game extends Phaser.Scene {
 			frameRate: 20,
 		});
 
-		this.physics.add.collider(this.hero, this.hero2);
+		this.physics.add.collider(this.hero.spriteObject, this.hero2);
 
 		this.mute = this.muteMan.on("pointerdown", () => {
 			if (this.musicOn === true) {
@@ -218,6 +223,13 @@ class Game extends Phaser.Scene {
 			console.log("muteMan in action!");
 		});
 
+// 		this.scoreText = this.add
+// 			.text(1000, 0, `Treasures: ${this.score}`, {
+// 				fontSize: "32px",
+// 				fill: "#ffffff",
+// 			})
+// 			.setScrollFactor(0);
+		
 		this.initialTime = 500;
 
 		this.timerText = this.add
@@ -270,8 +282,10 @@ class Game extends Phaser.Scene {
 	update() {
     this.treasureDetector = () => {
       const treasureProximity = (distance) => { 
-       return Math.abs(this.hero.x - this.treasureGroup[this.temperatureIndex - 1].x) <= distance &&
-        Math.abs(this.hero.y - this.treasureGroup[this.temperatureIndex - 1].y) <= distance 
+
+       return Math.abs(this.hero.spriteObject.x - this.treasureGroup[this.treasureIndex - 1].x) <= distance &&
+        Math.abs(this.hero.spriteObject.y - this.treasureGroup[this.treasureIndex - 1].y) <= distance 
+
       };
 
 			if (!this.treasure1.active) {
@@ -310,6 +324,7 @@ class Game extends Phaser.Scene {
 			// "hero y: " + this.hero.y.toFixed(0),
 			"world x: " + this.input.mousePointer.worldX.toFixed(0),
 			"world y: " + this.input.mousePointer.worldY.toFixed(0),
+
 			`Treasures: ${this.score}`,
      		"Treasure Detector: " + this.treasureDetector(),
 		]);

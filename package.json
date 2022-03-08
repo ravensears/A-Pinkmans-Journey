@@ -2,12 +2,17 @@
   "name": "rpg_game",
   "version": "1.0.0",
   "type": "module",
-  "description": "https://github.com/ravensears/RPG-Game.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ravensears/RPG-Game.git"
+  },
   "main": "index.js",
+  "config": {
+    "port": 3000
+  },
   "scripts": {
-
-    "start": "npx nodemon server.js",
-
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -17,26 +22,34 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "jest": {
+    "setupFiles": [
+      "jest-canvas-mock"
+    ]
+  },
   "dependencies": {
+    "npm": "8.x",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
+    "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "ejs": "^3.1.6",
     "express": "^4.17.3",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.2",
     "jest": "^27.5.1",
-
+    "jest-canvas-mock": "^2.3.1",
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.4",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
-    "phaser": "^3.55.2"
+    "phaser": "^3.55.2",
+    "server": "^0.0.3"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
+    "ejs": "^3.1.5",
     "nodemon": "^2.0.15",
-    "phaser": "^3.55.2",
-    "ejs": "^3.1.5"
+    "phaser": "^3.55.2"
   }
 }
