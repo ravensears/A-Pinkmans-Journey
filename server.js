@@ -8,7 +8,7 @@ import expressLayouts from 'express-ejs-layouts';
 import cors from 'cors';
 const app = express();
 import mongoose from 'mongoose';
-//import mongo from 'mongodb';
+import mongo from 'mongodb';
 import flash from 'connect-flash';
 import session from 'cookie-session';
 
