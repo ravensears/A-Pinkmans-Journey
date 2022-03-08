@@ -1,4 +1,5 @@
 import Player from "./Player.js";
+import Wormhole from "./Wormhole.js";
 
 class Game extends Phaser.Scene {
 	constructor() {
@@ -288,38 +289,17 @@ class Game extends Phaser.Scene {
 			}
 		}
 
-		const wormholesfx = this.sound.add("wormhole");
+		this.wormholesfx = this.sound.add("wormhole");
+		this.wormhole = new Wormhole(this, keyObj);
 
-		const generateTrap = (trap) => {
-			let trapShape = this.add.rectangle(
-				trap.x,
-				trap.y,
-				trap.width,
-				trap.height,
-				"00FFFFFF"
-			);
-			let trapObj = this.physics.add.existing(trapShape, 1);
-			trapObj.visible = false;
-			this.physics.add.overlap(trapObj, this.heroHand.spriteObject, findTrap);
-			return trapObj;
-		};
+		const wormholes = [
+			{ x: 1343, y: 2490, width: 70, height: 75 },
+			{ x: 1728, y: 2518, width: 70, height: 75 },
+			{ x: 1954, y: 2900, width: 70, height: 75 },
+			{ x: 1439, y: 3093, width: 70, height: 75 },
+		];
 
-		const findTrap = (trap) => {
-			if (trap.active) {
-				if (trap.body.embedded && keyObj.isDown) {
-					console.log(`You fell in a wormhole at: ${trap.x}, ${trap.y}!`);
-					wormholesfx.play();
-					this.cameras.main.fadeOut(1000, 0, 0, 0);
-					this.cameras.main.shake(700);
-					this.cameras.main.fadeIn(2000, 0, 0, 0);
-					this.hero.spriteObject.x = Math.random() * 3000;
-					this.hero.spriteObject.y = Math.random() * 3000;
-					// treasure.setActive(false);
-				}
-			}
-		};
-
-		this.trap = generateTrap({ x: 1750, y: 1750, width: 30, height: 63 });
+		wormholes.forEach((wormhole) => this.wormhole.generateWormhole(wormhole));
 	}
 
 	// ************UPDATE****************
