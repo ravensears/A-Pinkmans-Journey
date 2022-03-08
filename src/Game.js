@@ -44,7 +44,7 @@ class Game extends Phaser.Scene {
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
 
-	const ui = this.add.rectangle(647, 628, 1000, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+	const ui = this.add.rectangle(648, 732, 1200, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
 	ui.alpha = 0.75;
 
     const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
@@ -158,7 +158,7 @@ class Game extends Phaser.Scene {
 		this.cameras.main.startFollow(this.hero, true);
 
 		this.muteMan = this.add
-			.image(180, 566, "muteMan")
+			.image(85, 673, "muteMan")
 			.setInteractive()
 			.setScale(2.2)
 			.setScrollFactor(0);
@@ -172,7 +172,7 @@ class Game extends Phaser.Scene {
 		this.physics.add.collider(group, walls)
 
 		this.text = this.add
-			.text(250, 570, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
+			.text(58, 733, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
 			.setScrollFactor(0);
 
 		this.anims.create({
@@ -218,19 +218,12 @@ class Game extends Phaser.Scene {
 			console.log("muteMan in action!");
 		});
 
-		this.scoreText = this.add
-			.text(950, 558, `Treasures: ${this.score}`, {
-				fontSize: "26px",
-				fill: "#ffffff",
-			})
-			.setScrollFactor(0);
-		
 		this.initialTime = 500;
 
 		this.timerText = this.add
-			.text(500, 558, "Countdown: " + formatTime(this.initialTime), {
-				fontSize: "26px",
-				fill: "#ffffff",
+			.text(58, 705, "Countdown: " + formatTime(this.initialTime), {
+				font: "24px Courier", 
+				fill: "#00ff00"
 			})
 			.setScrollFactor(0);
 
@@ -240,6 +233,21 @@ class Game extends Phaser.Scene {
 			callbackScope: this,
 			loop: true,
 		});
+
+		this.treasureMessage = () => {
+			if(this.messageIndex < 0) {
+				return "Look in the desk"
+			} else {
+				return this.treasureGroup[this.messageIndex].message
+			}
+		};
+
+		this.clueText = this.add
+		.text(135, 660, "Current Clue: " + this.treasureMessage(), {
+			fontSize: "28px",
+			fill: "#ffffff",
+		})
+		.setScrollFactor(0);
 
 		function formatTime(seconds) {
 			var minutes = Math.floor(seconds / 60);
@@ -295,34 +303,23 @@ class Game extends Phaser.Scene {
       }
 		};
 
-		this.treasureMessage = () => {
-			console.log('index = ')
-			console.log(this.messageIndex)
-			if(this.messageIndex < 0) {
-				return "Look in the desk"
-			} else {
-				return this.treasureGroup[this.messageIndex].message
-			}
-		};
-
 		this.text.setText([
 			// "screen x: " + this.input.x,
 			// "screen y: " + this.input.y,
-			"Current Clue: " + this.treasureMessage(),
-			"world x: " + this.input.mousePointer.worldX.toFixed(0),
-			"world y: " + this.input.mousePointer.worldY.toFixed(0),
 			// "hero x: " + this.hero.x.toFixed(0),
 			// "hero y: " + this.hero.y.toFixed(0),
+			"world x: " + this.input.mousePointer.worldX.toFixed(0),
+			"world y: " + this.input.mousePointer.worldY.toFixed(0),
+			`Treasures: ${this.score}`,
      		"Treasure Detector: " + this.treasureDetector(),
 		]);
 
-
-		this.scoreText.setText(`Treasures: ${this.score}`);
-
 		this.hero.updatePlayer();
 		this.heroHand.updateHand(this.hero);
+
+		this.clueText.setText("Current Clue: " + this.treasureMessage());	
+
 	}
-	
 }
 
 export default Game;
