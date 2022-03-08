@@ -33,7 +33,8 @@ class Player {
 	}
 
 	updateHand(player) {
-		this.spriteObject.y = player.y;
+		this.spriteObject.x = player.spriteObject.x;
+		this.spriteObject.y = player.spriteObject.y;
 	}
 
 	moveUp() {
