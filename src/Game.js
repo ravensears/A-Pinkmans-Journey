@@ -283,8 +283,8 @@ class Game extends Phaser.Scene {
     this.treasureDetector = () => {
       const treasureProximity = (distance) => { 
 
-       return Math.abs(this.hero.spriteObject.x - this.treasureGroup[this.treasureIndex - 1].x) <= distance &&
-        Math.abs(this.hero.spriteObject.y - this.treasureGroup[this.treasureIndex - 1].y) <= distance 
+       return Math.abs(this.hero.spriteObject.x - this.treasureGroup[this.temperatureIndex - 1].x) <= distance &&
+        Math.abs(this.hero.spriteObject.y - this.treasureGroup[this.temperatureIndex - 1].y) <= distance 
 
       };
 
