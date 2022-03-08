@@ -44,17 +44,23 @@ class Game extends Phaser.Scene {
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
 
-	this.add.rectangle(647, 628, 1000, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
-
+		this.add.rectangle(647, 628, 1000, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
 
     const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
 
     Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
-		this.treasureIndex = 0;
+		this.temperatureIndex = 0;
+		this.messageIndex = -1;
 
 		this.treasureGroup = [
-      {},
+      {
+				x: 1679,
+				y: 1418,
+				width: 30,
+				height: 63,
+				message: "Found Treasure! Check in the couch",
+			},
 			{
 				x: 1011,
 				y: 1435,
@@ -109,12 +115,12 @@ class Game extends Phaser.Scene {
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
 			this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
-		  this.treasureIndex++;
+		  this.temperatureIndex++;
 			return treasureObj;
 		};
 
 		const generateNextTreasure = () => {
-			generateTreasure(this.treasureGroup[this.treasureIndex]);
+			generateTreasure(this.treasureGroup[this.temperatureIndex]);
 		}
 
 		const sfx = this.sound.add("beep");
@@ -128,7 +134,7 @@ class Game extends Phaser.Scene {
 		};
 
 		const nextTreasure = () => {
-			this.treasureIndex === this.treasureGroup.length
+			this.temperatureIndex === this.treasureGroup.length
 				? this.scene.start("GameOver")
 				: generateNextTreasure();
 		}
@@ -148,6 +154,7 @@ class Game extends Phaser.Scene {
 					);
 					destroyMessage(msg);
 					treasure.setActive(false);
+					this.messageIndex++;
 					nextTreasure();
 				}
 			}
@@ -273,8 +280,8 @@ class Game extends Phaser.Scene {
 	update() {
     this.treasureDetector = () => {
       const treasureProximity = (distance) => { 
-       return Math.abs(this.hero.x - this.treasureGroup[this.treasureIndex - 1].x) <= distance &&
-        Math.abs(this.hero.y - this.treasureGroup[this.treasureIndex - 1].y) <= distance 
+       return Math.abs(this.hero.x - this.treasureGroup[this.temperatureIndex - 1].x) <= distance &&
+        Math.abs(this.hero.y - this.treasureGroup[this.temperatureIndex - 1].y) <= distance 
       };
 
 			if (!this.treasure1.active) {
@@ -306,18 +313,29 @@ class Game extends Phaser.Scene {
       }
 		};
 
+		this.treasureMessage = () => {
+			console.log('index = ')
+			console.log(this.messageIndex)
+			if(this.messageIndex < 0) {
+				return "Look in the desk"
+			} else {
+				return this.treasureGroup[this.messageIndex].message
+			}
+		};
+
 		this.text.setText([
-			"screen x: " + this.input.x,
-			"screen y: " + this.input.y,
+			// "screen x: " + this.input.x,
+			// "screen y: " + this.input.y,
+			"Current Clue: " + this.treasureMessage(),
 			"world x: " + this.input.mousePointer.worldX.toFixed(0),
 			"world y: " + this.input.mousePointer.worldY.toFixed(0),
 			"hero x: " + this.hero.x.toFixed(0),
 			"hero y: " + this.hero.y.toFixed(0),
-      		"Treasure Detector: " + this.treasureDetector(),
+      "Treasure Detector: " + this.treasureDetector(),
 		]);
 
 		// "message: " + this.treasure1.message
-		// this.treasureGroup[this.treasureIndex].message
+		// this.treasureGroup[this.temperatureIndex].message
 
 		this.scoreText.setText(`Treasures: ${this.score}`);
 
