@@ -2,8 +2,8 @@ import Boot from "./Boot.js";
 import Game from "./Game.js";
 import GameOver from "./GameOver.js";
 //
-import Enemy from "./Enemy.js";
-import Entity from "./Entity.js";
+// import Enemy from "./Enemy.js";
+// import Entity from "./Entity.js";
 //tut check
 
 const config = {

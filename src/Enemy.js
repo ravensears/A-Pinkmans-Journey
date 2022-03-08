@@ -1,16 +1,17 @@
-import Entity from "./Entity"
+import Entity from "./Entity.js"
 
 class Enemy extends Entity{
     constructor(scene, x, y, textureKey, damage, type, speed){
         super(scene,x,y,textureKey,'Enemy')
     
         const anims = scene.anims
+        console.log(scene.anims)
         const animFrameRate = 4
         this.textureKey = textureKey
 
         anims.create({
         key: 'enemy-left',
-			frames: this.anims.generateFrameNames('this.textureKey', {
+			frames: anims.generateFrameNames('this.textureKey', {
 				prefix: 'walk-left-',
 				suffix: '.png',
 				start: 1,
@@ -23,7 +24,7 @@ class Enemy extends Entity{
 
         anims.create({
             key: 'enemy-right',
-                frames: this.anims.generateFrameNames('this.textureKey', {
+                frames: anims.generateFrameNames('this.textureKey', {
                     prefix: 'walk-right-',
                     suffix: '.png',
                     start: 1,
@@ -35,7 +36,7 @@ class Enemy extends Entity{
             })
         anims.create({
             key: 'enemy-up',
-                frames: this.anims.generateFrameNames('this.textureKey', {
+                frames: anims.generateFrameNames('this.textureKey', {
                     prefix: 'walk-up-',
                     suffix: '.png',
                     start: 1,
@@ -48,7 +49,7 @@ class Enemy extends Entity{
 
         anims.create({
             key: 'enemy-down',
-                frames: this.anims.generateFrameNames('this.textureKey', {
+                frames: anims.generateFrameNames('this.textureKey', {
                     prefix: 'walk-down-',
                     suffix: '.png',
                     start: 1,
@@ -58,7 +59,7 @@ class Enemy extends Entity{
                 frameRate: animFrameRate,
                 repeat: -1 
             })
-            this.anims.play('enemy-down')
+        this.anims.play('enemy-down')
     } //end constructor
 
     update(){
