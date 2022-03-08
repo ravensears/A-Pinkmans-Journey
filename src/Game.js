@@ -34,27 +34,26 @@ class Game extends Phaser.Scene {
 		stuff.setCollisionByProperty({ collides: true });
 
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
-
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy");
-		this.heroHand.spriteObject.setScale(1.4);
+
+		this.heroHand.spriteObject.setScale(1.4)
 		this.heroHand.spriteObject.visible = false;
-		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
-		this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
 
-		const group = this.physics.add.group({
-			key: "chicken",
-			frameQuantity: 300,
-		});
+    this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 
-		const ui = this.add
-			.rectangle(648, 732, 1200, 150, 0x002b36)
-			.setStrokeStyle(4, 0xefc53f)
-			.setScrollFactor(0);
+    this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
+		this.cake = this.physics.add.staticSprite(1763, 2382, "eatMe").setScale(1.7);
+		this.drink = this.physics.add.staticSprite(355, 2715, "drinkMe").setScale(1.4);
+
+    const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
+
+		const ui = this.add.rectangle(648, 732, 1200, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
 		ui.alpha = 0.75;
 
-		const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
+    const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
+	
+    Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
-		Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
 		this.temperatureIndex = 0;
 		this.messageIndex = -1;
@@ -163,11 +162,18 @@ class Game extends Phaser.Scene {
 			message: "Found Treasure! Check in the couch",
 		});
 
-		this.physics.add.overlap(
-			this.treasure1,
-			this.heroHand.spriteObject,
-			findTreasure
-		);
+
+		this.physics.add.overlap(this.treasure1, this.heroHand.spriteObject, findTreasure);
+		this.physics.add.collider(this.hero.spriteObject, stuff);
+		this.physics.add.collider(this.hero2, stuff);
+		this.physics.add.collider(this.hero.spriteObject, walls);
+		this.physics.add.collider(this.hero2, walls);
+		this.physics.add.collider(this.hero.spriteObject, this.cake);
+		this.physics.add.collider(this.hero.spriteObject, this.drink);
+    this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
+    this.physics.add.collider(this.hero.spriteObject, group);
+    this.physics.add.collider(group, walls);
+
 
 		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
@@ -176,15 +182,6 @@ class Game extends Phaser.Scene {
 			.setInteractive()
 			.setScale(2.2)
 			.setScrollFactor(0);
-
-		this.physics.add.collider(this.hero.spriteObject, stuff);
-		this.physics.add.collider(this.hero2, stuff);
-		this.physics.add.collider(this.hero.spriteObject, walls);
-		this.physics.add.collider(this.hero2, walls);
-
-		this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
-		this.physics.add.collider(this.hero.spriteObject, group);
-		this.physics.add.collider(group, walls);
 
 		this.text = this.add
 			.text(58, 733, "Cursors to move", {
