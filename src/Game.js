@@ -335,8 +335,6 @@ class Game extends Phaser.Scene {
 		this.heroHand.updateHand(this.hero);
 
 		this.clueText.setText("Current Clue: " + this.treasureMessage());	
-
-	}
-}
+};
 
 export default Game;
