@@ -1,5 +1,4 @@
 var noop = function() {};
-var move = function() { return "movement" }
 
 class SpriteClassMock {
   constructor(scene, x, y, sprite) {

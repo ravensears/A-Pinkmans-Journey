@@ -26,40 +26,51 @@ describe("Player class instance", () => {
     });
   });
 
-  
-
-  // describe("#updatePlayer", () => {
-  //   it('calls the moveUp function', () => {
-      
-  //     const player = new Player(sceneMock, 600, 600, "sadGuy", SpriteClassMock)
-  //     const moveUp = jest.spyOn(player, 'moveUp');
-  //     player.forceUpdate()
-  //     player.updatePlayer();
-  //     expect(moveUp).toHaveBeenCalledTimes(1)
-  //   })
-  // })
-
    describe("#updatePlayer if key is pressed", () => {
     it('If up key pressed calls the moveUp function', () => {
       
       const player = new Player(sceneMock, 600, 600, "sadGuy", SpriteClassMock)
-      // player.updatePlayer();
-      player.keyW.isDown = false;
-      expect(player.updatePlayer()).toEqual(player.moveUp())
+      const moveUpSpy = jest.spyOn(Player.prototype, 'moveUp');
+      moveUpSpy.mockImplementation(() => {})
+      player.keyW.isDown = true;
+      player.updatePlayer();
+      
+      expect(moveUpSpy).toHaveBeenCalled();
+    })
 
-      // this.spriteObject.body.setVelocityY(-180);
-      // this.spriteObject.play("top", true);
+    it('If down key pressed calls the moveUp function', () => {
+      
+      const player = new Player(sceneMock, 600, 600, "sadGuy", SpriteClassMock)
+      const moveDownSpy = jest.spyOn(Player.prototype, 'moveDown');
+      moveDownSpy.mockImplementation(() => {})
+      player.keyS.isDown = true;
+      player.updatePlayer();
+      
+      expect(moveDownSpy).toHaveBeenCalled();
+    })
+
+    it('If left key pressed calls the moveLeft function', () => {
+      
+      const player = new Player(sceneMock, 600, 600, "sadGuy", SpriteClassMock)
+      const moveLeftSpy = jest.spyOn(Player.prototype, 'moveLeft');
+      moveLeftSpy.mockImplementation(() => {})
+      player.keyA.isDown = true;
+      player.updatePlayer();
+      
+      expect(moveLeftSpy).toHaveBeenCalled();
+    })
+
+    it('If right key pressed calls the moveRigth function', () => {
+    
+      const player = new Player(sceneMock, 600, 600, "sadGuy", SpriteClassMock)
+      const moveRightSpy = jest.spyOn(Player.prototype, 'moveRight');
+      moveRightSpy.mockImplementation(() => {})
+      player.keyD.isDown = true;
+      player.updatePlayer();
+      
+      expect(moveRightSpy).toHaveBeenCalled();
     })
   })
-
-  // describe("#updatePlayer", () => {
-  //   it('calls the moveUp function', () => {
-      
-  //     const player = new Player(sceneMock, 600, 600, "sadGuy", SpriteClassMock)
-  //     player.updatePlayer();
-  //     expect(player.moveUp()).toHaveBeenCalledTimes(1)
-  //   })
-  // })
 
 });
 
