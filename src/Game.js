@@ -1,4 +1,7 @@
 import Player from "./Player.js";
+//
+import Enemy from "./Enemy.js";
+import Entity from "./Entity.js";
 
 class Game extends Phaser.Scene {
 	constructor() {
@@ -132,37 +135,11 @@ class Game extends Phaser.Scene {
 		this.cameras.main.startFollow(this.hero, true);
 
 		//sprites
-		//enemy
-	  	this.anims.create({
-			  key: 'skeleton',
-			  frames: this.anims.generateFrameNames('skeleton', {
-				  prefix: 'skeleton-walk-left/',
-				  suffix: '',
-				  start: 1,
-				  end: 3, 
-				  zeroPad: 2
-			  }),
-			  frameRate: 6,
-			  repeat: -1 
-		  })
+		//enemy////////////////
+		// this.add.sprite(1700, 1900, 'tpOnline').anims.play('tpOnRight').setTint(0x9999ff)
+		this.enemy = new Enemy(this , 250, 200, 'tpOnline')
 
-		  this.anims.create({
-			key: 'tpOnRight',
-			frames: this.anims.generateFrameNames('tpOnline', {
-				prefix: 'walk-right-',
-				suffix: '.png',
-				start: 1,
-				end: 3, 
-				zeroPad: 2
-			}),
-			frameRate: 8,
-			repeat: -1 
-		})
-
-		this.add.sprite(1800, 1900, 'skeleton').anims.play('skeleton')
-		this.add.sprite(1700, 1900, 'tpOnline').anims.play('tpOnRight').setTint(0x9999ff)
-
-		//tut end
+		//tutorial end -----------------
 		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 		this.muteMan = this.add
 			.image(30, 20, "muteMan")

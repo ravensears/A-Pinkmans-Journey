@@ -25,8 +25,9 @@ class Boot extends Phaser.Scene {
 		this.load.image("muteMan", "/sprites/muteMan.png");
 		//tutorial
 		this.load.atlas('tpOnline', '../sprites/spritesheetV2.png', '../sprites/spritesheetV2.json');
-		this.load.atlas('skeleton', '/sprites/skeleton.png', '/sprites/skeleton.json');
-	};
+		// this.load.atlas('skeleton', '/sprites/skeleton.png', '/sprites/skeleton.json');
+		this.enemy //tut
+	}; //end preload
 
 	create() {
 		this.scene.start("Game");
