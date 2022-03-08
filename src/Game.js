@@ -7,8 +7,9 @@ class Game extends Phaser.Scene {
     });
   }
 
-  create() {
-    this.music = this.sound.add("treasure_song");
+	create() {
+
+		this.music = this.sound.add("treasure_song");
 
     const musicConfig = {
       mute: false,
@@ -33,66 +34,72 @@ class Game extends Phaser.Scene {
     stuff.setCollisionByProperty({ collides: true });
 
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
+
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy");
 		this.heroHand.spriteObject.setScale(1.4)
 		this.heroHand.spriteObject.visible = false;
-
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
     this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
 
-    const group = this.physics.add.group({
-      key: "chicken",
-      frameQuantity: 300,
-    });
+
+    const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
+
+
+	const ui = this.add.rectangle(648, 732, 1200, 150, 0x002b36).setStrokeStyle(4, 0xefc53f).setScrollFactor(0);
+	ui.alpha = 0.75;
 
     const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
 
     Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
-    this.treasureIndex = 0;
+		this.temperatureIndex = 0;
+		this.messageIndex = -1;
 
-    this.treasureGroup = [
-      {},
+		this.treasureGroup = [
       {
-        x: 1011,
-        y: 1435,
-        width: 80,
-        height: 80,
-        message: "Found Treasure! Check in the wishing well",
-      },
-      {
-        x: 1539,
-        y: 2766,
-        width: 80,
-        height: 80,
-        message: "Found Treasure! Check under a chicken",
-      },
-      {
-        x: 1800,
-        y: 500,
-        width: 80,
-        height: 80,
-        message: "Check in the tube seat looking room by the pipe",
-      },
-      {
-        x: 50,
-        y: 2350,
-        width: 80,
-        height: 80,
-        message: "Check under the control desk",
-      },
-      {
-        x: 1369,
-        y: 1811,
-        width: 80,
-        height: 80,
-        message: "Game over!!",
-      },
-    ];
-
-    function gameOver() {
-      console.log(`nice work buddy!`);
-    }
+				x: 1679,
+				y: 1418,
+				width: 30,
+				height: 63,
+				message: "Found Treasure! Check in the couch",
+			},
+			{
+				x: 1011,
+				y: 1435,
+				width: 80,
+				height: 80,
+				message: "Found Treasure! Check in the wishing well",
+			},
+			{
+				x: 1539,
+				y: 2766,
+				width: 80,
+				height: 80,
+				message:
+					"Found Treasure! Check under a chicken",
+			},
+			{
+				x: 1800, 
+				y: 500,
+				width: 80,
+				height: 80,
+				message: "Check in the tube seat looking room by the pipe",
+      		},
+			{
+				x: 50,
+				y: 2350,
+				width: 80,
+				height: 80,
+				message: "Check under the control desk",
+			},
+			{
+				x: 1369,
+				y: 1811,
+				width: 80,
+				height: 80,
+				message: "Game over!!",
+			},
+		];
 
 		const generateTreasure = (treasure) => {
 			let treasureShape = this.add.rectangle(
@@ -105,50 +112,41 @@ class Game extends Phaser.Scene {
 			let treasureObj = this.physics.add.existing(treasureShape, 1);
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
-			this.physics.add.overlap(treasureObj, this.heroHand.spriteObject, findTreasure);
-		  this.treasureIndex++;
+      
+			this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
+		  this.temperatureIndex++;
+
 			return treasureObj;
 		};
 
-    const generateNextTreasure = () => {
-      generateTreasure(this.treasureGroup[this.treasureIndex]);
-    };
+		const generateNextTreasure = () => {
+			generateTreasure(this.treasureGroup[this.temperatureIndex]);
+		}
 
     const sfx = this.sound.add("beep");
     const keyObj = this.input.keyboard.addKey("E");
     this.score = 0;
 
-    const destroyMessage = (msg) => {
-      setTimeout(() => {
-        msg.destroy();
-      }, 5000);
-    };
+		const nextTreasure = () => {
+			this.temperatureIndex === this.treasureGroup.length
+				? this.scene.start("GameComplete")
+				: generateNextTreasure();
+		}
 
-    const nextTreasure = () => {
-      this.treasureIndex === this.treasureGroup.length
-        ? gameOver()
-        : generateNextTreasure();
-    };
-
-    const findTreasure = (treasure) => {
-      if (treasure.active) {
-        if (treasure.body.embedded && keyObj.isDown) {
-          console.log(
-            `You found the treasure at ${treasure.x}, ${treasure.y}!`
-          );
-          this.score++;
-          sfx.play();
-          let msg = this.add.text(
-            treasure.x,
-            treasure.y,
-            treasure.data.list.message
-          );
-          destroyMessage(msg);
-          treasure.setActive(false);
-          nextTreasure();
-        }
-      }
-    };
+		const findTreasure = (treasure) => {
+			if (treasure.active) {
+				if (treasure.body.embedded && keyObj.isDown) {
+					console.log(
+						`You found the treasure at ${treasure.x}, ${treasure.y}!`
+					);
+					this.score++;
+					sfx.play();
+					treasure.setActive(false);
+					this.messageIndex++;
+					nextTreasure();
+				}
+			}
+		};
 
     this.treasure1 = generateTreasure({
       x: 1679,
@@ -162,23 +160,24 @@ class Game extends Phaser.Scene {
 
 		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
-    this.muteMan = this.add
-      .image(30, 20, "muteMan")
-      .setInteractive()
-      .setScale(2)
-      .setScrollFactor(0);
+		this.muteMan = this.add
+			.image(85, 673, "muteMan")
+			.setInteractive()
+			.setScale(2.2)
+			.setScrollFactor(0);
 
 		this.physics.add.collider(this.hero.spriteObject, stuff);
 		this.physics.add.collider(this.hero2, stuff);
 		this.physics.add.collider(this.hero.spriteObject, walls);
 		this.physics.add.collider(this.hero2, walls);
+
     this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
     this.physics.add.collider(this.hero.spriteObject, group);
     this.physics.add.collider(group, walls)
 
-    this.text = this.add
-      .text(5, 40, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
-      .setScrollFactor(0);
+		this.text = this.add
+			.text(58, 733, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
+			.setScrollFactor(0);
 
     this.anims.create({
       key: "right",
@@ -223,25 +222,56 @@ class Game extends Phaser.Scene {
       console.log("muteMan in action!");
     });
 
-    this.scoreText = this.add
-      .text(1000, 0, `Treasures: ${this.score}`, {
-        fontSize: "32px",
-        fill: "#ffffff",
-      })
-      .setScrollFactor(0);
+// 		this.scoreText = this.add
+// 			.text(1000, 0, `Treasures: ${this.score}`, {
+// 				fontSize: "32px",
+// 				fill: "#ffffff",
+// 			})
+// 			.setScrollFactor(0);
+		
+		this.initialTime = 500;
 
-    this.initialTime = 500;
+		this.timerText = this.add
+			.text(58, 705, "Countdown: " + formatTime(this.initialTime), {
+				font: "24px Courier", 
+				fill: "#00ff00"
+			})
+			.setScrollFactor(0);
 
     this.timerText = this.add
       .text(500, 10, "Countdown: " + formatTime(this.initialTime))
       .setScrollFactor(0);
 
-    this.timedEvent = this.time.addEvent({
-      delay: 1000,
-      callback: onEvent,
-      callbackScope: this,
-      loop: true,
-    });
+		this.treasureMessage = () => {
+			if(this.messageIndex < 0) {
+				return "Look in the desk"
+			} else {
+				return this.treasureGroup[this.messageIndex].message
+			}
+		};
+
+		this.clueText = this.add
+		.text(135, 660, "Current Clue: " + this.treasureMessage(), {
+			fontSize: "28px",
+			fill: "#ffffff",
+		})
+		.setScrollFactor(0);
+
+		function formatTime(seconds) {
+			var minutes = Math.floor(seconds / 60);
+			var partInSeconds = seconds % 60;
+			partInSeconds = partInSeconds.toString().padStart(2, "0");
+			return `${minutes}:${partInSeconds}`;
+		};
+		function onEvent() {
+			this.initialTime -= 1;
+			if (this.initialTime >= 1){
+			this.timerText.setText("Countdown: " + formatTime(this.initialTime));
+			} else {
+			this.scene.start("GameOver");
+			};
+		};
+	}
 
     function formatTime(seconds) {
       var minutes = Math.floor(seconds / 60);
@@ -264,8 +294,10 @@ class Game extends Phaser.Scene {
   update() {
     this.treasureDetector = () => {
       const treasureProximity = (distance) => { 
+
        return Math.abs(this.hero.spriteObject.x - this.treasureGroup[this.treasureIndex - 1].x) <= distance &&
         Math.abs(this.hero.spriteObject.y - this.treasureGroup[this.treasureIndex - 1].y) <= distance 
+
       };
 
       if (!this.treasure1.active) {
@@ -288,20 +320,23 @@ class Game extends Phaser.Scene {
     };
 
 		this.text.setText([
-			"screen x: " + this.input.x,
-			"screen y: " + this.input.y,
+			// "screen x: " + this.input.x,
+			// "screen y: " + this.input.y,
+			// "hero x: " + this.hero.x.toFixed(0),
+			// "hero y: " + this.hero.y.toFixed(0),
 			"world x: " + this.input.mousePointer.worldX.toFixed(0),
 			"world y: " + this.input.mousePointer.worldY.toFixed(0),
-			"hero x: " + this.hero.spriteObject.x.toFixed(0),
-			"hero y: " + this.hero.spriteObject.y.toFixed(0),
-      "Treasure Detector: " + this.treasureDetector(),
-    ]);
 
-		this.scoreText.setText(`Treasures: ${this.score}`);
+			`Treasures: ${this.score}`,
+     		"Treasure Detector: " + this.treasureDetector(),
+		]);
+
 		this.hero.updatePlayer();
 		this.heroHand.updateHand(this.hero);
+
+		this.clueText.setText("Current Clue: " + this.treasureMessage());	
+
 	}
-	
 }
 
 export default Game;
