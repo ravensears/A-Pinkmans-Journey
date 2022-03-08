@@ -69,4 +69,7 @@ app.get('/game', (_req, res) => {
 app.use(cors());
 app.use(express.json());
 app.use(express.static('src'));
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+//app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(process.env.PORT || 3000, () => {  
+  console.log(`app is running on port ${process.env.PORT}`);
+}) 
