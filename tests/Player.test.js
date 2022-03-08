@@ -3,38 +3,25 @@
  */
 
 import 'jest-canvas-mock';
-// import Phaser from 'phaser';
+import * as Phaser from 'phaser';
+import { SpriteClassMock, sceneMock } from './__mocks__/phaserMock.js';
 import Player from '../src/Player.js';
 
-class Phaser {
-  constructor(scene, x, y, sprite) {
-    this.scene = scene;
-    this.x = x;
-    this.y = y;
-    this.sprite = sprite;
-    this.keyboard = {addKey: "A"}
-  }
-}
 
 describe("Player class instance", () => {
 
-  // it("Phaser mock works", () => {
-    
-  //   const player = new Player("Game", 600, 600, "sadGuy", Phaser)
-  //   expect(player).toBeInstanceOf(Player);
-  // });
-  
   it("returns Phaser object", () => {
     expect(Phaser).toBeInstanceOf(Object)
   });
 
   describe("#createPlayer", () => {
-    const player = new Player("Game", 600, 600, "sadGuy", Phaser)
-    it("returns spriteObject", () => {
-      expect(player.createObject).toEqual("this.spriteObject")
+    const player = new Player(sceneMock, 600, 600, "sadGuy", SpriteClassMock)
+
+    it("creates Sprite Object", () => {
+      expect(player.createPlayer()).toBeInstanceOf(SpriteClassMock)
     });
 
-    it("returns Phaser object", () => {
+    it("creates Player object", () => {
       expect(player).toBeInstanceOf(Player)
     });
 });
