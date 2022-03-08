@@ -21,7 +21,7 @@ class Game extends Phaser.Scene {
 		};
 
 		this.music.play(musicConfig);
-		this.musicOn = true;
+    this.musicOn = true;
 
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
@@ -34,10 +34,12 @@ class Game extends Phaser.Scene {
 		stuff.setCollisionByProperty({ collides: true });
 
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
-		this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
+		this.heroHand = new Player(this, 1600, 1600, "sadGuy");
+		this.heroHand.spriteObject.setScale(1.4)
+		this.heroHand.spriteObject.visible = false;
+
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
     this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
-		this.heroHand.visible = false;
 
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
@@ -102,7 +104,7 @@ class Game extends Phaser.Scene {
 			let treasureObj = this.physics.add.existing(treasureShape, 1);
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
-			this.physics.add.overlap(treasureObj, this.heroHand, findTreasure);
+			this.physics.add.overlap(treasureObj, this.heroHand.spriteObject, findTreasure);
 		  this.treasureIndex++;
 			return treasureObj;
 		};
@@ -155,9 +157,9 @@ class Game extends Phaser.Scene {
 			message: "Found Treasure! Check in the couch",
 		});
 
-		this.physics.add.overlap(this.treasure1, this.heroHand, findTreasure);
+		this.physics.add.overlap(this.treasure1, this.heroHand.spriteObject, findTreasure);
 
-		this.cameras.main.startFollow(this.hero, true);
+		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
 		this.muteMan = this.add
 			.image(30, 20, "muteMan")
@@ -165,12 +167,12 @@ class Game extends Phaser.Scene {
 			.setScale(2)
 			.setScrollFactor(0);
 
-		this.physics.add.collider(this.hero, stuff);
+		this.physics.add.collider(this.hero.spriteObject, stuff);
 		this.physics.add.collider(this.hero2, stuff);
-		this.physics.add.collider(this.hero, walls);
+		this.physics.add.collider(this.hero.spriteObject, walls);
 		this.physics.add.collider(this.hero2, walls);
-    this.physics.add.collider(this.hero, this.treasureChicken);
-    this.physics.add.collider(this.hero, group);
+    this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
+    this.physics.add.collider(this.hero.spriteObject, group);
     this.physics.add.collider(group, walls)
 
 		this.text = this.add
@@ -207,7 +209,7 @@ class Game extends Phaser.Scene {
 			frameRate: 20,
 		});
 
-		this.physics.add.collider(this.hero, this.hero2);
+		this.physics.add.collider(this.hero.spriteObject, this.hero2);
 
 		this.mute = this.muteMan.on("pointerdown", () => {
 			if (this.musicOn === true) {
@@ -260,8 +262,8 @@ class Game extends Phaser.Scene {
 	update() {
     this.treasureDetector = () => {
       const treasureProximity = (distance) => { 
-       return Math.abs(this.hero.x - this.treasureGroup[this.treasureIndex - 1].x) <= distance &&
-        Math.abs(this.hero.y - this.treasureGroup[this.treasureIndex - 1].y) <= distance 
+       return Math.abs(this.hero.spriteObject.x - this.treasureGroup[this.treasureIndex - 1].x) <= distance &&
+        Math.abs(this.hero.spriteObject.y - this.treasureGroup[this.treasureIndex - 1].y) <= distance 
       };
 
 			if (!this.treasure1.active) {
@@ -298,13 +300,12 @@ class Game extends Phaser.Scene {
 			"screen y: " + this.input.y,
 			"world x: " + this.input.mousePointer.worldX.toFixed(0),
 			"world y: " + this.input.mousePointer.worldY.toFixed(0),
-			"hero x: " + this.hero.x.toFixed(0),
-			"hero y: " + this.hero.y.toFixed(0),
+			"hero x: " + this.hero.spriteObject.x.toFixed(0),
+			"hero y: " + this.hero.spriteObject.y.toFixed(0),
       "Treasure Detector: " + this.treasureDetector(),
 		]);
 
 		this.scoreText.setText(`Treasures: ${this.score}`);
-
 		this.hero.updatePlayer();
 		this.heroHand.updateHand(this.hero);
 	}
