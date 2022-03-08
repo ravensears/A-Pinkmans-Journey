@@ -35,7 +35,15 @@ class Game extends Phaser.Scene {
 
 		this.hero = new Player(this, 1600, 1600, "sadGuy");
 		this.heroHand = new Player(this, 1600, 1600, "sadGuy").setScale(1.4);
+    this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
+    this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
 		this.heroHand.visible = false;
+
+    const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
+
+    const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
+
+    Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
 		this.treasureIndex = 0;
 
@@ -54,8 +62,15 @@ class Game extends Phaser.Scene {
 				width: 80,
 				height: 80,
 				message:
-					"Found Treasure! Check by the pipe in the tube seatcover-looking room",
+					"Found Treasure! Check under a chicken",
 			},
+      {
+        x: 1800, 
+        y: 500,
+        width: 80,
+				height: 80,
+				message: "Check in the tube seat looking room by the pipe",
+      },
 			{
 				x: 50,
 				y: 2350,
@@ -144,8 +159,6 @@ class Game extends Phaser.Scene {
 
 		this.cameras.main.startFollow(this.hero, true);
 
-		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
-
 		this.muteMan = this.add
 			.image(30, 20, "muteMan")
 			.setInteractive()
@@ -156,6 +169,9 @@ class Game extends Phaser.Scene {
 		this.physics.add.collider(this.hero2, stuff);
 		this.physics.add.collider(this.hero, walls);
 		this.physics.add.collider(this.hero2, walls);
+    this.physics.add.collider(this.hero, this.treasureChicken);
+    this.physics.add.collider(this.hero, group);
+    this.physics.add.collider(group, walls)
 
 		this.text = this.add
 			.text(5, 40, "Cursors to move", { font: "16px Courier", fill: "#00ff00" })
