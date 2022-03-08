@@ -1,5 +1,5 @@
 import Player from "./Player.js";
-import Wormhole from "./Wormhole.js";
+import Trap from "./Trap.js";
 
 class Game extends Phaser.Scene {
 	constructor() {
@@ -290,7 +290,7 @@ class Game extends Phaser.Scene {
 		}
 
 		this.wormholesfx = this.sound.add("wormhole");
-		this.wormhole = new Wormhole(this, keyObj);
+		this.traps = new Trap(this, keyObj);
 
 		const wormholes = [
 			{ x: 1343, y: 2490, width: 70, height: 75 },
@@ -299,7 +299,14 @@ class Game extends Phaser.Scene {
 			{ x: 1439, y: 3093, width: 70, height: 75 },
 		];
 
-		wormholes.forEach((wormhole) => this.wormhole.generateWormhole(wormhole));
+		wormholes.forEach((wormhole) =>
+			this.traps.generateTrap(wormhole, this.traps.findWormHole)
+		);
+
+		this.traps.generateTrap(
+			{ x: 1700, y: 1700, width: 70, height: 75 },
+			this.traps.goInvisible
+		);
 	}
 
 	// ************UPDATE****************
