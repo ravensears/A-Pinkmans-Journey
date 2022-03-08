@@ -42,6 +42,8 @@ class Game extends Phaser.Scene {
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
     this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
 
+		// this.hero.spriteObject.body.setFriction(0);
+
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
 
@@ -52,14 +54,14 @@ class Game extends Phaser.Scene {
 	
     Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
-		const iceRink1 = this.add.rectangle(1920, 1315, 604, 920);
-		const iceRink2 = this.add.rectangle(1920, 2242, 1248, 348);
+		// const iceRink1 = this.add.rectangle(1920, 1315, 604, 920);
+		// const iceRink2 = this.add.rectangle(1920, 2242, 1248, 348);
 
-		this.physics.add.existing(iceRink1);
-		this.physics.add.existing(iceRink2);
+		// this.physics.add.existing(iceRink1);
+		// this.physics.add.existing(iceRink2);
 
-		iceRink1.body.setFriction(0);
-		iceRink2.body.setFriction(0);
+		// iceRink1.body.setFriction(0);
+		// iceRink2.body.setFriction(0);
 
 		this.temperatureIndex = 0;
 		this.messageIndex = -1;
