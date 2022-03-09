@@ -14,7 +14,7 @@ class GameStart extends Phaser.Scene {
 
     this.add
       .text(640, 360, "A Pinkman's Journey", {
-        font: "80px Dogica",
+        font: "80px Source Sans Pro",
         fill: "#FFFFFF",
       })
       .setOrigin(0.5, 2.75);

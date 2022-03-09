@@ -15,7 +15,7 @@ class Instructions extends Phaser.Scene {
     {
         this.add.image(
             660, 360, "pinkman")
-            .setOrigin(0.5, 0.40).setScale(0.3);
+            .setOrigin(1.5, 0.40).setScale(0.3);
 
         this.add.text(
             640, 
@@ -34,40 +34,50 @@ class Instructions extends Phaser.Scene {
             360, 
             "Click to start", 
             {
-                font: "40px Source Sans Pro",
+                font: "45px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(0.5, -3.5);
+        ).setOrigin(0.5, -5.5);
 
         this.add.text(
             640,
             360,
-            "Follow the clues and find them all within the time limit!",
-            {
-                font: "30px Source Sans Pro",
-                fill: "#FFFFFF",
-            }
-        ).setOrigin(0.5, -1.5);
-
-        this.add.text(
-            640,
-            360,
-            "Movement: W A S D || Arrow keys",
+            "Follow the clues",
             {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(0.5, 4);
+        ).setOrigin(-0.89, 3.5);
 
         this.add.text(
             640,
             360,
-            "Interact: E",
+            "Find them all within the time limit",
             {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(0.5, 2);
+        ).setOrigin(0.09, 1.5);
+
+        this.add.text(
+            640,
+            360,
+            "Move using: W A S D  ||  Arrow keys",
+            {
+                font: "20px Source Sans Pro",
+                fill: "#FFFFFF",
+            }
+        ).setOrigin(0.09, -.5);
+
+        this.add.text(
+            640,
+            360,
+            "Pick up treasure: E",
+            {
+                font: "20px Source Sans Pro",
+                fill: "#FFFFFF",
+            }
+        ).setOrigin(-0.67, -2.5);
         
     };
 

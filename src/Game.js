@@ -34,7 +34,7 @@ class Game extends Phaser.Scene {
     const sfx = this.sound.add("beep");
     const keyObj = this.input.keyboard.addKey("E");
     const group = this.physics.add.group({
-      key: "chicken",
+      key: "basketball",
       frameQuantity: 300,
     });
     const ui = this.add
@@ -115,7 +115,7 @@ class Game extends Phaser.Scene {
         2766,
         80,
         80,
-        "Found Treasure! Check under the treasure chicken"
+        "Found Treasure! Check under the basketball"
       ),
       new Treasure(
         1800,
