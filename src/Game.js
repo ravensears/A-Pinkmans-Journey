@@ -25,11 +25,48 @@ class Game extends Phaser.Scene {
 		this.music.play(musicConfig);
 		this.musicOn = true;
 
+		this.muteMan = this.add
+		.image(85, 673, "muteMan")
+		.setInteractive()
+		.setScale(2.2)
+		.setScrollFactor(0);
+
+		this.mute = this.muteMan.on("pointerdown", () => {
+			if (this.musicOn === true) {
+				this.music.stop();
+				this.musicOn = false;
+			} else {
+				this.music.play(musicConfig);
+				this.musicOn = true;
+			}
+			console.log("muteMan in action!");
+		});
+
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
 		const floor = map.createStaticLayer("floor", tileset);
 		const walls = map.createStaticLayer("walls", tileset);
 		const stuff = map.createStaticLayer("stuff", tileset);
+		const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
+		const sfx = this.sound.add("beep");
+		const keyObj = this.input.keyboard.addKey("E");
+		const group = this.physics.add.group({
+			key: "chicken",
+			frameQuantity: 300,
+		});
+		const ui = this.add
+			.rectangle(648, 732, 1200, 150, 0x002b36)
+			.setStrokeStyle(4, 0xefc53f)
+			.setScrollFactor(0);
+		ui.alpha = 0.75;
+		Phaser.Actions.RandomRectangle(group.getChildren(), rect);
+
+		this.score = 0;
+		this.temperatureIndex = 0;
+		this.messageIndex = -1;
+		this.initialTime = 500;
+		this.wormholesfx = this.sound.add("wormhole");
+		this.traps = new Trap(this, keyObj);
 
 		walls.setCollisionByProperty({ collides: true });
 		stuff.setCollisionByProperty({ collides: true });
@@ -55,23 +92,20 @@ class Game extends Phaser.Scene {
 			.staticSprite(238, 738, "tree")
 			.setScale(2);
 
-		const group = this.physics.add.group({
-			key: "chicken",
-			frameQuantity: 300,
-		});
+		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
-		const ui = this.add
-			.rectangle(648, 732, 1200, 150, 0x002b36)
-			.setStrokeStyle(4, 0xefc53f)
-			.setScrollFactor(0);
-		ui.alpha = 0.75;
+		this.physics.add.collider(this.hero.spriteObject, stuff);
+		this.physics.add.collider(this.hero.spriteObject, walls);
+		this.physics.add.collider(this.hero.spriteObject, this.cake);
+		this.physics.add.collider(this.hero.spriteObject, this.drink);
+		this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
+		this.physics.add.collider(this.hero.spriteObject, this.hero2);
+		this.physics.add.collider(this.hero.spriteObject, group);
+		this.physics.add.collider(this.hero.spriteObject, this.tree);
+		this.physics.add.collider(this.hero2, walls);
+		this.physics.add.collider(this.hero2, stuff);
+		this.physics.add.collider(group, walls);
 
-		const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
-
-		Phaser.Actions.RandomRectangle(group.getChildren(), rect);
-
-		this.temperatureIndex = 0;
-		this.messageIndex = -1;
 
 		this.treasureGroup = [
 			new Treasure(1679, 1418, 80, 80, "Found Treasure! Check in the couch over there"),
@@ -84,6 +118,14 @@ class Game extends Phaser.Scene {
 			new Treasure(1369, 1811, 80, 80, "You found the final treasure!!! Woooo!!"),
 		];
 
+		const addOverlap = (obj1, obj2, callback) => {
+			this.physics.add.overlap(
+				obj1,
+				obj2,				
+				callback
+			);
+		};
+
 		const generateTreasure = (treasure) => {
 			let treasureShape = this.add.rectangle(
 				treasure.x,
@@ -95,11 +137,12 @@ class Game extends Phaser.Scene {
 			treasureObj.visible = false;
 			treasureObj.setData({ message: treasure.message });
 
-			this.physics.add.overlap(
-				treasureObj,
-				this.heroHand.spriteObject,
+			addOverlap(
+				treasureObj, 
+				this.heroHand.spriteObject, 
 				findTreasure
 			);
+
 			this.temperatureIndex++;
 
 			return treasureObj;
@@ -108,10 +151,6 @@ class Game extends Phaser.Scene {
 		const generateNextTreasure = () => {
 			generateTreasure(this.treasureGroup[this.temperatureIndex]);
 		};
-
-		const sfx = this.sound.add("beep");
-		const keyObj = this.input.keyboard.addKey("E");
-		this.score = 0;
 
 		const nextTreasure = () => {
 			this.temperatureIndex === this.treasureGroup.length
@@ -134,32 +173,26 @@ class Game extends Phaser.Scene {
 			}
 		};
 
+		this.treasureProximity = (distance) => {
+			return (
+				Math.abs(
+					this.hero.spriteObject.x -
+						this.treasureGroup[this.temperatureIndex - 1].x
+				) <= distance &&
+				Math.abs(
+					this.hero.spriteObject.y -
+						this.treasureGroup[this.temperatureIndex - 1].y
+				) <= distance
+			);
+		};
+
 		this.treasure1 = generateTreasure(this.treasureGroup[0]);
 
-		this.physics.add.overlap(
+		addOverlap(
 			this.treasure1,
 			this.heroHand.spriteObject,
 			findTreasure
 		);
-		this.physics.add.collider(this.hero.spriteObject, stuff);
-		this.physics.add.collider(this.hero2, stuff);
-		this.physics.add.collider(this.hero.spriteObject, walls);
-		this.physics.add.collider(this.hero2, walls);
-		this.physics.add.collider(this.hero.spriteObject, this.cake);
-		this.physics.add.collider(this.hero.spriteObject, this.drink);
-    this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
-    this.physics.add.collider(this.hero.spriteObject, group);
-		this.physics.add.collider(this.hero.spriteObject, this.tree);
-    this.physics.add.collider(group, walls);
-
-
-		this.cameras.main.startFollow(this.hero.spriteObject, true);
-
-		this.muteMan = this.add
-			.image(85, 673, "muteMan")
-			.setInteractive()
-			.setScale(2.2)
-			.setScrollFactor(0);
 
 		this.text = this.add
 			.text(58, 733, "Cursors to move", {
@@ -197,21 +230,6 @@ class Game extends Phaser.Scene {
 			frames: [{ key: "sadGuy", frame: 4 }],
 			frameRate: 20,
 		});
-
-		this.physics.add.collider(this.hero.spriteObject, this.hero2);
-
-		this.mute = this.muteMan.on("pointerdown", () => {
-			if (this.musicOn === true) {
-				this.music.stop();
-				this.musicOn = false;
-			} else {
-				this.music.play(musicConfig);
-				this.musicOn = true;
-			}
-			console.log("muteMan in action!");
-		});
-
-		this.initialTime = 500;
 
 		this.timerText = this.add
 			.text(58, 705, "Countdown: " + formatTime(this.initialTime), {
@@ -257,9 +275,6 @@ class Game extends Phaser.Scene {
 			}
 		}
 
-		this.wormholesfx = this.sound.add("wormhole");
-		this.traps = new Trap(this, keyObj);
-
 		const wormholes = [
 			{ x: 1343, y: 2490, width: 70, height: 75 },
 			{ x: 1728, y: 2518, width: 70, height: 75 },
@@ -300,39 +315,26 @@ class Game extends Phaser.Scene {
 		);
 
 		this.traps.generateTrap(
-			{ x: 355, y: 2715, width: 70, height: 1000 },
+			{ x: 355, y: 2715, width: 70, height: 70 },
 			this.traps.goTiny
 		);
 
 		this.traps.generateTrap(
-			{ x: 1763, y: 2382, width: 70, height: 1000 },
+			{ x: 1763, y: 2382, width: 70, height: 70 },
 			this.traps.goBig
 		);
 
-		this.treasureDetector = () => {
-			const treasureProximity = (distance) => {
-				return (
-					Math.abs(
-						this.hero.spriteObject.x -
-							this.treasureGroup[this.temperatureIndex - 1].x
-					) <= distance &&
-					Math.abs(
-						this.hero.spriteObject.y -
-							this.treasureGroup[this.temperatureIndex - 1].y
-					) <= distance
-				);
-			};
-
+		const treasureDetector = () => {
 			if (!this.treasure1.active) {
-				if (treasureProximity(120)) {
+				if (this.treasureProximity(120)) {
 					return "HOT!!!";
-				} else if (treasureProximity(450)) {
+				} else if (this.treasureProximity(450)) {
 					return "Getting hotter!";
-				} else if (treasureProximity(750)) {
+				} else if (this.treasureProximity(750)) {
 					return "Warm";
-				} else if (treasureProximity(1200)) {
+				} else if (this.treasureProximity(1200)) {
 					return "warming up a little";
-				} else if (treasureProximity(1500)) {
+				} else if (this.treasureProximity(1500)) {
 					return "Cold";
 				} else {
 					return "What's cooler than being cold? Ice cold!!";
@@ -349,16 +351,15 @@ class Game extends Phaser.Scene {
 			"hero y: " + this.hero.spriteObject.y.toFixed(0),
 			// "world x: " + this.input.mousePointer.worldX.toFixed(0),
 			// "world y: " + this.input.mousePointer.worldY.toFixed(0),
-
 			"Treasures: " + this.score,
-			"Treasure Detector: " + this.treasureDetector(),
+			"Treasure Detector: " + treasureDetector(),
 		]);
 
 		this.hero.updatePlayer();
 		this.heroHand.updateHand(this.hero);
 
 		this.clueText.setText(this.treasureMessage());
-	}
-}
+	};
+};
 
 export default Game;
