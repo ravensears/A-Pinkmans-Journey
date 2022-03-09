@@ -38,22 +38,22 @@ class Player {
   }
 
   moveUp() {
-    this.spriteObject.body.setVelocityY(-180);
+    this.spriteObject.body.setVelocityY(-225);
     this.spriteObject.play("top", true);
   }
 
   moveDown() {
-    this.spriteObject.body.setVelocityY(180);
+    this.spriteObject.body.setVelocityY(225);
     this.spriteObject.play("down", true);
   }
 
   moveLeft() {
-    this.spriteObject.body.setVelocityX(-180);
+    this.spriteObject.body.setVelocityX(-225);
     this.spriteObject.play("left", true);
   }
 
   moveRight() {
-    this.spriteObject.body.setVelocityX(180);
+    this.spriteObject.body.setVelocityX(225);
     this.spriteObject.play("right", true);
   }
 }

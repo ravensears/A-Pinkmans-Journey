@@ -22,7 +22,7 @@ class Game extends Phaser.Scene {
       delay: 0,
     };
 
-    this.music.play(musicConfig);
+    // this.music.play(musicConfig);
     this.musicOn = true;
 
     const map = this.make.tilemap({ key: "tilemap" });
@@ -34,14 +34,15 @@ class Game extends Phaser.Scene {
     const sfx = this.sound.add("beep");
     const keyObj = this.input.keyboard.addKey("E");
     const group = this.physics.add.group({
-      key: "basketball",
-      frameQuantity: 300,
+      key: "ball1",
+      frameQuantity: 250,
     });
-    const ui = this.add
-      .rectangle(648, 732, 1200, 150, 0x002b36)
-      .setStrokeStyle(4, 0xefc53f)
-      .setScrollFactor(0);
-    ui.alpha = 0.75;
+    let array = group.getChildren();
+    array.forEach((ball) =>
+      ball.setBounce(1, 1));
+    array.forEach((ball) => 
+    this.physics.add.collider(group, ball));
+    
     Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
     this.score = 0;
@@ -54,8 +55,8 @@ class Game extends Phaser.Scene {
     walls.setCollisionByProperty({ collides: true });
     stuff.setCollisionByProperty({ collides: true });
 
-    this.hero = new Player(this, 1600, 1600, "sadGuy");
-    this.heroHand = new Player(this, 1600, 1600, "sadGuy");
+    this.hero = new Player(this, 1500, 1600, "sadGuy");
+    this.heroHand = new Player(this, 1500, 1600, "sadGuy");
 
     this.heroHand.spriteObject.setScale(1.4);
     this.heroHand.spriteObject.visible = false;
@@ -63,15 +64,29 @@ class Game extends Phaser.Scene {
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman").setScale(0.03);
 
     this.treasureChicken = this.physics.add
-      .staticSprite(1800, 500, "chicken")
-      .setScale(1.3);
+      .staticSprite(1800, 500, "ball1")
+      .setScale(1.1);
     this.cake = this.physics.add
       .staticSprite(1763, 2382, "eatMe")
       .setScale(1.7);
     this.drink = this.physics.add
       .staticSprite(355, 2715, "drinkMe")
       .setScale(1.4);
-    this.tree = this.physics.add.staticSprite(238, 738, "tree").setScale(2);
+
+    this.heart = this.physics.add.staticSprite(240, 760, "heart");
+    this.treasure = this.physics.add.staticSprite(2404, 3080, "treasureChest");
+    this.tree11 = this.physics.add.staticSprite(360, 2150, "tree1");
+    this.tree12 = this.physics.add.staticSprite(490, 2470, "tree1");
+    this.tree13 = this.physics.add.staticSprite(700, 2700, "tree1");
+    this.tree14 = this.physics.add.staticSprite(920, 2100, "tree1");
+    this.tree21 = this.physics.add.staticSprite(900, 2600, "tree2");
+    this.tree22 = this.physics.add.staticSprite(279, 2200, "tree2");
+    this.tree23 = this.physics.add.staticSprite(275, 2750, "tree2");
+    this.tree24 = this.physics.add.staticSprite(630, 2400, "tree2");
+    this.tree31 = this.physics.add.staticSprite(950, 2730, "tree3");
+    this.treasureTree = this.physics.add.staticSprite(600, 2530, "tree3");
+    this.tree32 = this.physics.add.staticSprite(830, 2316, "tree3");
+    this.tree33 = this.physics.add.staticSprite(930, 2390, "tree3");
 
     this.cameras.main.startFollow(this.hero.spriteObject, true);
 
@@ -82,7 +97,8 @@ class Game extends Phaser.Scene {
     this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
     this.physics.add.collider(this.hero.spriteObject, this.hero2);
     this.physics.add.collider(this.hero.spriteObject, group);
-    this.physics.add.collider(this.hero.spriteObject, this.tree);
+    this.physics.add.collider(this.hero.spriteObject, this.heart);
+    this.physics.add.collider(this.hero.spriteObject, this.treasure);
     this.physics.add.collider(this.hero2, walls);
     this.physics.add.collider(this.hero2, stuff);
     this.physics.add.collider(group, walls);
@@ -122,18 +138,18 @@ class Game extends Phaser.Scene {
         500,
         80,
         80,
-        "Found treasure! Check in the ugly carpet room by the pipe"
+        "Found treasure! Check under a tree"
       ),
       new Treasure(
-        50,
-        2350,
+        600, 
+        2530,
         80,
         80,
-        "Found treasure! Check under the control desk"
+        "Found treasure! Find the treasure chest!!"
       ),
       new Treasure(
-        1369,
-        1811,
+        2404, 
+        3080,
         80,
         80,
         "You found the final treasure!!! Woooo!!"
@@ -208,13 +224,6 @@ class Game extends Phaser.Scene {
 
     addOverlap(this.treasure1, this.heroHand.spriteObject, findTreasure);
 
-    this.text = this.add
-      .text(58, 733, "Cursors to move", {
-        font: "16px Courier",
-        fill: "#00ff00",
-      })
-      .setScrollFactor(0);
-
     this.anims.create({
       key: "right",
       frames: this.anims.generateFrameNumbers("sadGuy", { start: 6, end: 8 }),
@@ -244,6 +253,12 @@ class Game extends Phaser.Scene {
       frames: [{ key: "sadGuy", frame: 4 }],
       frameRate: 20,
     });
+
+    const ui = this.add
+    .rectangle(648, 732, 1200, 150, 0x002b36)
+    .setStrokeStyle(4, 0xefc53f)
+    .setScrollFactor(0);
+    ui.alpha = 0.75;
 
     this.timerText = this.add
       .text(58, 705, "Countdown: " + formatTime(this.initialTime), {
@@ -322,11 +337,19 @@ class Game extends Phaser.Scene {
       }
     }
 
+    this.text = this.add
+    .text(58, 733, "Cursors to move", {
+      font: "16px Courier",
+      fill: "#00ff00",
+    })
+    .setScrollFactor(0);
+
     const wormholes = [
       { x: 1343, y: 2490, width: 70, height: 75 },
       { x: 1728, y: 2518, width: 70, height: 75 },
       { x: 1954, y: 2900, width: 70, height: 75 },
       { x: 1439, y: 3093, width: 70, height: 75 },
+      { x: 223, y: 3070, width: 70, height: 75 }
     ];
 
     wormholes.forEach((wormhole) =>
@@ -334,7 +357,27 @@ class Game extends Phaser.Scene {
     );
 
     this.traps.generateTrap(
-      { x: 1700, y: 1700, width: 70, height: 75 },
+      { x: 360, y: 2150, width: 70, height: 70 },
+      this.traps.goInvisible
+    );
+
+    this.traps.generateTrap(
+      { x: 700, y: 2700, width: 70, height: 70 },
+      this.traps.goInvisible
+    );
+
+    this.traps.generateTrap(
+      { x: 900, y: 2600, width: 70, height: 70 },
+      this.traps.goInvisible
+    );
+
+    this.traps.generateTrap(
+      { x: 630, y: 2400, width: 70, height: 70 },
+      this.traps.goInvisible
+    );
+
+    this.traps.generateTrap(
+      { x: 830, y: 2316, width: 70, height: 70 },
       this.traps.goInvisible
     );
   }
@@ -342,23 +385,28 @@ class Game extends Phaser.Scene {
   // ************UPDATE****************
   update() {
     this.traps.generateTrap(
-      { x: 2100, y: 1900, width: 170, height: 1000 },
+      { x: 2080, y: 1930, width: 140, height: 1150 },
       this.traps.goZoomDown
     );
 
     this.traps.generateTrap(
-      { x: 1993, y: 2025, width: 70, height: 70 },
+      { x: 2160, y: 2500, width: 230, height: 100 },
       this.traps.goZoomRight
     );
 
     this.traps.generateTrap(
-      { x: 2140, y: 1700, width: 70, height: 1000 },
+      { x: 2240, y: 1930, width: 140, height: 1150 },
       this.traps.goZoomUp
     );
 
     this.traps.generateTrap(
-      { x: 2140, y: 1500, width: 70, height: 1000 },
-      this.traps.goZoomLeft
+      { x: 2400, y: 1930, width: 140, height: 1150 },
+      this.traps.goZoomDown
+    );
+
+    this.traps.generateTrap(
+      { x: 2320, y: 1460, width: 260, height: 100 },
+      this.traps.goZoomRight
     );
 
     this.traps.generateTrap(
