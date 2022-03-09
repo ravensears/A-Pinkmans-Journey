@@ -1,47 +1,39 @@
 class GameStart extends Phaser.Scene {
+  constructor() {
+    super({
+      key: "GameStart",
+    });
+  }
 
-	constructor() {
-		super({
-			key: "GameStart",
-		});
-	}
+  preload() {
+    this.load.image("pinkman", "/sprites/new_pinkman.png");
+  }
 
-    preload () {
-        this.load.image("planet", "/sprites/pinkman_run.png");
+  create() {
+    this.add.image(660, 360, "pinkman").setOrigin(0.5, 0.40).setScale(0.3);
 
-    }
+    this.add
+      .text(640, 360, "A Pinkman's Journey", {
+        font: "80px Source Sans Pro",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5, 2.75);
 
-    create ()
-    {
-        this.add.text(
-            640, 
-            360, 
-            "A Pinkman's Journey", 
-            {
-                fontSize: "180px",
-                fill: "#ffffff",
-            }
-        ).setOrigin(0.5, 1.75);
+    this.input.once(
+      "pointerup",
+      function () {
+        this.scene.start("Instructions");
+      },
+      this
+    );
 
-        this.input.once('pointerup', function () {this.scene.start("Instructions")}, this);
-
-        this.add.text(
-            640, 
-            360, 
-            "Click for Instructions", 
-            {
-                fontSize: "52px",
-                fill: "#ffffff",
-            }
-        ).setOrigin(0.5, -3.5);
-
-        this.add.image(
-            640, 360, "planet")
-            .setOrigin(0.5, 0.5)
-            .setScale(3);
-
-        };
-
+    this.add
+      .text(640, 360, "Click for Instructions", {
+        font: "40px Source Sans Pro",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5, -5.5);
+  }
 }
 
 export default GameStart;

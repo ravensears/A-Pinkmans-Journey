@@ -34,7 +34,7 @@ class Game extends Phaser.Scene {
     const sfx = this.sound.add("beep");
     const keyObj = this.input.keyboard.addKey("E");
     const group = this.physics.add.group({
-      key: "chicken",
+      key: "basketball",
       frameQuantity: 300,
     });
     const ui = this.add
@@ -60,7 +60,7 @@ class Game extends Phaser.Scene {
     this.heroHand.spriteObject.setScale(1.4);
     this.heroHand.spriteObject.visible = false;
 
-    this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
+    this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman").setScale(0.03);
 
     this.treasureChicken = this.physics.add
       .staticSprite(1800, 500, "chicken")
@@ -115,7 +115,7 @@ class Game extends Phaser.Scene {
         2766,
         80,
         80,
-        "Found Treasure! Check under the treasure chicken"
+        "Found Treasure! Check under the basketball"
       ),
       new Treasure(
         1800,

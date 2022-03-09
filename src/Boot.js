@@ -16,7 +16,7 @@ class Boot extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
-
+    
     this.load.image("chicken", "/sprites/chicken.png");
     this.load.image("base_tiles", "/tiles/space_tileset.png");
     this.load.image("muteMan", "/sprites/muteMan.png");
