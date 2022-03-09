@@ -1,6 +1,6 @@
 ### Game Link:
 
-https://lonely-hearts-club.herokuapp.com/
+https://git.heroku.com/lonely-hearts-club.git
 
 ## User Stories:
 
@@ -33,3 +33,15 @@ As a lover of exciting loot,
 So I can see what an object contains,
 I want my interaction with an object to display text.
 ```
+
+## Credits
+
+Original Pinkman Sprite:
+https://pixelfrog-assets.itch.io/
+
+Planet Sprites:
+https://deep-fold.itch.io/pixel-planet-generator
+
+Space Tileset:
+https://v-ktor.itch.io/32x32-rpg-tilesets
+

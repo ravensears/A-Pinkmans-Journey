@@ -1,9 +1,9 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 const app = express();
-import passport from 'passport';
+import passport from "passport";
 
 // User Model
 import User from "../models/user.js";
@@ -61,34 +61,33 @@ router.post("/register", (req, res) => {
 
         // Hash Password
         bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              newUser.password = hash;
-              newUser
-                .save()
-                .then(user => {
-                  req.flash(
-                    'success_msg',
-                    'You are now registered and can log in'
-                  );
-                  res.redirect('/users/login');
-                })
-                .catch(err => console.log(err));
-            });
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then((user) => {
+                req.flash(
+                  "success_msg",
+                  "You are now registered and can log in"
+                );
+                res.redirect("/users/login");
+              })
+              .catch((err) => console.log(err));
           });
-        }
-      });
-    }
-  });
+        });
+      }
+    });
+  }
+});
 
 //Login Handle
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/game',
-    failureRedirect: '/users/login',
-    failureFlash: true
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", {
+    successRedirect: "/game",
+    failureRedirect: "/users/login",
+    failureFlash: true,
   })(req, res, next);
-})
+});
 
-  
 export default router;
