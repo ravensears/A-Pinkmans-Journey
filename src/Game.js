@@ -25,23 +25,6 @@ class Game extends Phaser.Scene {
 		this.music.play(musicConfig);
 		this.musicOn = true;
 
-		this.muteMan = this.add
-		.image(85, 673, "muteMan")
-		.setInteractive()
-		.setScale(2.2)
-		.setScrollFactor(0);
-
-		this.mute = this.muteMan.on("pointerdown", () => {
-			if (this.musicOn === true) {
-				this.music.stop();
-				this.musicOn = false;
-			} else {
-				this.music.play(musicConfig);
-				this.musicOn = true;
-			}
-			console.log("muteMan in action!");
-		});
-
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
 		const floor = map.createStaticLayer("floor", tileset);
@@ -279,6 +262,23 @@ class Game extends Phaser.Scene {
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);
+
+			this.muteMan = this.add
+				.image(85, 673, "muteMan")
+				.setInteractive()
+				.setScale(2.2)
+				.setScrollFactor(0);
+
+		this.mute = this.muteMan.on("pointerdown", () => {
+			if (this.musicOn === true) {
+				this.music.stop();
+				this.musicOn = false;
+			} else {
+				this.music.play(musicConfig);
+				this.musicOn = true;
+			}
+			console.log("muteMan in action!");
+		});
 
 		function formatTime(seconds) {
 			var minutes = Math.floor(seconds / 60);
