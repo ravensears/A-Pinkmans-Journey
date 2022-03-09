@@ -46,28 +46,28 @@ class Trap {
   goZoomDown = (trap) => {
     if (trap.body.embedded) {
       console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
-      this.scene.hero.spriteObject.body.setVelocityY(1000, 1000);
+      this.scene.hero.spriteObject.body.setVelocityY(800, 800);
     }
   };
 
   goZoomUp = (trap) => {
     if (trap.body.embedded) {
       console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
-      this.scene.hero.spriteObject.body.setVelocityY(-1000, 1000);
+      this.scene.hero.spriteObject.body.setVelocityY(-800, 800);
     }
   };
 
   goZoomLeft = (trap) => {
     if (trap.body.embedded) {
       console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
-      this.scene.hero.spriteObject.body.setVelocityX(-1000, 1000);
+      this.scene.hero.spriteObject.body.setVelocityX(-800, 800);
     }
   };
 
   goZoomRight = (trap) => {
     if (trap.body.embedded) {
       console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
-      this.scene.hero.spriteObject.body.setVelocityX(1000, 1000);
+      this.scene.hero.spriteObject.body.setVelocityX(800, 800);
     }
   };
 
