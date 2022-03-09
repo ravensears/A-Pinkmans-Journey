@@ -1,6 +1,5 @@
-https://github.com/ravensears/RPG-Game.git
-
 ### Game Link:
+
 https://lonely-hearts-club.herokuapp.com/
 
 ## User Stories:
