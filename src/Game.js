@@ -251,10 +251,26 @@ class Game extends Phaser.Scene {
 
 		this.treasureMessage = () => {
 			if (this.messageIndex < 0) {
-				return "Look in the desk!!";
+				return "Check out your coordinates";
 			} else {
 				return this.treasureGroup[this.messageIndex].message;
 			}
+		};
+
+		this.thermometer = () => {
+			if (this.treasureProximity(120)) {
+				return "HOT!!!";
+			} else if (this.treasureProximity(450)) {
+				return "Getting hotter!";
+			} else if (this.treasureProximity(750)) {
+				return "Warm";
+			} else if (this.treasureProximity(1200)) {
+				return "Warming up a little";
+			} else if (this.treasureProximity(1500)) {
+				return "Cold";
+			} else {
+				return "What's cooler than being cold? Ice cold!!";
+			};
 		};
 
 		this.clueText = this.add
@@ -330,19 +346,7 @@ class Game extends Phaser.Scene {
 
 		const treasureDetector = () => {
 			if (!this.treasure1.active) {
-				if (this.treasureProximity(120)) {
-					return "HOT!!!";
-				} else if (this.treasureProximity(450)) {
-					return "Getting hotter!";
-				} else if (this.treasureProximity(750)) {
-					return "Warm";
-				} else if (this.treasureProximity(1200)) {
-					return "warming up a little";
-				} else if (this.treasureProximity(1500)) {
-					return "Cold";
-				} else {
-					return "What's cooler than being cold? Ice cold!!";
-				}
+				return this.thermometer();
 			} else {
 				return "Go to coordinates 1676, 1411";
 			}
