@@ -158,17 +158,21 @@ class Game extends Phaser.Scene {
 				: generateNextTreasure();
 		};
 
+		const afterFindUpdate = () => {
+			this.score++;
+			this.messageIndex++;
+			sfx.play();
+			nextTreasure();
+		}
+
 		const findTreasure = (treasure) => {
 			if (treasure.active) {
 				if (treasure.body.embedded && keyObj.isDown) {
 					console.log(
 						`You found the treasure at ${treasure.x}, ${treasure.y}!`
 					);
-					this.score++;
-					sfx.play();
 					treasure.setActive(false);
-					this.messageIndex++;
-					nextTreasure();
+					afterFindUpdate();
 				}
 			}
 		};
