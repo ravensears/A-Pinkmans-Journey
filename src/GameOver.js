@@ -6,14 +6,14 @@ class GameOver extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("run", "src/sprites/pinkman.png");
+    this.load.image("run", "src/sprites/new_pinkman.png");
   }
 
   create() {
     this.add
       .text(640, 360, "Game Over!", {
         fontSize: "180px",
-        fill: "#ffffff",
+        fill: "#FFFFFF",
       })
       .setOrigin(0.5, 1.75);
 
@@ -28,11 +28,11 @@ class GameOver extends Phaser.Scene {
     this.add
       .text(640, 360, "Click to return", {
         fontSize: "52px",
-        fill: "#ffffff",
+        fill: "#FFFFFF",
       })
       .setOrigin(0.5, -3.5);
 
-    this.add.image(640, 360, "run").setOrigin(0.5, 0.5).setScale(2.5);
+    this.add.image(660, 360, "run").setOrigin(0.5, 0.2).setScale(0.5);
   }
 }
 

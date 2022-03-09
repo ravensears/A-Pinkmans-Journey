@@ -19,7 +19,7 @@ class Instructions extends Phaser.Scene {
             "Instructions", 
             {
                 fontSize: "180px",
-                fill: "#ffffff",
+                fill: "#FFFFFF",
             }
         ).setOrigin(0.5, 1.75);
 
@@ -31,7 +31,7 @@ class Instructions extends Phaser.Scene {
             "Click to start", 
             {
                 fontSize: "52px",
-                fill: "#ffffff",
+                fill: "#FFFFFF",
             }
         ).setOrigin(0.5, -3.5);
 
@@ -41,7 +41,7 @@ class Instructions extends Phaser.Scene {
             "Movement: W A S D || Arrow keys",
             {
                 fontSize: "28px",
-                fill: "#ffffff",
+                fill: "#FFFFFF",
             }
         ).setOrigin(0.5, 4);
 
@@ -51,7 +51,7 @@ class Instructions extends Phaser.Scene {
             "Interact: E",
             {
                 fontSize: "28px",
-                fill: "#ffffff",
+                fill: "#FFFFFF",
             }
         ).setOrigin(0.5, 2);
 
@@ -61,7 +61,7 @@ class Instructions extends Phaser.Scene {
             "Follow the clues and find them all within the time limit!",
             {
                 fontSize: "36px",
-                fill: "#ffffff",
+                fill: "#FFFFFF",
             }
         ).setOrigin(0.5, -1.5);
 
