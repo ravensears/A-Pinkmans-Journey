@@ -6,6 +6,6 @@ class Treasure {
     this.height = height,
     this.message = message
   }
-
-  
 }
+
+export default Treasure
