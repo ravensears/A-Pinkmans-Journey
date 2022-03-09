@@ -38,11 +38,10 @@ class GameStart extends Phaser.Scene {
         this.add.image(
             640, 360, "planet")
             .setOrigin(0.5, 0.5)
-            .setScale(5);
+            .setScale(3);
 
         };
 
 }
 
 export default GameStart;
-
