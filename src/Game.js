@@ -54,7 +54,7 @@ class Game extends Phaser.Scene {
     walls.setCollisionByProperty({ collides: true });
     stuff.setCollisionByProperty({ collides: true });
 
-    this.hero = new Player(this, 1600, 1600, "sadGuy");
+    this.hero = new Player(this, 300, 2000, "sadGuy");
     this.heroHand = new Player(this, 1600, 1600, "sadGuy");
 
     this.heroHand.spriteObject.setScale(1.4);
@@ -71,7 +71,21 @@ class Game extends Phaser.Scene {
     this.drink = this.physics.add
       .staticSprite(355, 2715, "drinkMe")
       .setScale(1.4);
-    this.tree = this.physics.add.staticSprite(238, 738, "tree").setScale(2);
+
+    this.heart = this.physics.add.staticSprite(238, 738, "heart").setScale(1.5);
+
+    this.tree11 = this.physics.add.staticSprite(360, 2150, "tree1");
+    this.tree12 = this.physics.add.staticSprite(490, 2470, "tree1");
+    this.tree13 = this.physics.add.staticSprite(700, 2700, "tree1");
+    this.tree14 = this.physics.add.staticSprite(920, 2100, "tree1");
+    this.tree21 = this.physics.add.staticSprite(900, 2600, "tree2");
+    this.tree22 = this.physics.add.staticSprite(279, 2200, "tree2");
+    this.tree23 = this.physics.add.staticSprite(275, 2750, "tree2");
+    this.tree24 = this.physics.add.staticSprite(630, 2400, "tree2");
+    this.tree31 = this.physics.add.staticSprite(950, 2730, "tree3");
+    this.treasureTree = this.physics.add.staticSprite(600, 2530, "tree3");
+    this.tree32 = this.physics.add.staticSprite(830, 2316, "tree3");
+    this.tree33 = this.physics.add.staticSprite(930, 2390, "tree3");
 
     this.cameras.main.startFollow(this.hero.spriteObject, true);
 
@@ -82,7 +96,7 @@ class Game extends Phaser.Scene {
     this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
     this.physics.add.collider(this.hero.spriteObject, this.hero2);
     this.physics.add.collider(this.hero.spriteObject, group);
-    this.physics.add.collider(this.hero.spriteObject, this.tree);
+    this.physics.add.collider(this.hero.spriteObject, this.heart);
     this.physics.add.collider(this.hero2, walls);
     this.physics.add.collider(this.hero2, stuff);
     this.physics.add.collider(group, walls);
@@ -122,11 +136,11 @@ class Game extends Phaser.Scene {
         500,
         80,
         80,
-        "Found treasure! Check in the ugly carpet room by the pipe"
+        "Found treasure! Check under a tree"
       ),
       new Treasure(
-        50,
-        2350,
+        600, 
+        2530,
         80,
         80,
         "Found treasure! Check under the control desk"
@@ -369,6 +383,31 @@ class Game extends Phaser.Scene {
     this.traps.generateTrap(
       { x: 1763, y: 2382, width: 70, height: 70 },
       this.traps.goBig
+    );
+
+    this.traps.generateTrap(
+      { x: 360, y: 2150, width: 70, height: 70 },
+      this.traps.goInvisible
+    );
+
+    this.traps.generateTrap(
+      { x: 700, y: 2700, width: 70, height: 70 },
+      this.traps.goInvisible
+    );
+
+    this.traps.generateTrap(
+      { x: 900, y: 2600, width: 70, height: 70 },
+      this.traps.goInvisible
+    );
+
+    this.traps.generateTrap(
+      { x: 630, y: 2400, width: 70, height: 70 },
+      this.traps.goInvisible
+    );
+
+    this.traps.generateTrap(
+      { x: 830, y: 2316, width: 70, height: 70 },
+      this.traps.goInvisible
     );
 
     const treasureDetector = () => {
