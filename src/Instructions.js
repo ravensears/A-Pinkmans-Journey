@@ -7,21 +7,25 @@ class Instructions extends Phaser.Scene {
 	}
 
     preload () {
-        this.load.image("planet", "/sprites/pinkman_run.png");
+        this.load.image("pinkman", "/sprites/new_pinkman.png");
 
     }
 
     create ()
     {
+        this.add.image(
+            660, 360, "pinkman")
+            .setOrigin(1.5, 0.40).setScale(0.3);
+
         this.add.text(
             640, 
             360, 
             "Instructions", 
             {
-                fontSize: "180px",
-                fill: "#ffffff",
+                font: "80px Source Sans Pro",
+                fill: "#FFFFFF",
             }
-        ).setOrigin(0.5, 1.75);
+        ).setOrigin(0.5, 2.75);
 
         this.input.once('pointerup', function () {this.scene.start("Game")}, this);
 
@@ -30,47 +34,52 @@ class Instructions extends Phaser.Scene {
             360, 
             "Click to start", 
             {
-                fontSize: "52px",
-                fill: "#ffffff",
+                font: "45px Source Sans Pro",
+                fill: "#FFFFFF",
             }
-        ).setOrigin(0.5, -3.5);
+        ).setOrigin(0.5, -5.5);
 
         this.add.text(
             640,
             360,
-            "Movement: W A S D || Arrow keys",
+            "Follow the clues",
             {
-                fontSize: "28px",
-                fill: "#ffffff",
+                font: "20px Source Sans Pro",
+                fill: "#FFFFFF",
             }
-        ).setOrigin(0.5, 4);
+        ).setOrigin(-0.89, 3.5);
 
         this.add.text(
             640,
             360,
-            "Interact: E",
+            "Find them all within the time limit",
             {
-                fontSize: "28px",
-                fill: "#ffffff",
+                font: "20px Source Sans Pro",
+                fill: "#FFFFFF",
             }
-        ).setOrigin(0.5, 2);
+        ).setOrigin(0.09, 1.5);
 
         this.add.text(
             640,
             360,
-            "Follow the clues and find them all within the time limit!",
+            "Move using: W A S D  ||  Arrow keys",
             {
-                fontSize: "36px",
-                fill: "#ffffff",
+                font: "20px Source Sans Pro",
+                fill: "#FFFFFF",
             }
-        ).setOrigin(0.5, -1.5);
+        ).setOrigin(0.09, -.5);
 
-        // this.add.image(
-        //     640, 360, "planet")
-        //     .setOrigin(0.5, 0.5)
-        //     .setScale(5);
-
-        };
+        this.add.text(
+            640,
+            360,
+            "Pick up treasure: E",
+            {
+                font: "20px Source Sans Pro",
+                fill: "#FFFFFF",
+            }
+        ).setOrigin(-0.67, -2.5);
+        
+    };
 
 }
 

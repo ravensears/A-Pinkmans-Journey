@@ -1,4 +1,4 @@
-### Game Link:
+### Game Link
 
 https://git.heroku.com/lonely-hearts-club.git
 
