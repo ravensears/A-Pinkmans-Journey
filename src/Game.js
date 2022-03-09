@@ -55,8 +55,8 @@ class Game extends Phaser.Scene {
     walls.setCollisionByProperty({ collides: true });
     stuff.setCollisionByProperty({ collides: true });
 
-    this.hero = new Player(this, 1900, 2010, "sadGuy");
-    this.heroHand = new Player(this, 1600, 1600, "sadGuy");
+    this.hero = new Player(this, 1500, 1600, "sadGuy");
+    this.heroHand = new Player(this, 1500, 1600, "sadGuy");
 
     this.heroHand.spriteObject.setScale(1.4);
     this.heroHand.spriteObject.visible = false;
@@ -73,8 +73,8 @@ class Game extends Phaser.Scene {
       .staticSprite(355, 2715, "drinkMe")
       .setScale(1.4);
 
-    this.heart = this.physics.add.staticSprite(238, 738, "heart").setScale(1.5);
-
+    this.heart = this.physics.add.staticSprite(240, 760, "heart");
+    this.treasure = this.physics.add.staticSprite(2404, 3080, "treasureChest");
     this.tree11 = this.physics.add.staticSprite(360, 2150, "tree1");
     this.tree12 = this.physics.add.staticSprite(490, 2470, "tree1");
     this.tree13 = this.physics.add.staticSprite(700, 2700, "tree1");
@@ -98,6 +98,7 @@ class Game extends Phaser.Scene {
     this.physics.add.collider(this.hero.spriteObject, this.hero2);
     this.physics.add.collider(this.hero.spriteObject, group);
     this.physics.add.collider(this.hero.spriteObject, this.heart);
+    this.physics.add.collider(this.hero.spriteObject, this.treasure);
     this.physics.add.collider(this.hero2, walls);
     this.physics.add.collider(this.hero2, stuff);
     this.physics.add.collider(group, walls);
@@ -144,11 +145,11 @@ class Game extends Phaser.Scene {
         2530,
         80,
         80,
-        "Found treasure! Check under the control desk"
+        "Found treasure! Find the treasure chest!!"
       ),
       new Treasure(
-        1369,
-        1811,
+        2404, 
+        3080,
         80,
         80,
         "You found the final treasure!!! Woooo!!"
@@ -348,6 +349,7 @@ class Game extends Phaser.Scene {
       { x: 1728, y: 2518, width: 70, height: 75 },
       { x: 1954, y: 2900, width: 70, height: 75 },
       { x: 1439, y: 3093, width: 70, height: 75 },
+      { x: 223, y: 3070, width: 70, height: 75 }
     ];
 
     wormholes.forEach((wormhole) =>

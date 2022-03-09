@@ -17,7 +17,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: false,
+      debug: true,
     },
   },
   scene: [Boot, GameStart, Instructions, Game, GameOver, GameComplete],

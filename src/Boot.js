@@ -32,6 +32,7 @@ class Boot extends Phaser.Scene {
     this.load.image("tree4", "/sprites/trees/tree7.png");
     this.load.image("heart", "/sprites/heart.png");
     this.load.image("ball1", "/sprites/balls/ball1.png");
+    this.load.image("treasureChest", "/sprites/treasure.png")
     this.load.tilemapTiledJSON("tilemap", "/tiles/space_map.json");
     this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
     this.load.audio("treasure_song", "/audio/treasure_hunting.mp3");
