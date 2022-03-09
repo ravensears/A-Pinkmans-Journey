@@ -44,6 +44,7 @@ class Game extends Phaser.Scene {
     this.treasureChicken = this.physics.add.staticSprite(1800, 500, "chicken");
 		this.cake = this.physics.add.staticSprite(1763, 2382, "eatMe").setScale(1.7);
 		this.drink = this.physics.add.staticSprite(355, 2715, "drinkMe").setScale(1.4);
+		this.tree = this.physics.add.staticSprite(238, 738, "tree").setScale(2);
 
     const group = this.physics.add.group({ key: "chicken", frameQuantity: 300 });
 
@@ -180,6 +181,7 @@ class Game extends Phaser.Scene {
 		this.physics.add.collider(this.hero.spriteObject, this.drink);
     this.physics.add.collider(this.hero.spriteObject, this.treasureChicken);
     this.physics.add.collider(this.hero.spriteObject, group);
+		this.physics.add.collider(this.hero.spriteObject, this.tree);
     this.physics.add.collider(group, walls);
 
 
@@ -315,18 +317,27 @@ class Game extends Phaser.Scene {
 	}
 
 	// ************UPDATE****************
-
 	update() {
 		this.traps.generateTrap(
-			{ x: 2000, y: 1500, width: 70, height: 1000 },
+			{ x: 2100, y: 1900, width: 170, height: 1000 },
 			this.traps.goZoomDown
 		);
 
 		this.traps.generateTrap(
-			{ x: 2140, y: 1500, width: 70, height: 1000 },
+			{ x: 2300, y: 1900, width: 170, height: 1000 },
 			this.traps.goZoomUp
 		);
-		
+
+		this.traps.generateTrap(
+			{ x: 355, y: 2715, width: 70, height: 1000 },
+			this.traps.goTiny
+		);
+
+		this.traps.generateTrap(
+			{ x: 1763, y: 2382, width: 70, height: 1000 },
+			this.traps.goBig
+		);
+
 		this.treasureDetector = () => {
 			const treasureProximity = (distance) => {
 				return (

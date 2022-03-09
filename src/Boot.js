@@ -22,6 +22,7 @@ class Boot extends Phaser.Scene {
 		this.load.image("muteMan", "/sprites/muteMan.png");
 		this.load.image("eatMe", "/sprites/cake.png");
 		this.load.image("drinkMe", "/sprites/drink.png");
+		this.load.image("tree", "/sprites/tree.png")
 		this.load.tilemapTiledJSON("tilemap", "/tiles/space_map.json");
 		this.load.audio("bens_beautiful_song", "/audio/music_2.mp3");
 		this.load.audio("treasure_song", "/audio/treasure_hunting.mp3");
@@ -31,7 +32,6 @@ class Boot extends Phaser.Scene {
 
 		this.gameWidth = this.sys.game.canvas.width
     this.gameHeight = this.sys.game.canvas.height
-
 	};
 
 	create() {
