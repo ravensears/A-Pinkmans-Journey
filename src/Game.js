@@ -1,5 +1,6 @@
 import Player from "./Player.js";
 import Trap from "./Trap.js";
+import treasureGroup from "./TreasureGroup.js";
 import Treasure from "./Treasure.js";
 
 class Game extends Phaser.Scene {
@@ -32,7 +33,7 @@ class Game extends Phaser.Scene {
 		const stuff = map.createStaticLayer("stuff", tileset);
 		const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
 		const sfx = this.sound.add("beep");
-		const keyObj = this.input.keyboard.addKey("E");
+		this.keyObj = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 		const group = this.physics.add.group({
 			key: "chicken",
 			frameQuantity: 300,
@@ -49,7 +50,7 @@ class Game extends Phaser.Scene {
 		this.messageIndex = -1;
 		this.initialTime = 500;
 		this.wormholesfx = this.sound.add("wormhole");
-		this.traps = new Trap(this, keyObj);
+		this.traps = new Trap(this, this.keyObj);
 
 		walls.setCollisionByProperty({ collides: true });
 		stuff.setCollisionByProperty({ collides: true });
@@ -62,8 +63,8 @@ class Game extends Phaser.Scene {
 
 		this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 
-		this.treasureChicken = this.physics.add.
-			staticSprite(1800, 500, "chicken")
+		this.treasureChicken = this.physics.add
+			.staticSprite(1800, 500, "chicken")
 			.setScale(1.3);
 		this.cake = this.physics.add
 			.staticSprite(1763, 2382, "eatMe")
@@ -71,9 +72,7 @@ class Game extends Phaser.Scene {
 		this.drink = this.physics.add
 			.staticSprite(355, 2715, "drinkMe")
 			.setScale(1.4);
-		this.tree = this.physics.add
-			.staticSprite(238, 738, "tree")
-			.setScale(2);
+		this.tree = this.physics.add.staticSprite(238, 738, "tree").setScale(2);
 
 		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
@@ -89,97 +88,13 @@ class Game extends Phaser.Scene {
 		this.physics.add.collider(this.hero2, stuff);
 		this.physics.add.collider(group, walls);
 
-
-		this.treasureGroup = [
-			new Treasure(1679, 1418, 80, 80, "Found Treasure! Check in the couch over there"),
-			new Treasure(1011, 1435, 80, 80, "Found Treasure! Check in the heart of the labyrinth"),
-			new Treasure(238, 738, 80, 80, "Found Treasure! Check in the black room"),
-			new Treasure(498, 3059, 80, 80, "Found Treasure! Check in the wishing well"),
-			new Treasure(1539, 2766, 80, 80, "Found Treasure! Check under the treasure chicken"),
-			new Treasure(1800, 500, 80, 80, "Found treasure! Check in the ugly carpet room by the pipe"),
-			new Treasure(50, 2350, 80, 80, "Found treasure! Check under the control desk"),
-			new Treasure(1369, 1811, 80, 80, "You found the final treasure!!! Woooo!!"),
-		];
-
-		const addOverlap = (obj1, obj2, callback) => {
-			this.physics.add.overlap(
-				obj1,
-				obj2,				
-				callback
-			);
-		};
-
-		const generateTreasure = (treasure) => {
-			let treasureShape = this.add.rectangle(
-				treasure.x,
-				treasure.y,
-				treasure.width,
-				treasure.height,
-			);
-			let treasureObj = this.physics.add.existing(treasureShape, 1);
-			treasureObj.visible = false;
-			treasureObj.setData({ message: treasure.message });
-
-			addOverlap(
-				treasureObj, 
-				this.heroHand.spriteObject, 
-				findTreasure
-			);
-
-			this.temperatureIndex++;
-
-			return treasureObj;
-		};
-
-		const generateNextTreasure = () => {
-			generateTreasure(this.treasureGroup[this.temperatureIndex]);
-		};
-
-		const nextTreasure = () => {
-			this.temperatureIndex === this.treasureGroup.length
-				? this.scene.start("GameComplete")
-				: generateNextTreasure();
-		};
-
-		const afterFindUpdate = () => {
-			this.score++;
-			this.messageIndex++;
-			sfx.play();
-			nextTreasure();
-		}
-
-		const findTreasure = (treasure) => {
-			if (treasure.active) {
-				if (treasure.body.embedded && keyObj.isDown) {
-					console.log(
-						`You found the treasure at ${treasure.x}, ${treasure.y}!`
-					);
-					treasure.setActive(false);
-					afterFindUpdate();
-				}
-			}
-		};
-
-		this.treasureProximity = (distance) => {
-			return (
-				Math.abs(
-					this.hero.spriteObject.x -
-						this.treasureGroup[this.temperatureIndex - 1].x
-				) <= distance &&
-				Math.abs(
-					this.hero.spriteObject.y -
-						this.treasureGroup[this.temperatureIndex - 1].y
-				) <= distance
-			);
-		};
-
-		this.treasure1 = generateTreasure(this.treasureGroup[0]);
-
-		addOverlap(
-			this.treasure1,
-			this.heroHand.spriteObject,
-			findTreasure
+		this.treasureManager = new Treasure(this, this.keyObj, treasureGroup);
+		this.treasure1 = this.treasureManager.generateTreasure(
+			{ x: 1679, y: 1418, width: 80, height: 80 },
+			"Found Treasure! Check in the couch over there"
 		);
+
+		console.log("T1 =" + this.treasure1.toString);
 
 		this.text = this.add
 			.text(58, 733, "Cursors to move", {
@@ -253,7 +168,7 @@ class Game extends Phaser.Scene {
 				return "Cold";
 			} else {
 				return "What's cooler than being cold? Ice cold!!";
-			};
+			}
 		};
 
 		this.clueText = this.add
@@ -263,11 +178,11 @@ class Game extends Phaser.Scene {
 			})
 			.setScrollFactor(0);
 
-			this.muteMan = this.add
-				.image(85, 673, "muteMan")
-				.setInteractive()
-				.setScale(2.2)
-				.setScrollFactor(0);
+		this.muteMan = this.add
+			.image(85, 673, "muteMan")
+			.setInteractive()
+			.setScale(2.2)
+			.setScrollFactor(0);
 
 		this.mute = this.muteMan.on("pointerdown", () => {
 			if (this.musicOn === true) {
@@ -367,7 +282,7 @@ class Game extends Phaser.Scene {
 		this.heroHand.updateHand(this.hero);
 
 		this.clueText.setText(this.treasureMessage());
-	};
-};
+	}
+}
 
 export default Game;

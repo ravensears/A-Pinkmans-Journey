@@ -3,7 +3,6 @@ class Trap {
 		this.scene = scene;
 		this.keyObj = keyObj;
 	}
-	//stop
 
 	findWormHole = (wormHole) => {
 		if (wormHole.body.embedded && this.keyObj.isDown) {
@@ -37,6 +36,7 @@ class Trap {
 
 	goInvisible = (trap) => {
 		if (trap.body.embedded && this.keyObj.isDown) {
+			console.log("invis" + this.keyObj);
 			console.log(`You went invisible at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.visible = false;
 			setTimeout(this.goVisible, 10000);
