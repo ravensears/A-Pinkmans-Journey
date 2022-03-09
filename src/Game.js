@@ -1,5 +1,6 @@
 import Player from "./Player.js";
 import Trap from "./Trap.js";
+import Treasure from "./Treasure.js";
 
 class Game extends Phaser.Scene {
 	constructor() {
@@ -73,62 +74,14 @@ class Game extends Phaser.Scene {
 		this.messageIndex = -1;
 
 		this.treasureGroup = [
-			{
-				x: 1679,
-				y: 1418,
-				width: 30,
-				height: 63,
-				message: "Found Treasure! Check in the couch over there",
-			},
-			{
-				x: 1011,
-				y: 1435,
-				width: 30,
-				height: 63,
-				message: "Found Treasure! Check in the heart of the labyrinth",
-			},
-			{
-				x: 238,
-				y: 738,
-				width: 30,
-				height: 63,
-				message: "Found Treasure! Check in the black room",
-			},
-			{
-				x: 498,
-				y: 3059,
-				width: 80,
-				height: 80,
-				message: "Found Treasure! Check in the wishing well",
-			},
-			{
-				x: 1539,
-				y: 2766,
-				width: 80,
-				height: 80,
-				message: "Found Treasure! Check under the treasure chicken",
-			},
-			{
-				x: 1800,
-				y: 500,
-				width: 80,
-				height: 80,
-				message: "Found treasure! Check in the ugly carpet room by the pipe",
-			},
-			{
-				x: 50,
-				y: 2350,
-				width: 80,
-				height: 80,
-				message: "found treasure! Check under the control desk",
-			},
-			{
-				x: 1369,
-				y: 1811,
-				width: 80,
-				height: 80,
-				message: "Game over!!",
-			},
+			new Treasure(1679, 1418, 80, 80, "Found Treasure! Check in the couch over there"),
+			new Treasure(1011, 1435, 80, 80, "Found Treasure! Check in the heart of the labyrinth"),
+			new Treasure(238, 738, 80, 80, "Found Treasure! Check in the black room"),
+			new Treasure(498, 3059, 80, 80, "Found Treasure! Check in the wishing well"),
+			new Treasure(1539, 2766, 80, 80, "Found Treasure! Check under the treasure chicken"),
+			new Treasure(1800, 500, 80, 80, "Found treasure! Check in the ugly carpet room by the pipe"),
+			new Treasure(50, 2350, 80, 80, "Found treasure! Check under the control desk"),
+			new Treasure(1369, 1811, 80, 80, "You found the final treasure!!! Woooo!!"),
 		];
 
 		const generateTreasure = (treasure) => {
@@ -137,7 +90,6 @@ class Game extends Phaser.Scene {
 				treasure.y,
 				treasure.width,
 				treasure.height,
-				"00FFFFFF"
 			);
 			let treasureObj = this.physics.add.existing(treasureShape, 1);
 			treasureObj.visible = false;
@@ -258,13 +210,6 @@ class Game extends Phaser.Scene {
 			}
 			console.log("muteMan in action!");
 		});
-
-		// 		this.scoreText = this.add
-		// 			.text(1000, 0, `Treasures: ${this.score}`, {
-		// 				fontSize: "32px",
-		// 				fill: "#ffffff",
-		// 			})
-		// 			.setScrollFactor(0);
 
 		this.initialTime = 500;
 
