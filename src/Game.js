@@ -22,7 +22,7 @@ class Game extends Phaser.Scene {
       delay: 0,
     };
 
-    this.music.play(musicConfig);
+    // this.music.play(musicConfig);
     this.musicOn = true;
 
     const map = this.make.tilemap({ key: "tilemap" });
@@ -34,14 +34,15 @@ class Game extends Phaser.Scene {
     const sfx = this.sound.add("beep");
     const keyObj = this.input.keyboard.addKey("E");
     const group = this.physics.add.group({
-      key: "chicken",
-      frameQuantity: 300,
+      key: "ball1",
+      frameQuantity: 250,
     });
-    const ui = this.add
-      .rectangle(648, 732, 1200, 150, 0x002b36)
-      .setStrokeStyle(4, 0xefc53f)
-      .setScrollFactor(0);
-    ui.alpha = 0.75;
+    let array = group.getChildren();
+    array.forEach((ball) =>
+      ball.setBounce(1, 1));
+    array.forEach((ball) => 
+    this.physics.add.collider(group, ball));
+    
     Phaser.Actions.RandomRectangle(group.getChildren(), rect);
 
     this.score = 0;
@@ -54,7 +55,7 @@ class Game extends Phaser.Scene {
     walls.setCollisionByProperty({ collides: true });
     stuff.setCollisionByProperty({ collides: true });
 
-    this.hero = new Player(this, 300, 2000, "sadGuy");
+    this.hero = new Player(this, 1900, 2010, "sadGuy");
     this.heroHand = new Player(this, 1600, 1600, "sadGuy");
 
     this.heroHand.spriteObject.setScale(1.4);
@@ -63,8 +64,8 @@ class Game extends Phaser.Scene {
     this.hero2 = this.physics.add.sprite(1650, 1650, "pinkman");
 
     this.treasureChicken = this.physics.add
-      .staticSprite(1800, 500, "chicken")
-      .setScale(1.3);
+      .staticSprite(1800, 500, "ball1")
+      .setScale(1.1);
     this.cake = this.physics.add
       .staticSprite(1763, 2382, "eatMe")
       .setScale(1.7);
@@ -222,13 +223,6 @@ class Game extends Phaser.Scene {
 
     addOverlap(this.treasure1, this.heroHand.spriteObject, findTreasure);
 
-    this.text = this.add
-      .text(58, 733, "Cursors to move", {
-        font: "16px Courier",
-        fill: "#00ff00",
-      })
-      .setScrollFactor(0);
-
     this.anims.create({
       key: "right",
       frames: this.anims.generateFrameNumbers("sadGuy", { start: 6, end: 8 }),
@@ -258,6 +252,12 @@ class Game extends Phaser.Scene {
       frames: [{ key: "sadGuy", frame: 4 }],
       frameRate: 20,
     });
+
+    const ui = this.add
+    .rectangle(648, 732, 1200, 150, 0x002b36)
+    .setStrokeStyle(4, 0xefc53f)
+    .setScrollFactor(0);
+    ui.alpha = 0.75;
 
     this.timerText = this.add
       .text(58, 705, "Countdown: " + formatTime(this.initialTime), {
@@ -336,6 +336,13 @@ class Game extends Phaser.Scene {
       }
     }
 
+    this.text = this.add
+    .text(58, 733, "Cursors to move", {
+      font: "16px Courier",
+      fill: "#00ff00",
+    })
+    .setScrollFactor(0);
+
     const wormholes = [
       { x: 1343, y: 2490, width: 70, height: 75 },
       { x: 1728, y: 2518, width: 70, height: 75 },
@@ -345,44 +352,6 @@ class Game extends Phaser.Scene {
 
     wormholes.forEach((wormhole) =>
       this.traps.generateTrap(wormhole, this.traps.findWormHole)
-    );
-
-    this.traps.generateTrap(
-      { x: 1700, y: 1700, width: 70, height: 75 },
-      this.traps.goInvisible
-    );
-  }
-
-  // ************UPDATE****************
-  update() {
-    this.traps.generateTrap(
-      { x: 2100, y: 1900, width: 170, height: 1000 },
-      this.traps.goZoomDown
-    );
-
-    this.traps.generateTrap(
-      { x: 1993, y: 2025, width: 70, height: 70 },
-      this.traps.goZoomRight
-    );
-
-    this.traps.generateTrap(
-      { x: 2140, y: 1700, width: 70, height: 1000 },
-      this.traps.goZoomUp
-    );
-
-    this.traps.generateTrap(
-      { x: 2140, y: 1500, width: 70, height: 1000 },
-      this.traps.goZoomLeft
-    );
-
-    this.traps.generateTrap(
-      { x: 355, y: 2715, width: 70, height: 70 },
-      this.traps.goTiny
-    );
-
-    this.traps.generateTrap(
-      { x: 1763, y: 2382, width: 70, height: 70 },
-      this.traps.goBig
     );
 
     this.traps.generateTrap(
@@ -408,6 +377,44 @@ class Game extends Phaser.Scene {
     this.traps.generateTrap(
       { x: 830, y: 2316, width: 70, height: 70 },
       this.traps.goInvisible
+    );
+  }
+
+  // ************UPDATE****************
+  update() {
+    this.traps.generateTrap(
+      { x: 2080, y: 1930, width: 140, height: 1150 },
+      this.traps.goZoomDown
+    );
+
+    this.traps.generateTrap(
+      { x: 2160, y: 2500, width: 230, height: 100 },
+      this.traps.goZoomRight
+    );
+
+    this.traps.generateTrap(
+      { x: 2240, y: 1930, width: 140, height: 1150 },
+      this.traps.goZoomUp
+    );
+
+    this.traps.generateTrap(
+      { x: 2400, y: 1930, width: 140, height: 1150 },
+      this.traps.goZoomDown
+    );
+
+    this.traps.generateTrap(
+      { x: 2320, y: 1460, width: 260, height: 100 },
+      this.traps.goZoomRight
+    );
+
+    this.traps.generateTrap(
+      { x: 355, y: 2715, width: 70, height: 70 },
+      this.traps.goTiny
+    );
+
+    this.traps.generateTrap(
+      { x: 1763, y: 2382, width: 70, height: 70 },
+      this.traps.goBig
     );
 
     const treasureDetector = () => {
