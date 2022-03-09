@@ -23,12 +23,12 @@ class GameStart extends Phaser.Scene {
             }
         ).setOrigin(0.5, 1.75);
 
-        this.input.once('pointerup', function () {this.scene.start("Game")}, this);
+        this.input.once('pointerup', function () {this.scene.start("Instructions")}, this);
 
         this.add.text(
             640, 
             360, 
-            "Click to start", 
+            "Click for Instructions", 
             {
                 fontSize: "52px",
                 fill: "#ffffff",
