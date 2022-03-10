@@ -56,8 +56,8 @@ class Game extends Phaser.Scene {
 		walls.setCollisionByProperty({ collides: true });
 		stuff.setCollisionByProperty({ collides: true });
 
-		this.hero = new Player(this, 1500, 1600, "sadGuy");
-		this.heroHand = new Player(this, 1500, 1600, "sadGuy");
+		this.hero = new Player(this, 1500, 1600, "pinkmanHero");
+		this.heroHand = new Player(this, 1500, 1600, "pinkmanHero");
 
 		this.heroHand.spriteObject.setScale(1.4);
 		this.heroHand.spriteObject.visible = false;
@@ -68,10 +68,16 @@ class Game extends Phaser.Scene {
 			.staticSprite(1800, 500, "ball1")
 			.setScale(1.1);
 		this.cake = this.physics.add
-			.staticSprite(1763, 2382, "eatMe")
+			.staticSprite(1763, 2382, "cake")
+			.setScale(1.7);
+			this.eatme = this.physics.add
+			.staticSprite(1813, 2382, "eatme")
 			.setScale(1.7);
 		this.drink = this.physics.add
-			.staticSprite(355, 2715, "drinkMe")
+			.staticSprite(355, 2715, "potion")
+			.setScale(1.4);
+		this.drinkme = this.physics.add
+			.staticSprite(405, 2715, "drinkme")
 			.setScale(1.4);
 
 		this.heart = this.physics.add.staticSprite(240, 760, "heart");
@@ -223,32 +229,27 @@ class Game extends Phaser.Scene {
 
 		this.anims.create({
 			key: "right",
-			frames: this.anims.generateFrameNumbers("sadGuy", { start: 6, end: 8 }),
+			frames: this.anims.generateFrameNumbers("pinkmanHero", { start: 8, end: 11 }),
 			frameRate: 10,
 			repeat: -1,
 		});
 		this.anims.create({
 			key: "left",
-			frames: this.anims.generateFrameNumbers("sadGuy", { start: 3, end: 5 }),
+			frames: this.anims.generateFrameNumbers("pinkmanHero", { start: 4, end: 7 }),
 			frameRate: 10,
 			repeat: -1,
 		});
 		this.anims.create({
 			key: "top",
-			frames: this.anims.generateFrameNumbers("sadGuy", { start: 9, end: 11 }),
+			frames: this.anims.generateFrameNumbers("pinkmanHero", { start: 12, end: 15 }),
 			frameRate: 10,
 			repeat: -1,
 		});
 		this.anims.create({
 			key: "down",
-			frames: this.anims.generateFrameNumbers("sadGuy", { start: 0, end: 2 }),
+			frames: this.anims.generateFrameNumbers("pinkmanHero", { start: 0, end: 3 }),
 			frameRate: 10,
 			repeat: -1,
-		});
-		this.anims.create({
-			key: "turn",
-			frames: [{ key: "sadGuy", frame: 4 }],
-			frameRate: 20,
 		});
 
 		const ui = this.add

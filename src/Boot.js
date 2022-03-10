@@ -12,7 +12,11 @@ class Boot extends Phaser.Scene {
 			frameWidth: 32,
 			frameHeight: 32,
 		});
-		this.load.spritesheet("sadGuy", "/sprites/cat.png", {
+		this.load.spritesheet("pinkmanHero", "/sprites/pinkman_spritesheet.png", {
+			frameWidth: 32,
+			frameHeight: 32,
+		});
+		this.load.spritesheet("EatMeDrinkMe", "/sprites/eatme_drinkme.png", {
 			frameWidth: 32,
 			frameHeight: 32,
 		});
@@ -21,8 +25,10 @@ class Boot extends Phaser.Scene {
 		this.load.image("ball1", "/sprites/balls/ball1.png");
 		this.load.image("base_tiles", "/tiles/space_tileset.png");
 		this.load.image("muteMan", "/sprites/muteMan.png");
-		this.load.image("eatMe", "/sprites/cake.png");
-		this.load.image("drinkMe", "/sprites/drink.png");
+		this.load.image("cake", "/sprites/cake.png");
+		this.load.image("potion", "/sprites/potion.png");
+		this.load.image("eatme", "/sprites/eatme.png");
+		this.load.image("drinkme", "/sprites/drinkme.png");
 		this.load.image("tree", "/sprites/tree.png");
     this.load.image("newPinkman", "/sprites/new_pinkman.png");
     this.load.image("pinkman", "/sprites/new_pinkman.gif");
