@@ -1,4 +1,4 @@
-### Game Link
+### Game Link:
 
 https://lonely-hearts-club.herokuapp.com/
 

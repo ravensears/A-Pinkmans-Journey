@@ -250,13 +250,13 @@ class Game extends Phaser.Scene {
 		});
 
 		const ui = this.add
-			.rectangle(648, 732, 1200, 150, 0x002b36)
+			.rectangle(648, 702, 1200, 150, 0x002b36)
 			.setStrokeStyle(4, 0xefc53f)
 			.setScrollFactor(0);
 		ui.alpha = 0.75;
 
 		this.timerText = this.add
-			.text(58, 705, "Countdown: " + formatTime(this.initialTime), {
+			.text(58, 675, "Countdown: " + formatTime(this.initialTime), {
 				font: "24px Courier",
 				fill: "#00ff00",
 			})
@@ -277,20 +277,6 @@ class Game extends Phaser.Scene {
 			}
 		};
 
-<<<<<<< HEAD
-    this.clueText = this.add
-      .text(135, 630, this.treasureMessage(), {
-        fontSize: "28px",
-        fill: "#ffffff",
-      })
-      .setScrollFactor(0);
-
-    this.muteMan = this.add
-      .image(85, 643, "muteMan")
-      .setInteractive()
-      .setScale(2.2)
-      .setScrollFactor(0);
-=======
 		this.thermometer = () => {
 			if (this.treasureProximity(120)) {
 				return "HOT!!!";
@@ -313,7 +299,6 @@ class Game extends Phaser.Scene {
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);
->>>>>>> ec3653cf89a943d16e62dc489d754c2134602e51
 
 		this.muteMan = this.add
 			.image(85, 673, "muteMan")
@@ -332,14 +317,6 @@ class Game extends Phaser.Scene {
 			console.log("muteMan in action!");
 		});
 
-<<<<<<< HEAD
-    this.text = this.add
-    .text(58, 703, "Cursors to move", {
-      font: "16px Courier",
-      fill: "#00ff00",
-    })
-    .setScrollFactor(0);
-=======
 		function formatTime(seconds) {
 			var minutes = Math.floor(seconds / 60);
 			var partInSeconds = seconds % 60;
@@ -354,7 +331,6 @@ class Game extends Phaser.Scene {
 				this.scene.start("GameOver");
 			}
 		}
->>>>>>> ec3653cf89a943d16e62dc489d754c2134602e51
 
 		this.text = this.add
 			.text(58, 733, "Cursors to move", {
