@@ -6,11 +6,11 @@ class GameStart extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("pinkman", "/sprites/new_pinkman.png");
+    this.load.image("newPinkman", "/sprites/new_pinkman.png");
   }
 
   create() {
-    this.add.image(660, 360, "pinkman").setOrigin(0.5, 0.40).setScale(0.3);
+    this.add.image(660, 360, "newPinkman").setOrigin(0.5, 0.40).setScale(.35);
 
     this.add
       .text(640, 360, "A Pinkman's Journey", {

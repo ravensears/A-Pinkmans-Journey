@@ -6,7 +6,7 @@ class GameOver extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("pinkman", "/sprites/new_pinkman.png");
+    this.load.image("newPinkman", "/sprites/new_pinkman.png");
   }
 
   create() {
@@ -32,7 +32,7 @@ class GameOver extends Phaser.Scene {
       })
       .setOrigin(0.5, -3.5);
 
-    this.add.image(660, 360, "pinkman").setOrigin(0.5, 0.2).setScale(0.5);
+    this.add.image(660, 360, "newPinkman").setOrigin(0.5, 0.2).setScale(0.5);
   }
 }
 
