@@ -22,8 +22,7 @@ class Game extends Phaser.Scene {
 			delay: 0,
 		};
 
-		// this.music.play(musicConfig);
-		this.musicOn = true;
+		this.musicOn = false;
 
 		const map = this.make.tilemap({ key: "tilemap" });
 		const tileset = map.addTilesetImage("space_tileset", "base_tiles");
@@ -56,8 +55,8 @@ class Game extends Phaser.Scene {
 		walls.setCollisionByProperty({ collides: true });
 		stuff.setCollisionByProperty({ collides: true });
 
-		this.hero = new Player(this, 1500, 1600, "sadGuy");
-		this.heroHand = new Player(this, 1500, 1600, "sadGuy");
+		this.hero = new Player(this, 1500, 1600, "pinkmanHero");
+		this.heroHand = new Player(this, 1500, 1600, "pinkmanHero");
 
 		this.heroHand.spriteObject.setScale(1.4);
 		this.heroHand.spriteObject.visible = false;
@@ -68,10 +67,16 @@ class Game extends Phaser.Scene {
 			.staticSprite(1800, 500, "ball1")
 			.setScale(1.1);
 		this.cake = this.physics.add
-			.staticSprite(1763, 2382, "eatMe")
+			.staticSprite(1763, 2382, "cake")
+			.setScale(1.7);
+			this.eatme = this.physics.add
+			.staticSprite(1813, 2382, "eatme")
 			.setScale(1.7);
 		this.drink = this.physics.add
-			.staticSprite(355, 2715, "drinkMe")
+			.staticSprite(355, 2715, "potion")
+			.setScale(1.4);
+		this.drinkme = this.physics.add
+			.staticSprite(405, 2715, "drinkme")
 			.setScale(1.4);
 
 		this.heart = this.physics.add.staticSprite(240, 760, "heart");
@@ -112,44 +117,44 @@ class Game extends Phaser.Scene {
 				1418,
 				80,
 				80,
-				"Found Treasure! Check in the couch over there"
+				"Found Treasure! I think I lost one down the back of the couch."
 			),
 			new Treasure(
 				1011,
 				1435,
 				80,
 				80,
-				"Found Treasure! Check in the heart of the labyrinth"
+				"Can you hear the beating of the labyrinth's heart?"
 			),
-			new Treasure(238, 738, 80, 80, "Found Treasure! Check in the black room"),
+			new Treasure(238, 738, 80, 80, "Bottoms up! I think you should look in the dark room."),
 			new Treasure(
 				498,
 				3059,
 				80,
 				80,
-				"Found Treasure! Check in the wishing well"
+				"Throw some coins in the wishing well and you might find the next one."
 			),
 			new Treasure(
 				1539,
 				2766,
 				80,
 				80,
-				"Found Treasure! Check under the basketball"
+				"Check in the ballroom."
 			),
-			new Treasure(1800, 500, 80, 80, "Found treasure! Check under a tree"),
+			new Treasure(1800, 500, 80, 80, "Look in the arborotorium... arbaterranium... the tree room."),
 			new Treasure(
 				600,
 				2530,
 				80,
 				80,
-				"Found treasure! Find the treasure chest!!"
+				"Finally, take a trip on the travelators... If you dare!!"
 			),
 			new Treasure(
 				2404,
 				3080,
 				80,
 				80,
-				"You found the final treasure!!! Woooo!!"
+				"You did it! Good work, little buddy."
 			),
 		];
 
@@ -223,32 +228,27 @@ class Game extends Phaser.Scene {
 
 		this.anims.create({
 			key: "right",
-			frames: this.anims.generateFrameNumbers("sadGuy", { start: 6, end: 8 }),
+			frames: this.anims.generateFrameNumbers("pinkmanHero", { start: 8, end: 11 }),
 			frameRate: 10,
 			repeat: -1,
 		});
 		this.anims.create({
 			key: "left",
-			frames: this.anims.generateFrameNumbers("sadGuy", { start: 3, end: 5 }),
+			frames: this.anims.generateFrameNumbers("pinkmanHero", { start: 4, end: 7 }),
 			frameRate: 10,
 			repeat: -1,
 		});
 		this.anims.create({
 			key: "top",
-			frames: this.anims.generateFrameNumbers("sadGuy", { start: 9, end: 11 }),
+			frames: this.anims.generateFrameNumbers("pinkmanHero", { start: 12, end: 15 }),
 			frameRate: 10,
 			repeat: -1,
 		});
 		this.anims.create({
 			key: "down",
-			frames: this.anims.generateFrameNumbers("sadGuy", { start: 0, end: 2 }),
+			frames: this.anims.generateFrameNumbers("pinkmanHero", { start: 0, end: 3 }),
 			frameRate: 10,
 			repeat: -1,
-		});
-		this.anims.create({
-			key: "turn",
-			frames: [{ key: "sadGuy", frame: 4 }],
-			frameRate: 20,
 		});
 
 		const ui = this.add
@@ -291,13 +291,13 @@ class Game extends Phaser.Scene {
 			} else if (this.treasureProximity(1500)) {
 				return "Cold";
 			} else {
-				return "What's cooler than being cold? Ice cold!!";
+				return "What's cooler than being cool? Ice cold!!";
 			}
 		};
 
 		this.clueText = this.add
-			.text(135, 630, this.treasureMessage(), {
-				fontSize: "28px",
+			.text(135, 640, this.treasureMessage(), {
+				fontSize: "26px",
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);
