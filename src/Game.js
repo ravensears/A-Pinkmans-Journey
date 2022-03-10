@@ -31,7 +31,6 @@ class Game extends Phaser.Scene {
 		const walls = map.createStaticLayer("walls", tileset);
 		const stuff = map.createStaticLayer("stuff", tileset);
 		const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
-		const sfx = this.sound.add("beep");
 		const keyObj = this.input.keyboard.addKey("E");
 		const group = this.physics.add.group({
 			key: "ball1",
@@ -47,6 +46,7 @@ class Game extends Phaser.Scene {
 		this.temperatureIndex = 0;
 		this.messageIndex = -1;
 		this.initialTime = 500;
+    const sfx = this.sound.add("beep");
 		this.wormholesfx = this.sound.add("wormhole");
 		this.tinySFX = this.sound.add("tiny");
 		this.bigSFX = this.sound.add("big");
@@ -89,6 +89,8 @@ class Game extends Phaser.Scene {
 		this.tree32 = this.physics.add.staticSprite(830, 2316, "tree3");
 		this.tree33 = this.physics.add.staticSprite(930, 2390, "tree3");
 
+    this.wormholesfx.play();
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
 		this.cameras.main.startFollow(this.hero.spriteObject, true);
 
 		this.physics.add.collider(this.hero.spriteObject, stuff);

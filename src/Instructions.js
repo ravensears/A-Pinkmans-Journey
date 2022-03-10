@@ -8,11 +8,16 @@ class Instructions extends Phaser.Scene {
 
     preload () {
         this.load.image("newPinkman", "/sprites/new_pinkman.png");
-
+        this.load.audio("wormhole", "/audio/wormholefx.mp3");
     }
 
     create ()
-    {
+    {   
+        this.wormholesfx = this.sound.add("wormhole");
+
+        this.wormholesfx.play();
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
+
         this.add.image(
             660, 360, "newPinkman")
             .setOrigin(1.5, 0.40).setScale(0.35);
