@@ -62,7 +62,7 @@ class Instructions extends Phaser.Scene {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(1.20, 0);
+        ).setOrigin(1.20, 1);
 
         this.add.text(
             640,
@@ -72,7 +72,7 @@ class Instructions extends Phaser.Scene {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(1.21, -3.5);
+        ).setOrigin(1.21, -1.5);
 
         this.add.text(
             640,
@@ -82,7 +82,17 @@ class Instructions extends Phaser.Scene {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(2.2, -7.5);
+        ).setOrigin(2.2, -4);
+
+        this.add.text(
+            640,
+            360,
+            "Watch out for traps!!",
+            {
+                font: "20px Source Sans Pro",
+                fill: "#FFFFFF",
+            }
+        ).setOrigin(2, -6.5);
         
     };
 
