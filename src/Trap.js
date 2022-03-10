@@ -7,7 +7,7 @@ class Trap {
 	trapMessage(text) {
 		let msg;
 		msg = this.scene.add
-			.text(340, 740, text, {
+			.text(340, 710, text, {
 				fontSize: "28px",
 				fill: "#ffffff",
 			})

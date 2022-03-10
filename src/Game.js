@@ -255,13 +255,13 @@ class Game extends Phaser.Scene {
     });
 
     const ui = this.add
-    .rectangle(648, 732, 1200, 150, 0x002b36)
+    .rectangle(648, 702, 1200, 150, 0x002b36)
     .setStrokeStyle(4, 0xefc53f)
     .setScrollFactor(0);
     ui.alpha = 0.75;
 
     this.timerText = this.add
-      .text(58, 705, "Countdown: " + formatTime(this.initialTime), {
+      .text(58, 675, "Countdown: " + formatTime(this.initialTime), {
         font: "24px Courier",
         fill: "#00ff00",
       })
@@ -299,14 +299,14 @@ class Game extends Phaser.Scene {
     };
 
     this.clueText = this.add
-      .text(135, 660, this.treasureMessage(), {
+      .text(135, 630, this.treasureMessage(), {
         fontSize: "28px",
         fill: "#ffffff",
       })
       .setScrollFactor(0);
 
     this.muteMan = this.add
-      .image(85, 673, "muteMan")
+      .image(85, 643, "muteMan")
       .setInteractive()
       .setScale(2.2)
       .setScrollFactor(0);
@@ -338,7 +338,7 @@ class Game extends Phaser.Scene {
     }
 
     this.text = this.add
-    .text(58, 733, "Cursors to move", {
+    .text(58, 703, "Cursors to move", {
       font: "16px Courier",
       fill: "#00ff00",
     })
