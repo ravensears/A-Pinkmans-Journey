@@ -45,3 +45,14 @@ https://deep-fold.itch.io/pixel-planet-generator
 Space Tileset:
 https://v-ktor.itch.io/32x32-rpg-tilesets
 
+Ball Sprite: 
+https://opengameart.org/users/leozlk
+
+Treasure Chest Sprite:
+https://opengameart.org/users/r0ar
+
+Heart Sprite:
+https://opengameart.org/users/socialside
+
+Tree Sprite:
+https://opengameart.org/users/wenrexa

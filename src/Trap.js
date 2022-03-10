@@ -71,7 +71,8 @@ class Trap {
 
 	goZoomUp = (trap) => {
 		if (trap.body.embedded) {
-			this.scene.hero.spriteObject.body.setVelocityY(-800, 800);		}
+			this.scene.hero.spriteObject.body.setVelocityY(-800, 800);
+		}
 	};
 
 	goZoomLeft = (trap) => {
