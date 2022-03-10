@@ -1,6 +1,6 @@
 ### Game Link
 
-https://git.heroku.com/lonely-hearts-club.git
+https://lonely-hearts-club.herokuapp.com/
 
 ## User Stories:
 
