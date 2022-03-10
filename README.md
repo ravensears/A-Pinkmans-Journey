@@ -1,8 +1,59 @@
-### Game Link:
+![A Pinkman's Journey logo](./src/sprites/logo.png)
+
+## Created by
+
+Team Lonely Hearts Club:
+
+[Anthony Chaplin](https://github.com/OrganicAC)  
+[Ben Coyne](https://github.com/BenCoyne)  
+[Francisco Pottinger-Marques](https://github.com/fpmrqs)  
+[Raven Reynolds-Sears](https://github.com/ravensears)  
+[Tyrone Williams](https://github.com/TMWcodes)
+[Victoria Black](https://github.com/icvotria)
+
+## Game Link
 
 https://lonely-hearts-club.herokuapp.com/
 
-## User Stories:
+## About the Project
+
+This is our team's final project at Makers Academy.
+
+A Pinkman's Journey is a space treasure hunt 2D game.  
+This game was built in just two weeks, using the following technologies:  
+Javascript  
+Node  
+Express  
+Phaser 3  
+
+## How to run it locally
+
+Make sure you have node and npm installed in your machine.  
+
+### Instalation
+
+Clone this repo into your machine
+```
+git clone https://github.com/ravensears/RPG-Game.git
+```
+Once inside our directory install the npm dependencies
+```
+npm install
+```
+### Run server
+Run a local server via express
+```
+npm start
+```
+To visit the locally hosted website, all you need to do is go to http://localhost:3000/ in your browser.
+### Testing
+To run unit tests, just run the script below
+```
+npm test
+```
+
+
+## User Stories
 
 ```
 As a lover of artsy games and rpgs,
