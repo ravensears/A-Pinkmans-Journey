@@ -48,7 +48,7 @@ class Game extends Phaser.Scene {
     this.score = 0;
     this.temperatureIndex = 0;
     this.messageIndex = -1;
-    this.initialTime = 500;
+    this.initialTime = 400;
     this.wormholesfx = this.sound.add("wormhole");
     this.traps = new Trap(this, keyObj);
 
