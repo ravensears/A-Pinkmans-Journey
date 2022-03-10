@@ -17,6 +17,7 @@ class Boot extends Phaser.Scene {
       frameHeight: 32,
     });
 
+    this.load.image("logo", "/sprites/logo.ping");
     this.load.image("ball1", "/sprites/balls/ball1.png");
     this.load.image("base_tiles", "/tiles/space_tileset.png");
     this.load.image("muteMan", "/sprites/muteMan.png");
