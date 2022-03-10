@@ -6,16 +6,19 @@ class GameComplete extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("earth", "/sprites/earth.gif");
+    this.load.image("newPinkman", "/sprites/new_pinkman.png");
   }
 
   create() {
+
+    this.add.image(660, 360, "newPinkman").setOrigin(0.5, 0.40).setScale(.35);
+
     this.add
-      .text(640, 360, "You Won!", {
-        fontSize: "180px",
-        fill: "#ffffff",
+      .text(640, 360, "You Won 🏆", {
+        font: "80px Source Sans Pro",
+        fill: "#FFFFFF",
       })
-      .setOrigin(0.5, 1.75);
+      .setOrigin(0.5, 2.75);
 
     this.input.once(
       "pointerup",
@@ -26,13 +29,11 @@ class GameComplete extends Phaser.Scene {
     );
 
     this.add
-      .text(640, 360, "Click to return", {
-        fontSize: "52px",
-        fill: "#ffffff",
-      })
-      .setOrigin(0.5, -3.5);
-
-    this.add.image(640, 360, "earth").setOrigin(0.5, 0.5).setScale(2.5);
+    .text(640, 360, "Click to return", {
+      font: "40px Source Sans Pro",
+      fill: "#FFFFFF",
+    })
+    .setOrigin(0.5, -5.5);
   }
 }
 
