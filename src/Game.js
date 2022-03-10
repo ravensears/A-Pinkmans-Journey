@@ -379,6 +379,16 @@ class Game extends Phaser.Scene {
     this.traps.generateTrap(
       { x: 830, y: 2316, width: 70, height: 70 },
       this.traps.goInvisible
+    ); 
+    
+    this.traps.generateTrap(
+      { x: 355, y: 2715, width: 70, height: 70 },
+      this.traps.goTiny
+    );
+
+    this.traps.generateTrap(
+      { x: 1763, y: 2382, width: 70, height: 70 },
+      this.traps.goBig
     );
   }
 
@@ -407,16 +417,6 @@ class Game extends Phaser.Scene {
     this.traps.generateTrap(
       { x: 2320, y: 1460, width: 260, height: 100 },
       this.traps.goZoomRight
-    );
-
-    this.traps.generateTrap(
-      { x: 355, y: 2715, width: 70, height: 70 },
-      this.traps.goTiny
-    );
-
-    this.traps.generateTrap(
-      { x: 1763, y: 2382, width: 70, height: 70 },
-      this.traps.goBig
     );
 
     const treasureDetector = () => {
