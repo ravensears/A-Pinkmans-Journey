@@ -8,7 +8,7 @@ class Trap {
 		let msg;
 		msg = this.scene.add
 			.text(340, 710, text, {
-				fontSize: "28px",
+				fontSize: "26px",
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);

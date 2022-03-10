@@ -118,44 +118,44 @@ class Game extends Phaser.Scene {
 				1418,
 				80,
 				80,
-				"Found Treasure! Check in the couch over there"
+				"Found Treasure! I think I lost one down the back of the couch."
 			),
 			new Treasure(
 				1011,
 				1435,
 				80,
 				80,
-				"Found Treasure! Check in the heart of the labyrinth"
+				"Can you hear the beating of the labyrinth's heart?"
 			),
-			new Treasure(238, 738, 80, 80, "Found Treasure! Check in the black room"),
+			new Treasure(238, 738, 80, 80, "Bottoms up! I think you should look in the dark room."),
 			new Treasure(
 				498,
 				3059,
 				80,
 				80,
-				"Found Treasure! Check in the wishing well"
+				"Throw some coins in the wishing well and you might find the next one."
 			),
 			new Treasure(
 				1539,
 				2766,
 				80,
 				80,
-				"Found Treasure! Check under the basketball"
+				"Check in the ballroom."
 			),
-			new Treasure(1800, 500, 80, 80, "Found treasure! Check under a tree"),
+			new Treasure(1800, 500, 80, 80, "Look in the arborotorium... arbaterranium... the tree room."),
 			new Treasure(
 				600,
 				2530,
 				80,
 				80,
-				"Found treasure! Find the treasure chest!!"
+				"Finally, take a trip on the travelators... If you dare!!"
 			),
 			new Treasure(
 				2404,
 				3080,
 				80,
 				80,
-				"You found the final treasure!!! Woooo!!"
+				"You did it! Good work, little buddy."
 			),
 		];
 
@@ -292,13 +292,13 @@ class Game extends Phaser.Scene {
 			} else if (this.treasureProximity(1500)) {
 				return "Cold";
 			} else {
-				return "What's cooler than being cold? Ice cold!!";
+				return "What's cooler than being cool? Ice cold!!";
 			}
 		};
 
 		this.clueText = this.add
-			.text(135, 630, this.treasureMessage(), {
-				fontSize: "28px",
+			.text(135, 640, this.treasureMessage(), {
+				fontSize: "26px",
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);

@@ -7,11 +7,13 @@ class GameComplete extends Phaser.Scene {
 
   preload() {
     this.load.image("newPinkman", "/sprites/new_pinkman.png");
+    this.load.audio("song", "/audio/music.mp3");
   }
 
   create() {
 
     this.add.image(660, 360, "newPinkman").setOrigin(0.5, 0.40).setScale(.35);
+    this.music = this.sound.add("song");
 
     this.add
       .text(640, 360, "You Won 🏆", {
@@ -25,6 +27,14 @@ class GameComplete extends Phaser.Scene {
       function () {
         this.scene.start("GameStart");
       },
+      this
+    );
+
+    this.input.once(
+      "pointerup", 
+      function () {
+        this.music.stop()
+      }, 
       this
     );
 
