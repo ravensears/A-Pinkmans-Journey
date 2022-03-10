@@ -4,6 +4,19 @@ class Trap {
 		this.keyObj = keyObj;
 	}
 
+	trapMessage(text) {
+		let msg;
+		msg = this.scene.add
+			.text(340, 740, text, {
+				fontSize: "28px",
+				fill: "#ffffff",
+			})
+			.setScrollFactor(0);
+		setTimeout(() => {
+			msg.destroy();
+		}, 6000);
+	}
+
 	findWormHole = (wormHole) => {
 		if (wormHole.body.embedded && this.keyObj.isDown) {
 			console.log(`You fell in a wormhole at: ${wormHole.x}, ${wormHole.y}!`);
@@ -13,6 +26,7 @@ class Trap {
 			this.scene.cameras.main.fadeIn(2000, 0, 0, 0);
 			this.scene.hero.spriteObject.x = Math.random() * 2400;
 			this.scene.hero.spriteObject.y = Math.random() * 3000;
+			this.trapMessage("Oh no!! You fell in a wormhole!!");
 		}
 	};
 
@@ -21,6 +35,7 @@ class Trap {
 			console.log(`You got tiny at: ${trap.x}, ${trap.y}!`);
 			this.scene.tinySFX.play();
 			this.scene.hero.spriteObject.setScale(0.4);
+			this.trapMessage("Whoa, you shrunk!!");
 		}
 	};
 
@@ -29,11 +44,13 @@ class Trap {
 			console.log(`You got big at: ${trap.x}, ${trap.y}!`);
 			this.scene.bigSFX.play();
 			this.scene.hero.spriteObject.setScale(1);
+			this.trapMessage("You're big again!!");
 		}
 	};
 
 	goVisible = () => {
 		this.scene.hero.spriteObject.visible = true;
+		this.trapMessage("There you are!!");
 	};
 
 	goInvisible = (trap) => {
@@ -42,6 +59,7 @@ class Trap {
 			this.scene.invizSFX.play();
 			this.scene.hero.spriteObject.visible = false;
 			setTimeout(this.goVisible, 10000);
+			this.trapMessage("Hey, where did you go??");
 		}
 	};
 
@@ -49,6 +67,7 @@ class Trap {
 		if (trap.body.embedded) {
 			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.body.setVelocityY(800, 800);
+			this.trapMessage("You're on the travelator!!");
 		}
 	};
 
@@ -56,6 +75,7 @@ class Trap {
 		if (trap.body.embedded) {
 			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.body.setVelocityY(-800, 800);
+			this.trapMessage("You're on the travelator!!");
 		}
 	};
 
@@ -63,6 +83,7 @@ class Trap {
 		if (trap.body.embedded) {
 			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.body.setVelocityX(-800, 800);
+			this.trapMessage("You're on the travelator!!");
 		}
 	};
 
@@ -70,6 +91,7 @@ class Trap {
 		if (trap.body.embedded) {
 			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.body.setVelocityX(800, 800);
+			this.trapMessage("You're on the travelator!!");
 		}
 	};
 
