@@ -65,33 +65,25 @@ class Trap {
 
 	goZoomDown = (trap) => {
 		if (trap.body.embedded) {
-			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.body.setVelocityY(800, 800);
-			this.trapMessage("You're on the travelator!!");
 		}
 	};
 
 	goZoomUp = (trap) => {
 		if (trap.body.embedded) {
-			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.body.setVelocityY(-800, 800);
-			this.trapMessage("You're on the travelator!!");
 		}
 	};
 
 	goZoomLeft = (trap) => {
 		if (trap.body.embedded) {
-			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.body.setVelocityX(-800, 800);
-			this.trapMessage("You're on the travelator!!");
 		}
 	};
 
 	goZoomRight = (trap) => {
 		if (trap.body.embedded) {
-			console.log(`You zoomed at: ${trap.x}, ${trap.y}!`);
 			this.scene.hero.spriteObject.body.setVelocityX(800, 800);
-			this.trapMessage("You're on the travelator!!");
 		}
 	};
 
