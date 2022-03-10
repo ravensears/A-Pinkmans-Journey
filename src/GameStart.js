@@ -7,11 +7,25 @@ class GameStart extends Phaser.Scene {
 
   preload() {
     this.load.image("logo", "/sprites/logo.png");
+    this.load.audio("song", "/audio/music.mp3");
   }
 
   create() {
     this.add.image(660, 360, "logo").setOrigin(.54, .50).setScale(3);
 
+    this.music = this.sound.add("song");
+
+		const musicConfig = {
+			mute: false,
+			volume: 0.6,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0,
+		};
+
+		this.music.play(musicConfig);
     // this.add
     //   .text(640, 360, "A Pinkman's Journey", {
     //     font: "80px Source Sans Pro",
@@ -24,6 +38,14 @@ class GameStart extends Phaser.Scene {
       function () {
         this.scene.start("Instructions");
       },
+      this
+    );
+
+    this.input.once(
+      "pointerup", 
+      function () {
+        this.music.stop()
+      }, 
       this
     );
 

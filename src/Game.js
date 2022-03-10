@@ -296,14 +296,14 @@ class Game extends Phaser.Scene {
 		};
 
 		this.clueText = this.add
-			.text(135, 660, this.treasureMessage(), {
+			.text(135, 630, this.treasureMessage(), {
 				fontSize: "28px",
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);
 
 		this.muteMan = this.add
-			.image(85, 673, "muteMan")
+			.image(85, 643, "muteMan")
 			.setInteractive()
 			.setScale(2.2)
 			.setScrollFactor(0);
@@ -334,12 +334,12 @@ class Game extends Phaser.Scene {
 			}
 		}
 
-		this.text = this.add
-			.text(58, 733, "Cursors to move", {
-				font: "16px Courier",
-				fill: "#00ff00",
-			})
-			.setScrollFactor(0);
+    this.text = this.add
+    .text(58, 703, "Cursors to move", {
+      font: "16px Courier",
+      fill: "#00ff00",
+    })
+    .setScrollFactor(0);
 
 		const wormholes = [
 			{ x: 1343, y: 2490, width: 70, height: 75 },
