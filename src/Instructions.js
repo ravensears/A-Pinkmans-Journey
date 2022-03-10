@@ -20,7 +20,7 @@ class Instructions extends Phaser.Scene {
 
         this.add.image(
             660, 360, "newPinkman")
-            .setOrigin(1.5, 0.40).setScale(0.35);
+            .setOrigin(0.0, 0.40).setScale(0.35);
 
         this.add.text(
             640, 
@@ -52,7 +52,7 @@ class Instructions extends Phaser.Scene {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(-0.89, 3.5);
+        ).setOrigin(2.5, 3.5);
 
         this.add.text(
             640,
@@ -62,7 +62,7 @@ class Instructions extends Phaser.Scene {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(0.09, 0);
+        ).setOrigin(1.20, 0);
 
         this.add.text(
             640,
@@ -72,7 +72,7 @@ class Instructions extends Phaser.Scene {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(0.09, -3.5);
+        ).setOrigin(1.21, -3.5);
 
         this.add.text(
             640,
@@ -82,7 +82,7 @@ class Instructions extends Phaser.Scene {
                 font: "20px Source Sans Pro",
                 fill: "#FFFFFF",
             }
-        ).setOrigin(-0.67, -7.5);
+        ).setOrigin(2.2, -7.5);
         
     };
 
