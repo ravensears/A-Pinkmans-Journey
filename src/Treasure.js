@@ -19,11 +19,22 @@ class Treasure {
 		treasureObj.visible = false;
 		treasureObj.setData({ message: msg });
 
-		this.addOverlap(
-			treasureObj,
-			this.scene.heroHand.spriteObject,
-			this.findTreasure
-		);
+		const findTreasure = (treasure) => {
+			if (treasure.active && this.keyObject.isDown) {
+				console.log(`printing: ${this.keyObject}`);
+				if (treasure.body.embedded) {
+					console.log(`You found the treasure at ${treasure.x}, ${treasure.y}!`);
+					treasure.setActive(false);
+					this.scene.score++;
+					this.messageIndex++;
+					this.temperatureIndex === this.treasureGroup.length
+					? this.scene.start("GameComplete")
+					: this.generateNextTreasure();
+				}
+			}
+		}
+		
+		this.scene.physics.add.overlap(treasureObj, this.scene.heroHand.spriteObject, findTreasure)
 
 		this.temperatureIndex++;
 
@@ -31,34 +42,7 @@ class Treasure {
 	}
 
 	generateNextTreasure() {
-		generateTreasure(this.treasureGroup[this.temperatureIndex]);
-	}
-
-	findTreasure(treasure) {
-		if (treasure.active) {
-			console.log(`printing: ${this.keyObject}`);
-			if (treasure.body.embedded && this.keyObject.isDown) {
-				console.log(`You found the treasure at ${treasure.x}, ${treasure.y}!`);
-				treasure.setActive(false);
-				this.afterFindUpdate();
-			}
-		}
-	}
-
-	addOverlap(obj1, obj2, callback) {
-		this.scene.physics.add.overlap(obj1, obj2, callback);
-	}
-
-	nextTreasure() {
-		this.temperatureIndex === this.treasureGroup.length
-			? this.scene.start("GameComplete")
-			: this.generateNextTreasure();
-	}
-
-	afterFindUpdate() {
-		this.scene.score++;
-		this.messageIndex++;
-		this.nextTreasure();
+		this.generateTreasure(this.treasureGroup[this.temperatureIndex]);
 	}
 }
 

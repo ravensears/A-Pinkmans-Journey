@@ -34,6 +34,7 @@ class Game extends Phaser.Scene {
 		const rect = new Phaser.Geom.Rectangle(1008, 50, 1480, 1180);
 		const sfx = this.sound.add("beep");
 		this.keyObj = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+		this.treasureGroup = treasureGroup;
 		const group = this.physics.add.group({
 			key: "chicken",
 			frameQuantity: 300,
@@ -154,6 +155,19 @@ class Game extends Phaser.Scene {
 				return this.treasureGroup[this.messageIndex].message;
 			}
 		};
+
+		this.treasureProximity = (distance) => {
+      return (
+        Math.abs(
+          this.hero.spriteObject.x -
+            this.treasureGroup[this.temperatureIndex - 1].x
+        ) <= distance &&
+        Math.abs(
+          this.hero.spriteObject.y -
+            this.treasureGroup[this.temperatureIndex - 1].y
+        ) <= distance
+      );
+    };
 
 		this.thermometer = () => {
 			if (this.treasureProximity(120)) {
