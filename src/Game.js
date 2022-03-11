@@ -117,22 +117,22 @@ class Game extends Phaser.Scene {
 				1418,
 				80,
 				80,
-				"Found Treasure! I think I lost one down the back of the couch."
+				"Found Treasure! I think I lost one down the back\nof the couch."
 			),
 			new Treasure(
 				1011,
 				1435,
 				80,
 				80,
-				"Can you hear the beating of the labyrinth's heart?"
+				"Can you hear the beating\nof the labyrinth's heart?"
 			),
-			new Treasure(238, 738, 80, 80, "Bottoms up! I think you should look in the dark room."),
+			new Treasure(238, 738, 80, 80, "Bottoms up! I think you should look\nin the dark room."),
 			new Treasure(
 				498,
 				3059,
 				80,
 				80,
-				"Throw some coins in the wishing well and you might find the next one."
+				"Throw some coins in the wishing well\nand you might find the next one."
 			),
 			new Treasure(
 				1539,
@@ -141,13 +141,13 @@ class Game extends Phaser.Scene {
 				80,
 				"Check in the ballroom."
 			),
-			new Treasure(1800, 500, 80, 80, "Look in the arborotorium... arbaterranium... the tree room."),
+			new Treasure(1800, 500, 80, 80, "Look in the arborotorium...\narbaterranium... the tree room."),
 			new Treasure(
 				600,
 				2530,
 				80,
 				80,
-				"Finally, take a trip on the travelators... If you dare!!"
+				"Finally, take a trip on the travelators...\nIf you dare!!"
 			),
 			new Treasure(
 				2404,
@@ -252,13 +252,13 @@ class Game extends Phaser.Scene {
 		});
 
 		const ui = this.add
-			.rectangle(648, 702, 1200, 150, 0x002b36)
+			.rectangle(400, 520, 790, 150, 0x002b36)
 			.setStrokeStyle(4, 0xefc53f)
 			.setScrollFactor(0);
 		ui.alpha = 0.75;
 
 		this.timerText = this.add
-			.text(58, 675, "Countdown: " + formatTime(this.initialTime), {
+			.text(555, 555, "Countdown: " + formatTime(this.initialTime), {
 				font: "24px Courier",
 				fill: "#00ff00",
 			})
@@ -296,14 +296,14 @@ class Game extends Phaser.Scene {
 		};
 
 		this.clueText = this.add
-			.text(135, 640, this.treasureMessage(), {
+			.text(25, 460, this.treasureMessage(), {
 				fontSize: "26px",
 				fill: "#ffffff",
 			})
 			.setScrollFactor(0);
 
 		this.muteMan = this.add
-			.image(85, 643, "muteMan")
+			.image(50, 25, "muteMan")
 			.setInteractive()
 			.setScale(2.2)
 			.setScrollFactor(0);
@@ -335,7 +335,7 @@ class Game extends Phaser.Scene {
 		}
 
     this.text = this.add
-    .text(58, 703, "Cursors to move", {
+    .text(25, 530, "Cursors to move", {
       font: "16px Courier",
       fill: "#00ff00",
     })
@@ -427,12 +427,12 @@ class Game extends Phaser.Scene {
 		this.text.setText([
 			// "screen x: " + this.input.x,
 			// "screen y: " + this.input.y,
-			"hero x: " + this.hero.spriteObject.x.toFixed(0),
-			"hero y: " + this.hero.spriteObject.y.toFixed(0),
 			// "world x: " + this.input.mousePointer.worldX.toFixed(0),
 			// "world y: " + this.input.mousePointer.worldY.toFixed(0),
-			"Treasures: " + this.score,
 			"Treasure Detector: " + treasureDetector(),
+			"Treasures: " + this.score,
+			"Pinkman's Coordinates: " + this.hero.spriteObject.x.toFixed(0) + ", " +
+			this.hero.spriteObject.y.toFixed(0),
 		]);
 
 		this.hero.updatePlayer();

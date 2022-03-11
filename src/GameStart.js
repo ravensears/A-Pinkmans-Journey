@@ -11,7 +11,7 @@ class GameStart extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(660, 360, "logo").setOrigin(.54, .50).setScale(3);
+    this.add.image(400, 300, "logo").setScale(2);
 
     this.music = this.sound.add("song");
 
@@ -50,7 +50,7 @@ class GameStart extends Phaser.Scene {
     );
 
     this.add
-      .text(640, 360, "Click for Instructions", {
+      .text(400, 300, "Click for Instructions", {
         font: "40px Source Sans Pro",
         fill: "#FFFFFF",
       })

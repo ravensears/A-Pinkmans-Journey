@@ -19,13 +19,13 @@ class Instructions extends Phaser.Scene {
         this.cameras.main.fadeIn(1000, 0, 0, 0);
 
         this.add.image(
-            660, 360, "newPinkman")
+            400, 300, "newPinkman")
             .setOrigin(0.0, 0.40).setScale(0.35);
 
         this.add.text(
-            640, 
-            360, 
-            "Instructions", 
+            400, 
+            300, 
+            "Instructions",
             {
                 font: "80px Source Sans Pro",
                 fill: "#FFFFFF",
@@ -35,8 +35,8 @@ class Instructions extends Phaser.Scene {
         this.input.once('pointerup', function () {this.scene.start("Game")}, this);
 
         this.add.text(
-            640, 
-            360, 
+            400, 
+            250, 
             "Click to start", 
             {
                 font: "45px Source Sans Pro",
@@ -45,8 +45,8 @@ class Instructions extends Phaser.Scene {
         ).setOrigin(0.5, -5.5);
 
         this.add.text(
-            640,
-            360,
+            400,
+            300,
             "Follow the clues",
             {
                 font: "20px Source Sans Pro",
@@ -55,8 +55,8 @@ class Instructions extends Phaser.Scene {
         ).setOrigin(2.5, 3.5);
 
         this.add.text(
-            640,
-            360,
+            400,
+            300,
             "Find them all within the time limit",
             {
                 font: "20px Source Sans Pro",
@@ -65,8 +65,8 @@ class Instructions extends Phaser.Scene {
         ).setOrigin(1.20, 1);
 
         this.add.text(
-            640,
-            360,
+            400,
+            300,
             "Move using: W A S D  ||  Arrow keys",
             {
                 font: "20px Source Sans Pro",
@@ -75,8 +75,8 @@ class Instructions extends Phaser.Scene {
         ).setOrigin(1.21, -1.5);
 
         this.add.text(
-            640,
-            360,
+            400,
+            300,
             "Pick up treasure: E",
             {
                 font: "20px Source Sans Pro",
@@ -85,8 +85,8 @@ class Instructions extends Phaser.Scene {
         ).setOrigin(2.2, -4);
 
         this.add.text(
-            640,
-            360,
+            400,
+            300,
             "Watch out for traps!!",
             {
                 font: "20px Source Sans Pro",

@@ -7,13 +7,9 @@ import Instructions from "./Instructions.js";
 
 const config = {
   type: Phaser.AUTO,
-  backgroundColor: "#002b36",
-  scale: {
-    parent: "phaser-game",
-    mode: Phaser.DOM.FIT,
-    width: window.innerWidth,
-    height: window.innerHeight,
-  },
+  backgroundColor: "#000000",
+  width: 800,
+  height: 600,
   physics: {
     default: "arcade",
     arcade: {

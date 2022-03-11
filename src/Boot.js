@@ -33,6 +33,7 @@ class Boot extends Phaser.Scene {
     this.load.image("newPinkman", "/sprites/new_pinkman.png");
     this.load.image("pinkman", "/sprites/new_pinkman.gif");
 		this.load.image("tree1", "/sprites/trees/tree1.png");
+		
 		this.load.image("tree2", "/sprites/trees/tree2.png");
 		this.load.image("tree3", "/sprites/trees/tree5.png");
 		this.load.image("tree4", "/sprites/trees/tree7.png");
