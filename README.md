@@ -4,10 +4,10 @@
 
 Team Lonely Hearts Club:
 
+[Raven Reynolds-Sears](https://github.com/ravensears)  
 [Anthony Chaplin](https://github.com/OrganicAC)  
 [Ben Coyne](https://github.com/BenCoyne)  
 [Francisco Pottinger-Marques](https://github.com/fpmrqs)  
-[Raven Reynolds-Sears](https://github.com/ravensears)  
 [Tyrone Williams](https://github.com/TMWcodes)
 [Victoria Black](https://github.com/icvotria)
 
